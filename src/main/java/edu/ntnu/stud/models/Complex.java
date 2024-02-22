@@ -25,9 +25,9 @@ public class Complex extends Vector2D {
         }
     }
 
-    public Complex sqrt(Complex complexNumber) {
-        double x = complexNumber.getRealPart();
-        double y = complexNumber.getImaginaryPart();
+    public Complex sqrt() {
+        double x = this.getRealPart();
+        double y = this.getImaginaryPart();
 
         double realPart = Math.sqrt((Math.sqrt(x * x + y * y) + x) / 2);
         double imaginaryPart = sgn(y) * Math.sqrt((Math.sqrt(x * x + y * y) -x) / 2);
@@ -35,4 +35,8 @@ public class Complex extends Vector2D {
         return new Complex (realPart, imaginaryPart);
     }
 
+    @Override
+    public String toString() {
+        return getRealPart() + " + " + getImaginaryPart();
+    }
 }
