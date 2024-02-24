@@ -57,6 +57,11 @@ public class Complex extends Vector2D {
      *
      * @return A new Complex object that represents the square root of the complex number.
      */
+    public Complex sqrt(){
+        double r = Math.hypot(this.getReal(), this.getImaginary());
+        double realPart = Math.sqrt((r + this.getReal()) / 2);
+        double imaginaryPart = Math.signum(this.getImaginary()) * Math.sqrt((r - this.getReal()) / 2);
+        return new Complex(realPart, imaginaryPart);
     }
 
     /**
@@ -66,6 +71,6 @@ public class Complex extends Vector2D {
      */
     @Override
     public String toString() {
-        return getRealPart() + " + " + getImaginaryPart();
+        return this.getReal() + (this.getImaginary() < 0 ? " - " : " + ") + Math.abs(this.getImaginary()) + "i";
     }
 }
