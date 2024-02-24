@@ -34,24 +34,6 @@ public class Complex extends Vector2D {
         return getX1();
     }
 
-    public double sgn(double value) {
-        if (value > 0) {
-            return 1;
-        } else if (value < 0) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
-    public Complex sqrt() {
-        double x = this.getRealPart();
-        double y = this.getImaginaryPart();
-
-        double realPart = Math.sqrt((Math.sqrt(x * x + y * y) + x) / 2);
-        double imaginaryPart = sgn(y) * Math.sqrt((Math.sqrt(x * x + y * y) -x) / 2);
-
-        return new Complex (realPart, imaginaryPart);
     /**
      * Returns the square root of the complex number.
      *
