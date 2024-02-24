@@ -8,36 +8,35 @@ import org.junit.Test;
 
 public class TestComplex {
 
-    private Complex complex1;
-    private Complex complex2;
+    private Complex complex;
     private final double precisionDelta = 0.0001;
 
     @Before
     public void setup(){
-        this.complex1 = new Complex(3, 6);
-        this.complex2 = new Complex(4, 2);
+        this.complex = new Complex(16, 30);
     }
 
     @Test
     public void constructor_constructorIsCorrect_true(){
-        assertEquals(3, complex1.getRealPart(), this.precisionDelta);
-        assertEquals(6, complex1.getImaginaryPart(), this.precisionDelta);
+        assertEquals(16, complex.getReal(), this.precisionDelta);
+        assertEquals(30, complex.getImaginary(), this.precisionDelta);
     }
 
     @Test
-    public void getRealPart_realPartIs3_true(){
-        assertEquals(3, complex1.getRealPart(), this.precisionDelta);
+    public void getReal_realIs3_true(){
+        assertEquals(16, complex.getReal(), this.precisionDelta);
     }
 
     @Test
-    public void getImaginaryPart_imaginaryPartIs6_true(){
-        assertEquals(6, complex1.getImaginaryPart(), this.precisionDelta);
+    public void getImaginary_imaginaryIs6_true(){
+        assertEquals(30, complex.getImaginary(), this.precisionDelta);
     }
 
     @Test
-    public void sqrt_squareRootIsCorrect_true(){
-        assertEquals(new Complex(2.203, 1.362), complex1.sqrt());
+    public void sqrt_sqrtIsCorrect_true(){
+        Complex complexSqrt = complex.sqrt();
+
+        assertEquals(5, complexSqrt.getReal(), this.precisionDelta);
+        assertEquals(3, complexSqrt.getImaginary(), this.precisionDelta);
     }
-
-
 }
