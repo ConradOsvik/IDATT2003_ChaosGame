@@ -1,10 +1,10 @@
 package edu.ntnu.stud.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This class is used to test the functionality of the Complex class.
@@ -21,7 +21,7 @@ public class TestComplex {
     /**
      * This method is executed before each test. It initializes the Complex object used in the tests.
      */
-    @Before
+    @BeforeEach
     public void setup(){
         this.complex = new Complex(16, 30);
     }
