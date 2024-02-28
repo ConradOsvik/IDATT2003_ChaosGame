@@ -34,6 +34,39 @@ public class Complex extends Vector2D {
   }
 
   /**
+   * Adds the specified vector to this complex point and returns the result as a new Complex.
+   *
+   * @param vec the vector to be added
+   * @return a new Complex that is the result of the addition
+   */
+  @Override
+  public Complex add(Vector2D vec) {
+    return new Complex(this.getX0() + vec.getX0(), this.getX1() + vec.getX1());
+  }
+
+  /**
+   * Subtracts the specified vector from this complex point and returns the result as a new Complex.
+   *
+   * @param vec the vector to be subtracted
+   * @return a new Complex that is the result of the subtraction
+   */
+  @Override
+  public Complex subtract(Vector2D vec) {
+    return new Complex(this.getX0() - vec.getX0(), this.getX1() - vec.getX1());
+  }
+
+  /**
+   * Multiplies this complex point by a scalar and returns the result as a new Complex.
+   *
+   * @param scalar the scalar to multiply the vector by
+   * @return a new Complex that is the result of the multiplication
+   */
+  @Override
+  public Complex multiply(double scalar) {
+    return new Complex(this.getX0() * scalar, this.getX1() * scalar);
+  }
+
+  /**
    * Returns the square root of the complex number.
    *
    * @return A new Complex object that represents the square root of the complex number.
