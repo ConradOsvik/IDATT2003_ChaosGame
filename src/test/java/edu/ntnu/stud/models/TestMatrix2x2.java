@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  * and Vector2D object used in the tests. The precisionDelta variable is used to compare double
  * values for equality.
  */
-public class TestMatrix2x2 {
+class TestMatrix2x2 {
 
   private Matrix2x2 matrix;
   private Vector2D vec1;
@@ -26,7 +26,7 @@ public class TestMatrix2x2 {
    * values and a Vector2D object with specific coordinates.
    */
   @BeforeEach
-  public void setup() {
+  void setup() {
     this.matrix = new Matrix2x2(1, 3, 2, 4);
     this.vec1 = new Vector2D(2, 3);
   }
@@ -35,7 +35,7 @@ public class TestMatrix2x2 {
    * This test checks if the constructor of the Matrix2x2 class works correctly.
    */
   @Test
-  public void constructor_constructorIsCorrect_true() {
+  void constructor_constructorIsCorrect_true() {
     assertEquals(1, matrix.a00(), this.precisionDelta);
     assertEquals(3, matrix.a01(), this.precisionDelta);
     assertEquals(2, matrix.a10(), this.precisionDelta);
@@ -46,7 +46,7 @@ public class TestMatrix2x2 {
    * This test checks if the multiply method of the Matrix2x2 class works correctly.
    */
   @Test
-  public void multiply_multiplicationIsCorrect_true() {
+  void multiply_multiplicationIsCorrect_true() {
     Vector2D vec2 = matrix.multiply(vec1);
 
     assertEquals(matrix.a00() * vec1.getX0() + matrix.a01() * vec1.getX1(), vec2.getX0(),
@@ -60,7 +60,7 @@ public class TestMatrix2x2 {
    * when multiplying with a null vector.
    */
   @Test
-  public void multiply_multiplicationWithNull_throws() {
+  void multiply_multiplicationWithNull_throws() {
     assertThrows(NullPointerException.class, () ->
         matrix.multiply(null)
     );
@@ -71,7 +71,7 @@ public class TestMatrix2x2 {
    * multiplication of a matrix with a vector with extreme values.
    */
   @Test
-  public void multiply_multiplicationWithExtremeValues_isInfinite() {
+  void multiply_multiplicationWithExtremeValues_isInfinite() {
     Vector2D vec2 = new Vector2D(Double.MAX_VALUE, Double.MAX_VALUE);
     Vector2D vec3 = matrix.multiply(vec2);
 

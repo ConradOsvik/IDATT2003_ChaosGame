@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  * Vector2D objects used in the tests. The precisionDelta variable is used to compare double values
  * for equality.
  */
-public class TestVector2D {
+class TestVector2D {
 
   private Vector2D vec1;
   private Vector2D vec2;
@@ -26,7 +26,7 @@ public class TestVector2D {
    * coordinates.
    */
   @BeforeEach
-  public void setup() {
+  void setup() {
     this.vec1 = new Vector2D(1, 0);
     this.vec2 = new Vector2D(2, 3);
   }
@@ -35,7 +35,7 @@ public class TestVector2D {
    * This test checks if the constructor of the Vector2D class works correctly.
    */
   @Test
-  public void constructor_constructorIsCorrect_true() {
+  void constructor_constructorIsCorrect_true() {
     assertEquals(1, vec1.getX0(), this.precisionDelta);
     assertEquals(0, vec1.getX1(), this.precisionDelta);
   }
@@ -44,7 +44,7 @@ public class TestVector2D {
    * This test checks if the getX0 method of the Vector2D class works correctly.
    */
   @Test
-  public void getX0_X0is1_true() {
+  void getX0_X0is1_true() {
     assertEquals(1, vec1.getX0(), this.precisionDelta);
   }
 
@@ -52,7 +52,7 @@ public class TestVector2D {
    * This test checks if the getX1 method of the Vector2D class works correctly.
    */
   @Test
-  public void getX1_X1is0_true() {
+  void getX1_X1is0_true() {
     assertEquals(0, vec1.getX1(), this.precisionDelta);
   }
 
@@ -60,7 +60,7 @@ public class TestVector2D {
    * This test checks if the add method of the Vector2D class works correctly.
    */
   @Test
-  public void add_additionIsCorrect_true() {
+  void add_additionIsCorrect_true() {
     Vector2D vec3 = vec1.add(vec2);
 
     assertEquals(vec1.getX0() + vec2.getX0(), vec3.getX0(), this.precisionDelta);
@@ -72,7 +72,7 @@ public class TestVector2D {
    * adding a null vector.
    */
   @Test
-  public void add_additionWithNull_throws() {
+  void add_additionWithNull_throws() {
     Vector2D vec3 = null;
 
     assertThrows(NullPointerException.class, () ->
@@ -85,7 +85,7 @@ public class TestVector2D {
    * vectors with extreme values.
    */
   @Test
-  public void add_additionWithExtremeValues_isInfinite() {
+  void add_additionWithExtremeValues_isInfinite() {
     Vector2D vec3 = new Vector2D(Double.MAX_VALUE, Double.MAX_VALUE);
     Vector2D vec4 = new Vector2D(Double.MAX_VALUE, Double.MAX_VALUE);
 
@@ -99,7 +99,7 @@ public class TestVector2D {
    * This test checks if the subtract method of the Vector2D class works correctly.
    */
   @Test
-  public void subtract_subtractionIsCorrect_true() {
+  void subtract_subtractionIsCorrect_true() {
     Vector2D vec3 = vec1.subtract(vec2);
 
     assertEquals(vec1.getX0() - vec2.getX0(), vec3.getX0(), this.precisionDelta);
@@ -111,7 +111,7 @@ public class TestVector2D {
    * when subtracting a null vector.
    */
   @Test
-  public void subtract_subtractionWithNull_throws() {
+  void subtract_subtractionWithNull_throws() {
     Vector2D vec3 = null;
 
     assertThrows(NullPointerException.class, () ->
@@ -124,7 +124,7 @@ public class TestVector2D {
    * of vectors with extreme values.
    */
   @Test
-  public void subtract_subtractionWithExtremeValues_isInfinite() {
+  void subtract_subtractionWithExtremeValues_isInfinite() {
     Vector2D vec3 = new Vector2D(-Double.MAX_VALUE, -Double.MAX_VALUE);
     Vector2D vec4 = new Vector2D(Double.MAX_VALUE, Double.MAX_VALUE);
 
