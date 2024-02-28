@@ -59,6 +59,16 @@ public class Vector2D {
   }
 
   /**
+   * Multiplies this vector by a scalar and returns the result as a new Vector2D.
+   *
+   * @param scalar the scalar to multiply the vector by
+   * @return a new Vector2D that is the result of the multiplication
+   */
+  public Vector2D multiply(double scalar) {
+    return new Vector2D(this.getX0() * scalar, this.getX1() * scalar);
+  }
+
+  /**
    * Checks if this vector is equal to the specified object. The result is true if and only if the
    * argument is not null and is a Vector2D object that has the same coordinates as this vector.
    *
