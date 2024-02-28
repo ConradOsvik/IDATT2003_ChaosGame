@@ -34,18 +34,6 @@ public class Complex extends Vector2D {
   }
 
   /**
-   * Adds the given vector to this complex number.
-   *
-   * @param vec The vector to be added to this complex number.
-   * @return A new Complex object that represents the sum of this complex number and the given
-   * vector.
-   */
-  @Override
-  public Complex add(Vector2D vec) {
-    return new Complex(this.getReal() + vec.getX0(), this.getImaginary() + vec.getX1());
-  }
-
-  /**
    * Returns the square root of the complex number.
    *
    * @return A new Complex object that represents the square root of the complex number.
