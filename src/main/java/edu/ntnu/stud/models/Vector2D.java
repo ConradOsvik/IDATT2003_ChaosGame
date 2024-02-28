@@ -1,10 +1,11 @@
 package edu.ntnu.stud.models;
 
 /**
- * Represents a 2D vector with two coordinates: x0 and x1.
- * This class provides methods to perform basic vector operations such as addition and subtraction.
+ * Represents a 2D vector with two coordinates: x0 and x1. This class provides methods to perform
+ * basic vector operations such as addition and subtraction.
  */
 public class Vector2D {
+
   private final double x0;
   private final double x1;
 
@@ -14,7 +15,7 @@ public class Vector2D {
    * @param x0 the first coordinate of the vector
    * @param x1 the second coordinate of the vector
    */
-  public Vector2D(double x0, double x1){
+  public Vector2D(double x0, double x1) {
     this.x0 = x0;
     this.x1 = x1;
   }
@@ -43,7 +44,7 @@ public class Vector2D {
    * @param vec the vector to be added
    * @return a new Vector2D that is the result of the addition
    */
-  public Vector2D add(Vector2D vec){
+  public Vector2D add(Vector2D vec) {
     return new Vector2D(this.getX0() + vec.getX0(), this.getX1() + vec.getX1());
   }
 
@@ -53,7 +54,38 @@ public class Vector2D {
    * @param vec the vector to be subtracted
    * @return a new Vector2D that is the result of the subtraction
    */
-  public Vector2D subtract(Vector2D vec){
+  public Vector2D subtract(Vector2D vec) {
     return new Vector2D(this.getX0() - vec.getX0(), this.getX1() - vec.getX1());
+  }
+
+  /**
+   * Checks if this vector is equal to the specified object. The result is true if and only if the
+   * argument is not null and is a Vector2D object that has the same coordinates as this vector.
+   *
+   * @param obj The object to compare this Vector2D against
+   * @return true if the given object represents a Vector2D equivalent to this vector, false
+   * otherwise
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    Vector2D vector = (Vector2D) obj;
+    return Double.compare(vector.getX0(), getX0()) == 0 &&
+        Double.compare(vector.getX1(), getX1()) == 0;
+  }
+
+  /**
+   * Returns a string representation of the vector.
+   *
+   * @return A string representation of the vector in the format "(x0, x1)".
+   */
+  @Override
+  public String toString() {
+    return "(" + getX0() + ", " + getX1() + ")";
   }
 }
