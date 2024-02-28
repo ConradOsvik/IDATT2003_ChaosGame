@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
  * The setup method, annotated with @Before, is used to initialize the Complex object used in the tests.
  * The precisionDelta variable is used to compare double values for equality.
  */
-public class TestComplex {
+class TestComplex {
 
     private Complex complex;
     private final double precisionDelta = 0.0001;
@@ -22,7 +22,7 @@ public class TestComplex {
      * This method is executed before each test. It initializes the Complex object used in the tests.
      */
     @BeforeEach
-    public void setup(){
+    void setup(){
         this.complex = new Complex(16, 30);
     }
 
@@ -30,7 +30,7 @@ public class TestComplex {
      * This test checks if the constructor of the Complex class correctly initializes the real and imaginary parts.
      */
     @Test
-    public void constructor_constructorIsCorrect_true(){
+    void constructor_constructorIsCorrect_true(){
         assertEquals(16, complex.getReal(), this.precisionDelta);
         assertEquals(30, complex.getImaginary(), this.precisionDelta);
     }
@@ -39,7 +39,7 @@ public class TestComplex {
      * This test checks if the getReal method of the Complex class correctly returns the real part.
      */
     @Test
-    public void getReal_realIs3_true(){
+    void getReal_realIs3_true(){
         assertEquals(16, complex.getReal(), this.precisionDelta);
     }
 
@@ -47,7 +47,7 @@ public class TestComplex {
      * This test checks if the getImaginary method of the Complex class correctly returns the imaginary part.
      */
     @Test
-    public void getImaginary_imaginaryIs6_true(){
+    void getImaginary_imaginaryIs6_true(){
         assertEquals(30, complex.getImaginary(), this.precisionDelta);
     }
 
@@ -55,7 +55,7 @@ public class TestComplex {
      * This test checks if the sqrt method of the Complex class correctly returns the square root of the complex number.
      */
     @Test
-    public void sqrt_sqrtIsCorrect_true(){
+    void sqrt_sqrtIsCorrect_true(){
         Complex complexSqrt = complex.sqrt();
 
         assertEquals(5, complexSqrt.getReal(), this.precisionDelta);
