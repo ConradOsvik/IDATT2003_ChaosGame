@@ -56,4 +56,20 @@ public class Vector2D {
   public Vector2D subtract(Vector2D vec){
     return new Vector2D(this.getX0() - vec.getX0(), this.getX1() - vec.getX1());
   }
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    Vector2D vector = (Vector2D) obj;
+    return Double.compare(vector.getX0(), getX0()) == 0 &&
+        Double.compare(vector.getX1(), getX1()) == 0;
+  }
+  @Override
+  public String toString() {
+    return "(" + getX0() + ", " + getX1() + ")";
+  }
 }

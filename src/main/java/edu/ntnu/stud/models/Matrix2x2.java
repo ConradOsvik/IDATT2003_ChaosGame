@@ -18,5 +18,23 @@ public record Matrix2x2(double a00, double a01, double a10, double a11) {
             this.a10 * vec.getX0() + this.a11 * vec.getX1());
     }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    Matrix2x2 matrix = (Matrix2x2) obj;
+    return Double.compare(matrix.a00, a00) == 0 &&
+        Double.compare(matrix.a01, a01) == 0 &&
+        Double.compare(matrix.a10, a10) == 0 &&
+        Double.compare(matrix.a11, a11) == 0;
+  }
 
+  @Override
+  public String toString() {
+    return "[[" + a00 + ", " + a01 + "], [" + a10 + ", " + a11 + "]]";
+  }
 }

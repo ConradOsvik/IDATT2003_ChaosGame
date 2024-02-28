@@ -33,6 +33,10 @@ public class Complex extends Vector2D {
     public double getImaginary() {
         return getX1();
     }
+  @Override
+  public Complex add(Vector2D vec) {
+    return new Complex(this.getReal() + vec.getX0(), this.getImaginary() + vec.getX1());
+  }
 
     /**
      * Returns the square root of the complex number.
@@ -45,6 +49,18 @@ public class Complex extends Vector2D {
         double imaginaryPart = Math.signum(this.getImaginary()) * Math.sqrt((r - this.getReal()) / 2);
         return new Complex(realPart, imaginaryPart);
     }
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    Complex complex = (Complex) obj;
+    return Double.compare(complex.getReal(), getReal()) == 0 &&
+        Double.compare(complex.getImaginary(), getImaginary()) == 0;
+  }
 
     /**
      * Returns a string representation of the complex number.
