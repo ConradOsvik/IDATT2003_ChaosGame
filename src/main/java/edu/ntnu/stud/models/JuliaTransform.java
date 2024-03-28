@@ -22,12 +22,13 @@ public class JuliaTransform implements Transform2D {
    *
    * @param c    the complex number to be used in the transformation
    * @param sign the sign to be used in the transformation
+   * @throws IllegalArgumentException if the complex point c is null or if the sign is not 1 or -1
    */
   public JuliaTransform(Complex c, int sign) {
-    if(c == null) {
-      throw new NullPointerException("The complex point c cannot be null");
+    if (c == null) {
+      throw new IllegalArgumentException("The complex point c cannot be null");
     }
-    if(sign != 1 && sign != -1) {
+    if (sign != 1 && sign != -1) {
       throw new IllegalArgumentException("The sign must be either 1 or -1");
     }
 
@@ -42,10 +43,11 @@ public class JuliaTransform implements Transform2D {
    *
    * @param z the 2D vector to be transformed
    * @return the transformed vector
+   * @throws IllegalArgumentException if the complex point z is null
    */
   public Vector2D transform(Vector2D z) {
-    if(z == null) {
-      throw new NullPointerException("The complex point z cannot be null");
+    if (z == null) {
+      throw new IllegalArgumentException("The complex point z cannot be null");
     }
 
     Complex zComplex = new Complex(z.getX0(), z.getX1());

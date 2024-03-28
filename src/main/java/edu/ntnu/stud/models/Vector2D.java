@@ -43,8 +43,13 @@ public class Vector2D {
    *
    * @param vec the vector to be added
    * @return a new Vector2D that is the result of the addition
+   * @throws IllegalArgumentException if the specified vector is null
    */
   public Vector2D add(Vector2D vec) {
+    if (vec == null) {
+      throw new IllegalArgumentException("Vector cannot be null");
+    }
+
     return new Vector2D(this.getX0() + vec.getX0(), this.getX1() + vec.getX1());
   }
 
@@ -53,8 +58,13 @@ public class Vector2D {
    *
    * @param vec the vector to be subtracted
    * @return a new Vector2D that is the result of the subtraction
+   * @throws IllegalArgumentException if the specified vector is null
    */
   public Vector2D subtract(Vector2D vec) {
+    if (vec == null) {
+      throw new IllegalArgumentException("Vector cannot be null");
+    }
+
     return new Vector2D(this.getX0() - vec.getX0(), this.getX1() - vec.getX1());
   }
 
@@ -85,8 +95,8 @@ public class Vector2D {
       return false;
     }
     Vector2D vector = (Vector2D) obj;
-    return Double.compare(vector.getX0(), getX0()) == 0 &&
-        Double.compare(vector.getX1(), getX1()) == 0;
+    return Double.compare(vector.getX0(), getX0()) == 0
+        && Double.compare(vector.getX1(), getX1()) == 0;
   }
 
   /**

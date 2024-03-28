@@ -21,13 +21,14 @@ public class AffineTransform2D implements Transform2D {
    *
    * @param matrix the 2x2 matrix representing the linear transformation
    * @param vector the 2D vector representing the translation
+   * @throws IllegalArgumentException if the matrix or vector is null
    */
   public AffineTransform2D(Matrix2x2 matrix, Vector2D vector) {
-    if(matrix == null) {
-      throw new NullPointerException("The matrix cannot be null");
+    if (matrix == null) {
+      throw new IllegalArgumentException("The matrix cannot be null");
     }
-    if(vector == null) {
-      throw new NullPointerException("The vector cannot be null");
+    if (vector == null) {
+      throw new IllegalArgumentException("The vector cannot be null");
     }
 
     this.matrix = matrix;
@@ -41,10 +42,11 @@ public class AffineTransform2D implements Transform2D {
    *
    * @param point the point to be transformed
    * @return the transformed 2D vector
+   * @throws IllegalArgumentException if the point is null
    */
   public Vector2D transform(Vector2D point) {
-    if(point == null) {
-      throw new NullPointerException("The point cannot be null");
+    if (point == null) {
+      throw new IllegalArgumentException("The point cannot be null");
     }
 
     return matrix.multiply(point).add(vector);

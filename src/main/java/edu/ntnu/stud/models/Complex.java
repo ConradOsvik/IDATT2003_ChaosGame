@@ -38,20 +38,31 @@ public class Complex extends Vector2D {
    *
    * @param vec the vector to be added
    * @return a new Complex that is the result of the addition
+   * @throws IllegalArgumentException if the vector is null
    */
   @Override
   public Complex add(Vector2D vec) {
+    if (vec == null) {
+      throw new IllegalArgumentException("Vector cannot be null");
+    }
+
     return new Complex(this.getX0() + vec.getX0(), this.getX1() + vec.getX1());
   }
 
   /**
-   * Subtracts the specified vector from this complex point and returns the result as a new Complex.
+   * Subtracts the specified vector from this complex point and returns the result as a new
+   * Complex.
    *
    * @param vec the vector to be subtracted
    * @return a new Complex that is the result of the subtraction
+   * @throws IllegalArgumentException if the vector is null
    */
   @Override
   public Complex subtract(Vector2D vec) {
+    if (vec == null) {
+      throw new IllegalArgumentException("Vector cannot be null");
+    }
+
     return new Complex(this.getX0() - vec.getX0(), this.getX1() - vec.getX1());
   }
 
@@ -96,8 +107,8 @@ public class Complex extends Vector2D {
       return false;
     }
     Complex complex = (Complex) obj;
-    return Double.compare(complex.getReal(), getReal()) == 0 &&
-        Double.compare(complex.getImaginary(), getImaginary()) == 0;
+    return Double.compare(complex.getReal(), getReal()) == 0
+        && Double.compare(complex.getImaginary(), getImaginary()) == 0;
   }
 
   /**
