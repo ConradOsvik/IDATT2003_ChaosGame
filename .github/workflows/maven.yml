@@ -28,7 +28,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Google Java Format
-        uses: axel-op/googlejavaformat-action@v4
+        uses: axel-op/googlejavaformat-action@v3
         with:
           args: --skip-unsupported-files
       - name: Commit and Push changes
