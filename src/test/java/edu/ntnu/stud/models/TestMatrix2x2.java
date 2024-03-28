@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
@@ -35,6 +36,7 @@ class TestMatrix2x2 {
    * This test checks if the constructor of the Matrix2x2 class works correctly.
    */
   @Test
+  @DisplayName("Test Matrix2x2 constructor")
   void constructor_constructorIsCorrect_true() {
     assertEquals(1, matrix.a00(), this.precisionDelta);
     assertEquals(3, matrix.a01(), this.precisionDelta);
@@ -46,6 +48,7 @@ class TestMatrix2x2 {
    * This test checks if the multiply method of the Matrix2x2 class works correctly.
    */
   @Test
+  @DisplayName("Test Matrix2x2 multiplication works")
   void multiply_multiplicationIsCorrect_true() {
     Vector2D vec2 = matrix.multiply(vec1);
 
@@ -60,8 +63,9 @@ class TestMatrix2x2 {
    * when multiplying with a null vector.
    */
   @Test
+  @DisplayName("Test Matrix2x2 multiplication with null vector throws")
   void multiply_multiplicationWithNull_throws() {
-    assertThrows(NullPointerException.class, () ->
+    assertThrows(IllegalArgumentException.class, () ->
         matrix.multiply(null)
     );
   }
@@ -71,6 +75,7 @@ class TestMatrix2x2 {
    * multiplication of a matrix with a vector with extreme values.
    */
   @Test
+  @DisplayName("Test Matrix2x2 multiplication with extreme values")
   void multiply_multiplicationWithExtremeValues_isInfinite() {
     Vector2D vec2 = new Vector2D(Double.MAX_VALUE, Double.MAX_VALUE);
     Vector2D vec3 = matrix.multiply(vec2);
