@@ -30,7 +30,7 @@ jobs:
       - name: Google Java Format
         uses: axel-op/googlejavaformat-action@v3
         with:
-          args: --skip-unsupported-files
+          args: --replace
       - name: Commit and Push changes
         run: |
           git config --global user.name 'github-actions'
