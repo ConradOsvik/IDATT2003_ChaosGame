@@ -84,7 +84,7 @@ public class Vector2D {
    *
    * @param obj The object to compare this Vector2D against
    * @return true if the given object represents a Vector2D equivalent to this vector, false
-   * otherwise
+   *     otherwise
    */
   @Override
   public boolean equals(Object obj) {

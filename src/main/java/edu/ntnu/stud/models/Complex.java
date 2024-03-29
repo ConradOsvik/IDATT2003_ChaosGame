@@ -1,14 +1,12 @@
 package edu.ntnu.stud.models;
 
-/**
- * Represents a complex number with a real and an imaginary part. Extends the Vector2D class.
- */
+/** Represents a complex number with a real and an imaginary part. Extends the Vector2D class. */
 public class Complex extends Vector2D {
 
   /**
    * Constructs a new Complex object.
    *
-   * @param realPart      The real part of the complex number.
+   * @param realPart The real part of the complex number.
    * @param imaginaryPart The imaginary part of the complex number.
    */
   public Complex(double realPart, double imaginaryPart) {
@@ -50,8 +48,7 @@ public class Complex extends Vector2D {
   }
 
   /**
-   * Subtracts the specified vector from this complex point and returns the result as a new
-   * Complex.
+   * Subtracts the specified vector from this complex point and returns the result as a new Complex.
    *
    * @param vec the vector to be subtracted
    * @return a new Complex that is the result of the subtraction
@@ -96,7 +93,7 @@ public class Complex extends Vector2D {
    *
    * @param obj The object to compare this Complex against
    * @return true if the given object represents a Complex equivalent to this complex number, false
-   * otherwise
+   *     otherwise
    */
   @Override
   public boolean equals(Object obj) {
@@ -118,7 +115,9 @@ public class Complex extends Vector2D {
    */
   @Override
   public String toString() {
-    return this.getReal() + (this.getImaginary() < 0 ? " - " : " + ") + Math.abs(
-        this.getImaginary()) + "i";
+    return this.getReal()
+        + (this.getImaginary() < 0 ? " - " : " + ")
+        + Math.abs(this.getImaginary())
+        + "i";
   }
 }

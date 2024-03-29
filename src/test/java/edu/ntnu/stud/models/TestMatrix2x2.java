@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
 /**
  * This class is used to test the functionality of the Matrix2x2 class. It includes tests for the
  * constructor, and the multiply method. Each test method in this class is annotated with the @Test
@@ -32,9 +31,7 @@ class TestMatrix2x2 {
     this.vec1 = new Vector2D(2, 3);
   }
 
-  /**
-   * This test checks if the constructor of the Matrix2x2 class works correctly.
-   */
+  /** This test checks if the constructor of the Matrix2x2 class works correctly. */
   @Test
   @DisplayName("Test Matrix2x2 constructor")
   void constructor_constructorIsCorrect_true() {
@@ -44,17 +41,19 @@ class TestMatrix2x2 {
     assertEquals(4, matrix.a11(), this.precisionDelta);
   }
 
-  /**
-   * This test checks if the multiply method of the Matrix2x2 class works correctly.
-   */
+  /** This test checks if the multiply method of the Matrix2x2 class works correctly. */
   @Test
   @DisplayName("Test Matrix2x2 multiplication works")
   void multiply_multiplicationIsCorrect_true() {
     Vector2D vec2 = matrix.multiply(vec1);
 
-    assertEquals(matrix.a00() * vec1.getX0() + matrix.a01() * vec1.getX1(), vec2.getX0(),
+    assertEquals(
+        matrix.a00() * vec1.getX0() + matrix.a01() * vec1.getX1(),
+        vec2.getX0(),
         this.precisionDelta);
-    assertEquals(matrix.a10() * vec1.getX0() + matrix.a11() * vec1.getX1(), vec2.getX1(),
+    assertEquals(
+        matrix.a10() * vec1.getX0() + matrix.a11() * vec1.getX1(),
+        vec2.getX1(),
         this.precisionDelta);
   }
 
@@ -65,9 +64,7 @@ class TestMatrix2x2 {
   @Test
   @DisplayName("Test Matrix2x2 multiplication with null vector throws")
   void multiply_multiplicationWithNull_throws() {
-    assertThrows(IllegalArgumentException.class, () ->
-        matrix.multiply(null)
-    );
+    assertThrows(IllegalArgumentException.class, () -> matrix.multiply(null));
   }
 
   /**

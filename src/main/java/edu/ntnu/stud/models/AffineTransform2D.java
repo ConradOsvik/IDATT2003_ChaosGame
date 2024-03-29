@@ -7,13 +7,10 @@ package edu.ntnu.stud.models;
  */
 public class AffineTransform2D implements Transform2D {
 
-  /**
-   * The 2x2 matrix representing the linear transformation.
-   */
+  /** The 2x2 matrix representing the linear transformation. */
   private final Matrix2x2 matrix;
-  /**
-   * The 2D vector representing the translation.
-   */
+
+  /** The 2D vector representing the translation. */
   private final Vector2D vector;
 
   /**

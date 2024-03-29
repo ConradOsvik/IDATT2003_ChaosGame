@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * This class is used to test the functionality of the JuliaTransform class. It includes tests for
- * the constructor and the transform method. Each test method in this class is annotated with the
- * @Test annotation. The setup method, annotated with @BeforeEach, is used to initialize the
+ * the constructor and the transform method. Each test method in this class is annotated with
+ * the @Test annotation. The setup method, annotated with @BeforeEach, is used to initialize the
  * JuliaTransform object used in the tests. The precisionDelta variable is used to compare double
  * values for equality.
  */
@@ -31,9 +31,7 @@ class TestJuliaTransform {
     this.juliaTransform = new JuliaTransform(point, sign);
   }
 
-  /**
-   * This test checks if the constructor of the JuliaTransform class works correctly.
-   */
+  /** This test checks if the constructor of the JuliaTransform class works correctly. */
   @Test
   @DisplayName("Test constructor works")
   void constructor_constructsNewJuliaTransform_works() {
@@ -69,9 +67,7 @@ class TestJuliaTransform {
     assertThrows(IllegalArgumentException.class, () -> new JuliaTransform(point, sign));
   }
 
-  /**
-   * This test checks if the transform method of the JuliaTransform class works correctly.
-   */
+  /** This test checks if the transform method of the JuliaTransform class works correctly. */
   @Test
   @DisplayName("Test transform works")
   void transform_transformsPoint_works() {

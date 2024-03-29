@@ -1,6 +1,5 @@
 package edu.ntnu.stud.models;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -61,9 +60,7 @@ class TestComplex {
     assertEquals(30, complex1.getImaginary(), this.precisionDelta);
   }
 
-  /**
-   * This test checks if the add method of the Complex class correctly adds two complex numbers.
-   */
+  /** This test checks if the add method of the Complex class correctly adds two complex numbers. */
   @Test
   @DisplayName("Test add works")
   void add_additionIsCorrect_true() {
@@ -82,9 +79,7 @@ class TestComplex {
   void add_additionWithNull_throws() {
     Complex complex3 = null;
 
-    assertThrows(IllegalArgumentException.class, () ->
-        complex1.add(complex3)
-    );
+    assertThrows(IllegalArgumentException.class, () -> complex1.add(complex3));
   }
 
   /**
@@ -125,9 +120,7 @@ class TestComplex {
   void subtract_subtractionWithNull_throws() {
     Complex complex3 = null;
 
-    assertThrows(IllegalArgumentException.class, () ->
-        complex1.subtract(complex3)
-    );
+    assertThrows(IllegalArgumentException.class, () -> complex1.subtract(complex3));
   }
 
   /**
