@@ -8,19 +8,16 @@ package edu.ntnu.stud.models;
  */
 public class JuliaTransform implements Transform2D {
 
-  /**
-   * The complex point used in the transformation.
-   */
+  /** The complex point used in the transformation. */
   private final Complex c;
-  /**
-   * The sign used in the transformation.
-   */
+
+  /** The sign used in the transformation. */
   private final int sign;
 
   /**
    * Constructs a new JuliaTransform with the specified complex point and sign.
    *
-   * @param c    the complex number to be used in the transformation
+   * @param c the complex number to be used in the transformation
    * @param sign the sign to be used in the transformation
    * @throws IllegalArgumentException if the complex point c is null or if the sign is not 1 or -1
    */
@@ -38,8 +35,8 @@ public class JuliaTransform implements Transform2D {
 
   /**
    * Transforms the specified complex point into a new complex point. The transformation is done by
-   * subtracting the complex point c  from the z, and then taking the square root and multiplying
-   * the result by the sign.
+   * subtracting the complex point c from the z, and then taking the square root and multiplying the
+   * result by the sign.
    *
    * @param z the 2D vector to be transformed
    * @return the transformed vector

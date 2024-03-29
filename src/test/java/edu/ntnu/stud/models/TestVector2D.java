@@ -1,6 +1,5 @@
 package edu.ntnu.stud.models;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -32,9 +31,7 @@ class TestVector2D {
     this.vec2 = new Vector2D(2, 3);
   }
 
-  /**
-   * This test checks if the constructor of the Vector2D class works correctly.
-   */
+  /** This test checks if the constructor of the Vector2D class works correctly. */
   @Test
   @DisplayName("Test constructor works")
   void constructor_constructorIsCorrect_true() {
@@ -42,27 +39,21 @@ class TestVector2D {
     assertEquals(0, vec1.getX1(), this.precisionDelta);
   }
 
-  /**
-   * This test checks if the getX0 method of the Vector2D class works correctly.
-   */
+  /** This test checks if the getX0 method of the Vector2D class works correctly. */
   @Test
   @DisplayName("Test getX0 works")
   void getX0_X0is1_true() {
     assertEquals(1, vec1.getX0(), this.precisionDelta);
   }
 
-  /**
-   * This test checks if the getX1 method of the Vector2D class works correctly.
-   */
+  /** This test checks if the getX1 method of the Vector2D class works correctly. */
   @Test
   @DisplayName("Test getX1 works")
   void getX1_X1is0_true() {
     assertEquals(0, vec1.getX1(), this.precisionDelta);
   }
 
-  /**
-   * This test checks if the add method of the Vector2D class works correctly.
-   */
+  /** This test checks if the add method of the Vector2D class works correctly. */
   @Test
   @DisplayName("Test add works")
   void add_additionIsCorrect_true() {
@@ -81,9 +72,7 @@ class TestVector2D {
   void add_additionWithNull_throws() {
     Vector2D vec3 = null;
 
-    assertThrows(IllegalArgumentException.class, () ->
-        vec1.add(vec3)
-    );
+    assertThrows(IllegalArgumentException.class, () -> vec1.add(vec3));
   }
 
   /**
@@ -102,9 +91,7 @@ class TestVector2D {
     assertTrue(Double.isInfinite(vec5.getX1()));
   }
 
-  /**
-   * This test checks if the subtract method of the Vector2D class works correctly.
-   */
+  /** This test checks if the subtract method of the Vector2D class works correctly. */
   @Test
   @DisplayName("Test subtract works")
   void subtract_subtractionIsCorrect_true() {
@@ -123,9 +110,7 @@ class TestVector2D {
   void subtract_subtractionWithNull_throws() {
     Vector2D vec3 = null;
 
-    assertThrows(IllegalArgumentException.class, () ->
-        vec1.subtract(vec3)
-    );
+    assertThrows(IllegalArgumentException.class, () -> vec1.subtract(vec3));
   }
 
   /**
@@ -144,9 +129,7 @@ class TestVector2D {
     assertTrue(Double.isInfinite(vec5.getX1()));
   }
 
-  /**
-   * This test checks if the multiply method of the Vector2D class works correctly.
-   */
+  /** This test checks if the multiply method of the Vector2D class works correctly. */
   @Test
   @DisplayName("Test multiply works")
   void multiply_multiplicationIsCorrect_true() {

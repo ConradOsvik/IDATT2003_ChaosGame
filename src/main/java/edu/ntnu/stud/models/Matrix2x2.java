@@ -19,7 +19,8 @@ public record Matrix2x2(double a00, double a01, double a10, double a11) {
       throw new IllegalArgumentException("Vector cannot be null");
     }
 
-    return new Vector2D(this.a00 * vec.getX0() + this.a01 * vec.getX1(),
+    return new Vector2D(
+        this.a00 * vec.getX0() + this.a01 * vec.getX1(),
         this.a10 * vec.getX0() + this.a11 * vec.getX1());
   }
 
@@ -29,7 +30,7 @@ public record Matrix2x2(double a00, double a01, double a10, double a11) {
    *
    * @param obj The object to compare this Matrix2x2 against
    * @return true if the given object represents a Matrix2x2 equivalent to this matrix, false
-   * otherwise
+   *     otherwise
    */
   @Override
   public boolean equals(Object obj) {
@@ -40,8 +41,10 @@ public record Matrix2x2(double a00, double a01, double a10, double a11) {
       return false;
     }
     Matrix2x2 matrix = (Matrix2x2) obj;
-    return Double.compare(matrix.a00, a00) == 0 && Double.compare(matrix.a01, a01) == 0
-        && Double.compare(matrix.a10, a10) == 0 && Double.compare(matrix.a11, a11) == 0;
+    return Double.compare(matrix.a00, a00) == 0
+        && Double.compare(matrix.a01, a01) == 0
+        && Double.compare(matrix.a10, a10) == 0
+        && Double.compare(matrix.a11, a11) == 0;
   }
 
   /**

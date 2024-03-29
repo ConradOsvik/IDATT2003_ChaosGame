@@ -29,9 +29,7 @@ class TestAffineTransform2D {
     this.affineTransform2D = new AffineTransform2D(matrix, vector);
   }
 
-  /**
-   * This test checks if the constructor of the AffineTransform2D class works correctly.
-   */
+  /** This test checks if the constructor of the AffineTransform2D class works correctly. */
   @Test
   @DisplayName("Test constructor works")
   void constructor_constructsNewAffineTransform2D_works() {
@@ -67,9 +65,7 @@ class TestAffineTransform2D {
     assertThrows(IllegalArgumentException.class, () -> new AffineTransform2D(matrix, vector));
   }
 
-  /**
-   * This test checks if the transform method of the AffineTransform2D class works correctly.
-   */
+  /** This test checks if the transform method of the AffineTransform2D class works correctly. */
   @Test
   @DisplayName("Test transform works")
   void transform_transformsPoint_works() {
