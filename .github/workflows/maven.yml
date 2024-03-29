@@ -33,14 +33,7 @@ jobs:
         uses: axel-op/googlejavaformat-action@v3
         with:
           args: --replace
-      - name: Commit and Push changes
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git commit -am "refactor: reformat code to Google Java Format" || echo "No changes to commit"
-          git push origin ${{ github.head_ref || 'main' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'refactor: reformat code to Google Java Format'
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
 
