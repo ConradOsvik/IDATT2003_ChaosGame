@@ -5,7 +5,7 @@ package edu.ntnu.stud.models;
  * Implementations of this interface can define their own specific transformations, such as affine
  * transformations or Julia transformations.
  */
-interface Transform2D {
+public interface Transform2D {
 
   /**
    * Transforms the given 2D vector according to the specific transformation defined by the
