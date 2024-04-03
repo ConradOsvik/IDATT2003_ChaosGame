@@ -33,6 +33,10 @@ public class JuliaTransform implements Transform2D {
     this.sign = sign;
   }
 
+  public Complex getC() {
+    return this.c;
+  }
+
   /**
    * Transforms the specified complex point into a new complex point. The transformation is done by
    * subtracting the complex point c from the z, and then taking the square root and multiplying the

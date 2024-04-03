@@ -32,6 +32,14 @@ public class AffineTransform2D implements Transform2D {
     this.vector = vector;
   }
 
+  public Matrix2x2 getMatrix() {
+    return this.matrix;
+  }
+
+  public Vector2D getVector() {
+    return this.vector;
+  }
+
   /**
    * Transforms a point represented by a Vector2D according to the affine transformation. The
    * transformation involves multiplying the point with the matrix and then adding the translation
