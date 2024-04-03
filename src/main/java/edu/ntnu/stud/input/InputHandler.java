@@ -29,17 +29,17 @@ class InputHandler {
     return primitiveInputHandler.getInt();
   }
 
-  public double getDouble() throws InvalidFormatException, InvalidInputException {
-    return primitiveInputHandler.getDouble();
-  }
-
-  public double getSign() throws InvalidFormatException, InvalidInputException {
-    double input = primitiveInputHandler.getDouble();
+  public int getSign() throws InvalidFormatException, InvalidInputException {
+    int input = primitiveInputHandler.getInt();
 
     if (input != 1 && input != -1) {
       throw new InvalidInputException("The sign must be either 1 or -1.");
     }
 
     return input;
+  }
+
+  public double getDouble() throws InvalidFormatException, InvalidInputException {
+    return primitiveInputHandler.getDouble();
   }
 }
