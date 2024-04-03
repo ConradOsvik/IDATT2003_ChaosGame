@@ -3,8 +3,8 @@ package edu.ntnu.stud.models;
 import java.util.List;
 
 /**
- * This class represents the description of a Chaos Game.
- * It includes a list of transformations and the minimum and maximum coordinates for the game.
+ * This class represents the description of a Chaos Game. It includes a list of transformations and
+ * the minimum and maximum coordinates for the game.
  */
 public class ChaosGameDescription {
   private final List<Transform2D> transforms;
@@ -18,12 +18,14 @@ public class ChaosGameDescription {
    * @param minCoords the minimum coordinates for the Chaos Game
    * @param maxCoords the maximum coordinates for the Chaos Game
    */
-  public ChaosGameDescription(List<Transform2D> transforms, Vector2D minCoords, Vector2D maxCoords) {
-    if(transforms == null || minCoords == null || maxCoords == null){
+  public ChaosGameDescription(
+      List<Transform2D> transforms, Vector2D minCoords, Vector2D maxCoords) {
+    if (transforms == null || minCoords == null || maxCoords == null) {
       throw new IllegalArgumentException("Arguments cannot be null");
     }
-    if(minCoords.getX0() >= maxCoords.getX0() || minCoords.getX1() >= maxCoords.getX1()){
-      throw new IllegalArgumentException("Minimum coordinates must be less than maximum coordinates");
+    if (minCoords.getX0() >= maxCoords.getX0() || minCoords.getX1() >= maxCoords.getX1()) {
+      throw new IllegalArgumentException(
+          "Minimum coordinates must be less than maximum coordinates");
     }
 
     this.minCoords = minCoords;
@@ -36,7 +38,7 @@ public class ChaosGameDescription {
    *
    * @return the list of transformations
    */
-  public List<Transform2D> getTransforms(){
+  public List<Transform2D> getTransforms() {
     return this.transforms;
   }
 
@@ -67,6 +69,8 @@ public class ChaosGameDescription {
       return false;
     }
     ChaosGameDescription description = (ChaosGameDescription) obj;
-    return transforms.equals(description.transforms) && minCoords.equals(description.minCoords) && maxCoords.equals(description.maxCoords);
+    return transforms.equals(description.transforms)
+        && minCoords.equals(description.minCoords)
+        && maxCoords.equals(description.maxCoords);
   }
 }

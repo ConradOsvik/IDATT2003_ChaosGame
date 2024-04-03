@@ -62,13 +62,13 @@ public class JuliaTransform implements Transform2D {
   }
 
   /**
-   * Checks if the Julia transformation is equal to the specified object. The result is true if and only
-   * if the argument is not null and is a Julia object that has the same c and sign
-   * as this Julia transformation.
+   * Checks if the Julia transformation is equal to the specified object. The result is true if and
+   * only if the argument is not null and is a Julia object that has the same c and sign as this
+   * Julia transformation.
    *
    * @param obj The object to compare this Julia transformation against
-   * @return true if the given object represents a Julia transformation equivalent to this Julia transformation, false
-   *     otherwise
+   * @return true if the given object represents a Julia transformation equivalent to this Julia
+   *     transformation, false otherwise
    */
   @Override
   public boolean equals(Object obj) {

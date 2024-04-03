@@ -58,13 +58,13 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
-   * Checks if the Affine transformation is equal to the specified object. The result is true if and only
-   * if the argument is not null and is an Affine object that has the same matrix and vector
-   * as this Affine transformation.
+   * Checks if the Affine transformation is equal to the specified object. The result is true if and
+   * only if the argument is not null and is an Affine object that has the same matrix and vector as
+   * this Affine transformation.
    *
    * @param obj The object to compare this Affine transformation against
-   * @return true if the given object represents an Affine transformation equivalent to this Affine transformation, false
-   *     otherwise
+   * @return true if the given object represents an Affine transformation equivalent to this Affine
+   *     transformation, false otherwise
    */
   @Override
   public boolean equals(Object obj) {

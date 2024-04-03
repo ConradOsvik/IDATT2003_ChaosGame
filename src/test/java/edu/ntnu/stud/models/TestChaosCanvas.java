@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * This class contains unit tests for the ChaosCanvas class. It tests the functionality of the
- * ChaosCanvas class methods and constructors.Each test method in this class is annotated with the
- * @Test annotation. The setup method, annotated with @BeforeEach, is used to initialize the
+ * ChaosCanvas class methods and constructors.Each test method in this class is annotated with
+ * the @Test annotation. The setup method, annotated with @BeforeEach, is used to initialize the
  * ChaosCanvas object used in the tests.
+ *
  * @see edu.ntnu.stud.models.ChaosCanvas
  */
 class TestChaosCanvas {
@@ -26,11 +27,16 @@ class TestChaosCanvas {
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(1, 1);
     this.chaosCanvas = new ChaosCanvas(width, height, minCoords, maxCoords);
-    this.transformCoordsToIndices = new AffineTransform2D(
-        new Matrix2x2(0, (double) (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
-            (double) (width - 1) / (maxCoords.getX0() - minCoords.getX0()), 0),
-        new Vector2D((height - 1) * maxCoords.getX1() / (maxCoords.getX1() - minCoords.getX1()),
-            (width - 1) * minCoords.getX0() / (maxCoords.getX0() - minCoords.getX0())));
+    this.transformCoordsToIndices =
+        new AffineTransform2D(
+            new Matrix2x2(
+                0,
+                (double) (height - 1) / (minCoords.getX1() - maxCoords.getX1()),
+                (double) (width - 1) / (maxCoords.getX0() - minCoords.getX0()),
+                0),
+            new Vector2D(
+                (height - 1) * maxCoords.getX1() / (maxCoords.getX1() - minCoords.getX1()),
+                (width - 1) * minCoords.getX0() / (maxCoords.getX0() - minCoords.getX0())));
   }
 
   @Test
@@ -52,8 +58,8 @@ class TestChaosCanvas {
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(1, 1);
 
-    assertThrows(IllegalArgumentException.class,
-        () -> new ChaosCanvas(width, height, minCoords, maxCoords));
+    assertThrows(
+        IllegalArgumentException.class, () -> new ChaosCanvas(width, height, minCoords, maxCoords));
   }
 
   @Test
@@ -63,8 +69,8 @@ class TestChaosCanvas {
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(1, 1);
 
-    assertThrows(IllegalArgumentException.class,
-        () -> new ChaosCanvas(width, height, minCoords, maxCoords));
+    assertThrows(
+        IllegalArgumentException.class, () -> new ChaosCanvas(width, height, minCoords, maxCoords));
   }
 
   @Test
@@ -74,8 +80,8 @@ class TestChaosCanvas {
     Vector2D minCoords = null;
     Vector2D maxCoords = new Vector2D(1, 1);
 
-    assertThrows(IllegalArgumentException.class,
-        () -> new ChaosCanvas(width, height, minCoords, maxCoords));
+    assertThrows(
+        IllegalArgumentException.class, () -> new ChaosCanvas(width, height, minCoords, maxCoords));
   }
 
   @Test
@@ -85,8 +91,8 @@ class TestChaosCanvas {
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = null;
 
-    assertThrows(IllegalArgumentException.class,
-        () -> new ChaosCanvas(width, height, minCoords, maxCoords));
+    assertThrows(
+        IllegalArgumentException.class, () -> new ChaosCanvas(width, height, minCoords, maxCoords));
   }
 
   @Test
@@ -96,8 +102,8 @@ class TestChaosCanvas {
     Vector2D minCoords = new Vector2D(1, 1);
     Vector2D maxCoords = new Vector2D(0, 0);
 
-    assertThrows(IllegalArgumentException.class,
-        () -> new ChaosCanvas(width, height, minCoords, maxCoords));
+    assertThrows(
+        IllegalArgumentException.class, () -> new ChaosCanvas(width, height, minCoords, maxCoords));
   }
 
   @Test
@@ -107,8 +113,8 @@ class TestChaosCanvas {
     Vector2D minCoords = new Vector2D(1, 1);
     Vector2D maxCoords = new Vector2D(1, 1);
 
-    assertThrows(IllegalArgumentException.class,
-        () -> new ChaosCanvas(width, height, minCoords, maxCoords));
+    assertThrows(
+        IllegalArgumentException.class, () -> new ChaosCanvas(width, height, minCoords, maxCoords));
   }
 
   @Test
