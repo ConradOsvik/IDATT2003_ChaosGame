@@ -1,5 +1,11 @@
 package edu.ntnu.stud.models;
 
+/**
+ * This class represents a canvas for the Chaos Game. It is used to store and manipulate pixel data.
+ * The canvas is a 2D array of integers, where each integer represents a pixel.
+ * The integers can be either 0 or 1, where 0 represents an empty pixel and 1 represents a filled pixel.
+ * The class also includes methods for transforming coordinates to indices, getting and setting pixels, and clearing the canvas.
+ */
 public class ChaosCanvas {
   private final int width;
   private final int height;
@@ -8,6 +14,14 @@ public class ChaosCanvas {
   private final AffineTransform2D transformCoordsToIndices;
   private int[][] canvas;
 
+  /**
+   * Constructs a new ChaosCanvas with the given width, height, minimum and maximum coordinates.
+   *
+   * @param width the width of the canvas
+   * @param height the height of the canvas
+   * @param minCoords the minimum coordinates of the canvas
+   * @param maxCoords the maximum coordinates of the canvas
+   */
   public ChaosCanvas(int width, int height, Vector2D minCoords, Vector2D maxCoords) {
     this.width = width;
     this.height = height;
@@ -22,6 +36,12 @@ public class ChaosCanvas {
     );
   }
 
+  /**
+   * Returns the pixel at the given point.
+   *
+   * @param point the point to get the pixel from
+   * @return the pixel at the given point
+   */
   public int getPixel(Vector2D point){
     Vector2D indices = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(indices.getX0());
@@ -29,6 +49,11 @@ public class ChaosCanvas {
     return this.canvas[i][j];
   }
 
+  /**
+   * Sets the pixel at the given point.
+   *
+   * @param point the point to set the pixel at
+   */
   public void putPixel(Vector2D point){
     Vector2D indices = this.transformCoordsToIndices.transform(point);
     int i = (int) Math.round(indices.getX0());
@@ -38,10 +63,18 @@ public class ChaosCanvas {
     }
   }
 
+  /**
+   * Returns the canvas.
+   *
+   * @return the canvas
+   */
   public int[][] getCanvas(){
     return this.canvas;
   }
 
+  /**
+   * Clears the canvas by setting all pixels to 0.
+   */
   public void clear(){
     this.canvas = new int[width][height];
   }
