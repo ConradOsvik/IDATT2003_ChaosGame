@@ -32,6 +32,14 @@ public class AffineTransform2D implements Transform2D {
     this.vector = vector;
   }
 
+  public Matrix2x2 getMatrix() {
+    return this.matrix;
+  }
+
+  public Vector2D getVector() {
+    return this.vector;
+  }
+
   /**
    * Transforms a point represented by a Vector2D according to the affine transformation. The
    * transformation involves multiplying the point with the matrix and then adding the translation
@@ -47,5 +55,26 @@ public class AffineTransform2D implements Transform2D {
     }
 
     return matrix.multiply(point).add(vector);
+  }
+
+  /**
+   * Checks if the Affine transformation is equal to the specified object. The result is true if and
+   * only if the argument is not null and is an Affine object that has the same matrix and vector as
+   * this Affine transformation.
+   *
+   * @param obj The object to compare this Affine transformation against
+   * @return true if the given object represents an Affine transformation equivalent to this Affine
+   *     transformation, false otherwise
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    AffineTransform2D transform = (AffineTransform2D) obj;
+    return matrix.equals(transform.matrix) && vector.equals(transform.vector);
   }
 }

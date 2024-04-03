@@ -33,6 +33,10 @@ public class JuliaTransform implements Transform2D {
     this.sign = sign;
   }
 
+  public Complex getC() {
+    return this.c;
+  }
+
   /**
    * Transforms the specified complex point into a new complex point. The transformation is done by
    * subtracting the complex point c from the z, and then taking the square root and multiplying the
@@ -55,5 +59,26 @@ public class JuliaTransform implements Transform2D {
     }
 
     return result;
+  }
+
+  /**
+   * Checks if the Julia transformation is equal to the specified object. The result is true if and
+   * only if the argument is not null and is a Julia object that has the same c and sign as this
+   * Julia transformation.
+   *
+   * @param obj The object to compare this Julia transformation against
+   * @return true if the given object represents a Julia transformation equivalent to this Julia
+   *     transformation, false otherwise
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    JuliaTransform transform = (JuliaTransform) obj;
+    return c.equals(transform.c) && sign == transform.sign;
   }
 }
