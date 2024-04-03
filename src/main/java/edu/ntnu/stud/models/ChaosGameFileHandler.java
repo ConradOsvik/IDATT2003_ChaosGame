@@ -34,7 +34,7 @@ public class ChaosGameFileHandler {
     }
 
     try (Scanner scanner = new Scanner(file).useLocale(Locale.ENGLISH)) {
-      scanner.useDelimiter("[,\\n]"); //",|\\n"
+      scanner.useDelimiter("\\n|, "); //",|\\n"
 
       String transformType = scanner.next().trim();
       Vector2D lowerLeft = new Vector2D(scanner.nextDouble(), scanner.nextDouble());
@@ -119,8 +119,8 @@ public class ChaosGameFileHandler {
   private void writeCoordinates(BufferedWriter writer, ChaosGameDescription description) throws IOException {
     Vector2D minCoords = description.getMinCoords();
     Vector2D maxCoords = description.getMaxCoords();
-    writer.write(minCoords.getX0() + "," + minCoords.getX1() + "\n");
-    writer.write(maxCoords.getX0() + "," + maxCoords.getX1() + "\n");
+    writer.write(minCoords.getX0() + ", " + minCoords.getX1() + "\n");
+    writer.write(maxCoords.getX0() + ", " + maxCoords.getX1() + "\n");
   }
 
   /**
@@ -133,7 +133,7 @@ public class ChaosGameFileHandler {
   private void writeAffineTransforms(BufferedWriter writer, List<Transform2D> transforms) throws IOException {
     for (Transform2D transform : transforms) {
       AffineTransform2D affine = (AffineTransform2D) transform;
-      writer.write(affine.getMatrix().a00() + "," + affine.getMatrix().a01() + "," + affine.getMatrix().a10() + "," + affine.getMatrix().a11() + "," + affine.getVector().getX0() + "," + affine.getVector().getX1() + "\n");
+      writer.write(affine.getMatrix().a00() + ", " + affine.getMatrix().a01() + ", " + affine.getMatrix().a10() + ", " + affine.getMatrix().a11() + ", " + affine.getVector().getX0() + ", " + affine.getVector().getX1() + "\n");
     }
   }
 
@@ -147,7 +147,7 @@ public class ChaosGameFileHandler {
   private void writeJuliaTransforms(BufferedWriter writer, List<Transform2D> transforms) throws IOException {
     for (Transform2D transform : transforms) {
       JuliaTransform julia = (JuliaTransform) transform;
-      writer.write(julia.getC().getReal() + "," + julia.getC().getImaginary() + "\n");
+      writer.write(julia.getC().getReal() + ", " + julia.getC().getImaginary() + "\n");
     }
   }
 }
