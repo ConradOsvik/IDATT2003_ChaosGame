@@ -26,6 +26,10 @@ public class ValidatedInput {
     return execute(inputHandler::getString, prompt);
   }
 
+  public String getTransformType(String prompt){
+    return execute(inputHandler::getTransformType, prompt);
+  }
+
   public int getInt(String prompt){
     return execute(inputHandler::getInt, prompt);
   }
