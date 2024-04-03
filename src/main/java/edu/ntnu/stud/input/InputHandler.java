@@ -15,6 +15,16 @@ class InputHandler {
     return primitiveInputHandler.getString();
   }
 
+  public String getTransformType() throws InvalidFormatException, InvalidInputException {
+    String input = primitiveInputHandler.getString();
+
+    if(!input.equalsIgnoreCase("affine") && !input.equalsIgnoreCase("julia")) {
+      throw new InvalidInputException("The transform type must be either 'affine' or 'julia'.");
+    }
+
+    return input.toLowerCase();
+  }
+
   public int getInt() throws InvalidFormatException, InvalidInputException {
     return primitiveInputHandler.getInt();
   }
