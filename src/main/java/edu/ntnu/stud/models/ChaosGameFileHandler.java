@@ -1,5 +1,7 @@
 package edu.ntnu.stud.models;
 
+import static java.lang.Math.signum;
+
 import edu.ntnu.stud.exceptions.FileHandlingException;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -79,7 +81,7 @@ public class ChaosGameFileHandler {
   private void readJuliaTransforms(Scanner scanner, List<Transform2D> transforms) {
     while (scanner.hasNext()) {
       Complex c = new Complex(scanner.nextDouble(), scanner.nextDouble());
-      int sign = 1; // default sign
+      int sign = (int) signum(c.getImaginary());
       transforms.add(new JuliaTransform(c, sign));
     }
   }
