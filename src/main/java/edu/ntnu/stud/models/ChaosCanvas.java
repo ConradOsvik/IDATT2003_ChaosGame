@@ -23,6 +23,16 @@ public class ChaosCanvas {
    * @param maxCoords the maximum coordinates of the canvas
    */
   public ChaosCanvas(int width, int height, Vector2D minCoords, Vector2D maxCoords) {
+    if(width <= 0 || height <= 0){
+      throw new IllegalArgumentException("Width and height must be positive");
+    }
+    if(minCoords == null || maxCoords == null){
+      throw new IllegalArgumentException("Coordinates cannot be null");
+    }
+    if(minCoords.getX0() >= maxCoords.getX0() || minCoords.getX1() >= maxCoords.getX1()){
+      throw new IllegalArgumentException("Minimum coordinates must be less than maximum coordinates");
+    }
+
     this.width = width;
     this.height = height;
     this.minCoords = minCoords;

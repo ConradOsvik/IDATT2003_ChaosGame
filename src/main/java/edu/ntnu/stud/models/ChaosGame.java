@@ -20,6 +20,13 @@ public class ChaosGame {
    * @param height the height of the canvas
    */
   public ChaosGame(ChaosGameDescription description, int width, int height){
+    if(description == null){
+      throw new IllegalArgumentException("Description cannot be null");
+    }
+    if(width <= 0 || height <= 0){
+      throw new IllegalArgumentException("Width and height must be positive");
+    }
+
     this.description = description;
     this.canvas = new ChaosCanvas(width, height, description.getMinCoords(), description.getMaxCoords());
     this.currentPoint = new Vector2D(0, 0);

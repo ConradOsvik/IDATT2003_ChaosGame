@@ -19,6 +19,13 @@ public class ChaosGameDescription {
    * @param maxCoords the maximum coordinates for the Chaos Game
    */
   public ChaosGameDescription(List<Transform2D> transforms, Vector2D minCoords, Vector2D maxCoords) {
+    if(transforms == null || minCoords == null || maxCoords == null){
+      throw new IllegalArgumentException("Arguments cannot be null");
+    }
+    if(minCoords.getX0() >= maxCoords.getX0() || minCoords.getX1() >= maxCoords.getX1()){
+      throw new IllegalArgumentException("Minimum coordinates must be less than maximum coordinates");
+    }
+
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.transforms = transforms;
@@ -49,5 +56,17 @@ public class ChaosGameDescription {
    */
   public Vector2D getMaxCoords() {
     return maxCoords;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    ChaosGameDescription description = (ChaosGameDescription) obj;
+    return transforms.equals(description.transforms) && minCoords.equals(description.minCoords) && maxCoords.equals(description.maxCoords);
   }
 }
