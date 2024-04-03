@@ -34,11 +34,12 @@ public class ValidatedInput {
     return execute(inputHandler::getInt, prompt);
   }
 
+  public int getSign(String prompt){
+    return execute(inputHandler::getSign, prompt);
+  }
+
   public double getDouble(String prompt){
     return execute(inputHandler::getDouble, prompt);
   }
 
-  public double getSign(String prompt){
-    return execute(inputHandler::getSign, prompt);
-  }
 }
