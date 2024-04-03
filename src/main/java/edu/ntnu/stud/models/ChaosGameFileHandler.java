@@ -1,20 +1,22 @@
 package edu.ntnu.stud.models;
 
+import edu.ntnu.stud.exceptions.FileHandlingException;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ChaosGameFileHandler {
-  public ChaosGameDescription readFromFile(String path) throws FileNotFoundException {
+  public ChaosGameDescription readFromFile(String path) throws FileHandlingException {
     File file = new File(path);
     if(!file.exists()){
-      throw new FileNotFoundException("File not found");
+      throw new FileHandlingException("File not found");
     }
 
     try (Scanner scanner = new Scanner(file).useLocale(Locale.ENGLISH)) {
@@ -33,6 +35,12 @@ public class ChaosGameFileHandler {
       }
 
       return new ChaosGameDescription(transforms, lowerLeft, upperRight);
+    } catch (InputMismatchException e) {
+      throw new FileHandlingException("The file is not formatted correctly");
+    } catch (NoSuchElementException e) {
+      throw new FileHandlingException("The file is missing elements");
+    } catch (Exception e){
+      throw new FileHandlingException("An error occurred reading the file");
     }
   }
 
@@ -52,7 +60,7 @@ public class ChaosGameFileHandler {
     }
   }
 
-  public void writeToFile(ChaosGameDescription description, String path) throws IOException {
+  public void writeToFile(ChaosGameDescription description, String path) throws FileHandlingException {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))){
       if(description.getTransforms().getFirst() instanceof AffineTransform2D){
         writer.write("Affine2D\n");
@@ -63,6 +71,8 @@ public class ChaosGameFileHandler {
         writeCoordinates(writer, description);
         writeJuliaTransforms(writer, description.getTransforms());
       }
+    } catch (Exception e){
+      throw new FileHandlingException("An error occurred writing to the file");
     }
   }
 
