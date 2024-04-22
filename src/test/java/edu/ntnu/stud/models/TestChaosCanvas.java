@@ -124,6 +124,13 @@ class TestChaosCanvas {
 
     int result = chaosCanvas.getPixel(point);
   }
+  
+  @Test
+  @DisplayName("Test getPixel throws when request is outside boundaries")
+  void getPixel_getsPixelOutsideBoundaries_throws() {
+    Vector2D outsidePoint = new Vector2D(1.1, 1.1);
+    assertThrows(ArrayIndexOutOfBoundsException.class, () -> chaosCanvas.getPixel(outsidePoint));
+  }
 
   @Test
   @DisplayName("Test putPixel works")
@@ -182,6 +189,9 @@ class TestChaosCanvas {
   @Test
   @DisplayName("Test clear works")
   void clear_clearsCanvas_works() {
+    Vector2D point = new Vector2D(0.5, 0.5);
+    chaosCanvas.putPixel(point);
     chaosCanvas.clear();
+    assertEquals(0, chaosCanvas.getPixel(point));
   }
 }

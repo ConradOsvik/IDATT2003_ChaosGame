@@ -50,6 +50,9 @@ public class ChaosGame {
    * @param steps the number of steps to run the game for
    */
   public void runSteps(int steps) {
+    if (steps < 0) {
+      throw new IllegalArgumentException("The number of steps cannot be negative");
+    }
     for (int i = 0; i < steps; i++) {
       Transform2D transform =
           this.description
