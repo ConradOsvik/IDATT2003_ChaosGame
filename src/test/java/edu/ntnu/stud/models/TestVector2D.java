@@ -1,12 +1,11 @@
 package edu.ntnu.stud.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * This class is used to test the functionality of the Vector2D class. It includes tests for the
@@ -152,5 +151,29 @@ class TestVector2D {
 
     assertTrue(Double.isInfinite(vec4.getX0()));
     assertTrue(Double.isInfinite(vec4.getX1()));
+  }
+  
+  @Test  @DisplayName("Test equals is true with same Vector2D")
+  void equals_sameVector2D_isTrue() {
+    Vector2D vec3 = new Vector2D(1, 0);
+    assertTrue(vec1.equals(vec3));
+  }
+  
+  @Test
+  @DisplayName("Test equals is false with different Vector2D")
+  void equals_differentVector2D_isFalse() {
+    assertFalse(vec1.equals(vec2));
+  }
+  
+  @Test
+  @DisplayName("Test equals is false with null Vector2D")
+  void equals_nullVector2D_isFalse() {
+    assertFalse(vec1.equals(null));
+  }
+  
+  @Test
+  @DisplayName("Test toString is correct")
+  void toString_isCorrect() {
+    assertEquals("(1.0, 0.0)", vec1.toString());
   }
 }
