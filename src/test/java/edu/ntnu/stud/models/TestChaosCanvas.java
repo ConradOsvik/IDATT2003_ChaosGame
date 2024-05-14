@@ -124,7 +124,7 @@ class TestChaosCanvas {
 
     int result = chaosCanvas.getPixel(point);
   }
-  
+
   @Test
   @DisplayName("Test getPixel throws when request is outside boundaries")
   void getPixel_getsPixelOutsideBoundaries_throws() {

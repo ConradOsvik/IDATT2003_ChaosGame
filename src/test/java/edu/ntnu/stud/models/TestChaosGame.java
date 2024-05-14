@@ -1,12 +1,12 @@
 package edu.ntnu.stud.models;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class contains unit tests for the ChaosGame class. It tests the functionality of the
@@ -71,7 +71,7 @@ class TestChaosGame {
 
     assertThrows(IllegalArgumentException.class, () -> new ChaosGame(description, width, height));
   }
-  
+
   @Test
   @DisplayName("Test getCanvas works")
   void getCanvas_getsCanvas_works() {
@@ -83,7 +83,7 @@ class TestChaosGame {
   void runSteps_runsSteps_works() {
     this.chaosGame.runSteps(100000);
   }
-  
+
   @Test
   @DisplayName("Test handling of zero steps")
   void runSteps_zeroSteps() {
@@ -91,7 +91,7 @@ class TestChaosGame {
     chaosGame.runSteps(0);
     assertEquals(original, chaosGame.getCanvas());
   }
-  
+
   @Test
   @DisplayName("Test runSteps with invalid step count throws illegal argument exception")
   void runSteps_runsInvalidSteps_throws() {

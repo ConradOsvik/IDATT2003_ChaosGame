@@ -1,10 +1,10 @@
 package edu.ntnu.stud.models;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class is used to test the functionality of the Complex class. It includes tests for the
@@ -178,31 +178,31 @@ class TestComplex {
     assertEquals(5, complexSqrt.getReal(), this.precisionDelta);
     assertEquals(3, complexSqrt.getImaginary(), this.precisionDelta);
   }
-  
+
   @Test
   @DisplayName("Test equals is true with same complex number")
   void equals_sameComplex_true() {
     assertTrue(complex1.equals(complex1));
   }
-  
+
   @Test
   @DisplayName("Test equals is false with different complex number")
   void equals_differentComplex_false() {
     assertFalse(complex1.equals(complex2));
   }
-  
+
   @Test
   @DisplayName("Test equals is false with null complex number")
   void equals_nnullComplex_false() {
     assertFalse(complex1.equals(null));
   }
-  
+
   @Test
   @DisplayName("Test toString with positive imaginary number is correct")
   void toString_positiveImaginary_correct() {
     assertEquals("16.0 + 30.0i", complex1.toString());
   }
-  
+
   @Test
   @DisplayName("Test toString with positive imaginary number is correct")
   void toString_negativeImaginary_correct() {
