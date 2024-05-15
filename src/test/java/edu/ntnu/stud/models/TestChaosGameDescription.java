@@ -1,10 +1,9 @@
 package edu.ntnu.stud.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,6 +41,19 @@ class TestChaosGameDescription {
   @DisplayName("Test constructor works")
   void constructor_constructsChaosGameDescription_works() {
     assertNotNull(this.chaosGameDescription);
+  }
+
+  @Test
+  @DisplayName("Test constructor works with empty (zero) transformations")
+  void constructor_constructsEmptyTransformations_works() {
+    try {
+      Vector2D minCoords = new Vector2D(0, 0);
+      Vector2D maxCoords = new Vector2D(1, 1);
+      ChaosGameDescription chaosGameDescription =
+          new ChaosGameDescription(Collections.emptyList(), minCoords, maxCoords);
+    } catch (Exception e) {
+      fail("Should not throw exception");
+    }
   }
 
   @Test
@@ -114,12 +126,28 @@ class TestChaosGameDescription {
   @DisplayName("Test getMinCoords works")
   void getMinCoords_getsMinCoords_works() {
     assertNotNull(this.chaosGameDescription.getMinCoords());
+    ;
   }
 
   @Test
   @DisplayName("Test getMaxCoords works")
   void getMaxCoords_getsMaxCoords_works() {
     assertNotNull(this.chaosGameDescription.getMaxCoords());
+    ;
+  }
+
+  @Test
+  @DisplayName("Test getTransforms returns correct value")
+  void getTransforms_getsTransforms_returnsCorrectValue() {
+    Transform2D transform1 =
+        new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0, 0));
+    Transform2D transform2 =
+        new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0.25, 0.5));
+    Transform2D transform3 =
+        new AffineTransform2D(new Matrix2x2(0.5, 0, 0, 0.5), new Vector2D(0.5, 0));
+    List<Transform2D> transforms = Arrays.asList(transform1, transform2, transform3);
+
+    assertEquals(transforms, chaosGameDescription.getTransforms());
   }
 
   @Test

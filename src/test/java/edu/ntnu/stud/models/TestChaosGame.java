@@ -1,7 +1,6 @@
 package edu.ntnu.stud.models;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -74,8 +73,33 @@ class TestChaosGame {
   }
 
   @Test
+  @DisplayName("Test getCanvas works")
+  void getCanvas_getsCanvas_works() {
+    assertNotNull(this.chaosGame.getCanvas());
+  }
+
+  @Test
   @DisplayName("Test runSteps works")
   void runSteps_runsSteps_works() {
     this.chaosGame.runSteps(100000);
+  }
+
+  @Test
+  @DisplayName("Test handling of zero steps")
+  void runSteps_zeroSteps() {
+    ChaosCanvas original = chaosGame.getCanvas();
+    chaosGame.runSteps(0);
+    assertEquals(original, chaosGame.getCanvas());
+  }
+
+  @Test
+  @DisplayName("Test runSteps with invalid step count throws illegal argument exception")
+  void runSteps_runsInvalidSteps_throws() {
+    try {
+      chaosGame.runSteps(-1);
+      fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+      assertEquals("The number of steps cannot be negative", e.getMessage());
+    }
   }
 }

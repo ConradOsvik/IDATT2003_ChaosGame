@@ -1,8 +1,6 @@
 package edu.ntnu.stud.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +17,7 @@ class TestComplex {
 
   private Complex complex1;
   private Complex complex2;
+  private Complex complex3;
   private final double precisionDelta = 0.0001;
 
   /**
@@ -28,6 +27,7 @@ class TestComplex {
   void setup() {
     this.complex1 = new Complex(16, 30);
     this.complex2 = new Complex(4, 8);
+    this.complex3 = new Complex(5, -6);
   }
 
   /**
@@ -171,10 +171,41 @@ class TestComplex {
    * the complex number.
    */
   @Test
+  @DisplayName("Test sqrt returns correct value")
   void sqrt_sqrtIsCorrect_true() {
     Complex complexSqrt = complex1.sqrt();
 
     assertEquals(5, complexSqrt.getReal(), this.precisionDelta);
     assertEquals(3, complexSqrt.getImaginary(), this.precisionDelta);
+  }
+
+  @Test
+  @DisplayName("Test equals is true with same complex number")
+  void equals_sameComplex_true() {
+    assertTrue(complex1.equals(complex1));
+  }
+
+  @Test
+  @DisplayName("Test equals is false with different complex number")
+  void equals_differentComplex_false() {
+    assertFalse(complex1.equals(complex2));
+  }
+
+  @Test
+  @DisplayName("Test equals is false with null complex number")
+  void equals_nnullComplex_false() {
+    assertFalse(complex1.equals(null));
+  }
+
+  @Test
+  @DisplayName("Test toString with positive imaginary number is correct")
+  void toString_positiveImaginary_correct() {
+    assertEquals("16.0 + 30.0i", complex1.toString());
+  }
+
+  @Test
+  @DisplayName("Test toString with positive imaginary number is correct")
+  void toString_negativeImaginary_correct() {
+    assertEquals("5.0 - 6.0i", complex3.toString());
   }
 }
