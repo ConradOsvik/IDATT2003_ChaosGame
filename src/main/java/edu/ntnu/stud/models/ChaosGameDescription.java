@@ -73,4 +73,16 @@ public class ChaosGameDescription {
         && minCoords.equals(description.minCoords)
         && maxCoords.equals(description.maxCoords);
   }
+
+  @Override
+  public String toString() {
+    return "ChaosGameDescription{"
+        + "transforms="
+        + transforms
+        + ", minCoords="
+        + minCoords
+        + ", maxCoords="
+        + maxCoords
+        + '}';
+  }
 }

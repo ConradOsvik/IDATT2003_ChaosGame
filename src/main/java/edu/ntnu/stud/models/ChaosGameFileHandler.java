@@ -1,7 +1,5 @@
 package edu.ntnu.stud.models;
 
-import static java.lang.Math.signum;
-
 import edu.ntnu.stud.exceptions.FileHandlingException;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,11 +12,20 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-/**
- * This class is responsible for handling file operations related to the ChaosGame. It can read a
- * ChaosGameDescription from a file and write a ChaosGameDescription to a file.
- */
 public class ChaosGameFileHandler {
+
+  /**
+   * Removes the comment from a line.
+   *
+   * @param line the line to remove the comment from.
+   * @return a line without the comment.
+   */
+  private String removeComment(String line) {
+    if (line.contains("#")) {
+      return line.substring(0, line.indexOf("#")).trim();
+    }
+    return line;
+  }
 
   /**
    * Reads a ChaosGameDescription from a file.
@@ -33,19 +40,19 @@ public class ChaosGameFileHandler {
       throw new FileHandlingException("File not found");
     }
 
-    try (Scanner scanner = new Scanner(file).useLocale(Locale.ENGLISH)) {
-      scanner.useDelimiter("[,\\n]"); // ",|\\n"
+    try (Scanner lineScanner = new Scanner(file).useLocale(Locale.ENGLISH)) {
+      lineScanner.useDelimiter("\\n");
 
-      String transformType = scanner.next().trim();
-      Vector2D lowerLeft = new Vector2D(scanner.nextDouble(), scanner.nextDouble());
-      Vector2D upperRight = new Vector2D(scanner.nextDouble(), scanner.nextDouble());
+      String transformType = removeComment(lineScanner.nextLine().trim());
+      Vector2D lowerLeft = parseVector2D(removeComment(lineScanner.nextLine().trim()));
+      Vector2D upperRight = parseVector2D(removeComment(lineScanner.nextLine().trim()));
 
       List<Transform2D> transforms = new ArrayList<>();
       if (transformType.equals("Affine2D")) {
-        readAffineTransforms(scanner, transforms);
+        readAffineTransforms(lineScanner, transforms);
       }
       if (transformType.equals("Julia")) {
-        readJuliaTransforms(scanner, transforms);
+        readJuliaTransforms(lineScanner, transforms);
       }
 
       return new ChaosGameDescription(transforms, lowerLeft, upperRight);
@@ -59,35 +66,76 @@ public class ChaosGameFileHandler {
   }
 
   /**
+   * Parses a Vector2D from a line.
+   *
+   * @param line the line to parse the Vector2D from.
+   * @return a Vector2D parsed from the line.
+   */
+  private Vector2D parseVector2D(String line) {
+    try (Scanner scanner = new Scanner(line)) {
+      scanner.useDelimiter(", ");
+      return new Vector2D(scanner.nextDouble(), scanner.nextDouble());
+    }
+  }
+
+  /**
    * Reads a list of AffineTransform2D objects from a Scanner.
    *
-   * @param scanner The Scanner to read from.
+   * @param lineScanner The Scanner to read from.
    * @param transforms The list to add the read transforms to.
    */
-  private void readAffineTransforms(Scanner scanner, List<Transform2D> transforms) {
-    while (scanner.hasNext()) {
-      Matrix2x2 matrix =
-          new Matrix2x2(
-              scanner.nextDouble(),
-              scanner.nextDouble(),
-              scanner.nextDouble(),
-              scanner.nextDouble());
-      Vector2D vector = new Vector2D(scanner.nextDouble(), scanner.nextDouble());
-      transforms.add(new AffineTransform2D(matrix, vector));
+  private void readAffineTransforms(Scanner lineScanner, List<Transform2D> transforms)
+      throws FileHandlingException {
+    while (lineScanner.hasNextLine()) {
+      String line = removeComment(lineScanner.nextLine().trim());
+      try (Scanner scanner = new Scanner(line)) {
+        scanner.useDelimiter(", ");
+        while (scanner.hasNext()) {
+          double[] parts = new double[6];
+          for (int i = 0; i < 6; i++) {
+            if (!scanner.hasNext()) {
+              throw new FileHandlingException(
+                  "The file is not formatted correctly. Expected 6 parts for each transform.");
+            }
+            parts[i] = scanner.nextDouble();
+          }
+
+          Matrix2x2 matrix = new Matrix2x2(parts[0], parts[1], parts[2], parts[3]);
+          Vector2D vector = new Vector2D(parts[4], parts[5]);
+          transforms.add(new AffineTransform2D(matrix, vector));
+        }
+      }
     }
   }
 
   /**
    * Reads a list of JuliaTransform objects from a Scanner.
    *
-   * @param scanner The Scanner to read from.
+   * @param lineScanner The Scanner to read from.
    * @param transforms The list to add the read transforms to.
    */
-  private void readJuliaTransforms(Scanner scanner, List<Transform2D> transforms) {
-    while (scanner.hasNext()) {
-      Complex c = new Complex(scanner.nextDouble(), scanner.nextDouble());
-      int sign = (int) signum(c.getImaginary());
-      transforms.add(new JuliaTransform(c, sign));
+  private void readJuliaTransforms(Scanner lineScanner, List<Transform2D> transforms)
+      throws FileHandlingException {
+    while (lineScanner.hasNextLine()) {
+      String line = removeComment(lineScanner.nextLine().trim());
+      try (Scanner scanner = new Scanner(line)) {
+        scanner.useDelimiter(", ");
+        while (scanner.hasNext()) {
+          double[] parts = new double[2];
+          for (int i = 0; i < 2; i++) {
+            if (!scanner.hasNext()) {
+              throw new FileHandlingException(
+                  "The file is not formatted correctly. Expected 2 parts for each Julia"
+                      + " transform.");
+            }
+            parts[i] = scanner.nextDouble();
+          }
+
+          Complex c = new Complex(parts[0], parts[1]);
+          int sign = (int) Math.signum(c.getImaginary());
+          transforms.add(new JuliaTransform(c, sign));
+        }
+      }
     }
   }
 
@@ -100,6 +148,24 @@ public class ChaosGameFileHandler {
    */
   public void writeToFile(ChaosGameDescription description, String path)
       throws FileHandlingException {
+    File file = new File(path);
+    File parentDir = file.getParentFile();
+    if (parentDir != null) {
+      if (!parentDir.exists()) {
+        if (!parentDir.mkdirs()) {
+          throw new FileHandlingException("Could not create directory: " + parentDir);
+        }
+      }
+    }
+
+    try {
+      if (!file.exists()) {
+        file.createNewFile();
+      }
+    } catch (IOException e) {
+      throw new FileHandlingException("An error occurred creating the file");
+    }
+
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
       if (description.getTransforms().getFirst() instanceof AffineTransform2D) {
         writer.write("Affine2D\n");
@@ -116,6 +182,31 @@ public class ChaosGameFileHandler {
   }
 
   /**
+   * Formats a number to the correct format. for numbers less than 1 and greater than 1, it should
+   * be on the form sign.digit. for example .5 or -.5. For numbers that are integers, it should be
+   * formatted as an integer instead of a double.
+   *
+   * @param number the number to be formated.
+   * @return the formatted number.
+   */
+  private String formatNumber(double number) {
+    // Convert doubles to ints if they are ints
+    if (number == (int) number) {
+      return String.valueOf((int) number);
+    } else {
+      String formattedNumber = String.valueOf(number);
+
+      // Remove leading zeros
+      if (formattedNumber.startsWith("0.")) {
+        formattedNumber = formattedNumber.substring(1);
+      } else if (formattedNumber.startsWith("-0.")) {
+        formattedNumber = "-" + formattedNumber.substring(2);
+      }
+      return formattedNumber;
+    }
+  }
+
+  /**
    * Writes the coordinates of a ChaosGameDescription to a BufferedWriter.
    *
    * @param writer The BufferedWriter to write to.
@@ -126,8 +217,8 @@ public class ChaosGameFileHandler {
       throws IOException {
     Vector2D minCoords = description.getMinCoords();
     Vector2D maxCoords = description.getMaxCoords();
-    writer.write(minCoords.getX0() + "," + minCoords.getX1() + "\n");
-    writer.write(maxCoords.getX0() + "," + maxCoords.getX1() + "\n");
+    writer.write(formatNumber(minCoords.getX0()) + ", " + formatNumber(minCoords.getX1()) + "\n");
+    writer.write(formatNumber(maxCoords.getX0()) + ", " + formatNumber(maxCoords.getX1()) + "\n");
   }
 
   /**
@@ -142,17 +233,17 @@ public class ChaosGameFileHandler {
     for (Transform2D transform : transforms) {
       AffineTransform2D affine = (AffineTransform2D) transform;
       writer.write(
-          affine.getMatrix().a00()
-              + ","
-              + affine.getMatrix().a01()
-              + ","
-              + affine.getMatrix().a10()
-              + ","
-              + affine.getMatrix().a11()
-              + ","
-              + affine.getVector().getX0()
-              + ","
-              + affine.getVector().getX1()
+          formatNumber(affine.getMatrix().a00())
+              + ", "
+              + formatNumber(affine.getMatrix().a01())
+              + ", "
+              + formatNumber(affine.getMatrix().a10())
+              + ", "
+              + formatNumber(affine.getMatrix().a11())
+              + ", "
+              + formatNumber(affine.getVector().getX0())
+              + ", "
+              + formatNumber(affine.getVector().getX1())
               + "\n");
     }
   }
@@ -168,7 +259,11 @@ public class ChaosGameFileHandler {
       throws IOException {
     for (Transform2D transform : transforms) {
       JuliaTransform julia = (JuliaTransform) transform;
-      writer.write(julia.getC().getReal() + "," + julia.getC().getImaginary() + "\n");
+      writer.write(
+          formatNumber(julia.getC().getReal())
+              + ", "
+              + formatNumber(julia.getC().getImaginary())
+              + "\n");
     }
   }
 }
