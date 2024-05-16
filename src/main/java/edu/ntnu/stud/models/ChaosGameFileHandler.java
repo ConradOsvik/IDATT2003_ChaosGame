@@ -12,6 +12,10 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * This class is responsible for handling file operations related to the ChaosGame. It can read a
+ * ChaosGameDescription from a file and write a ChaosGameDescription to a file.
+ */
 public class ChaosGameFileHandler {
 
   /**
