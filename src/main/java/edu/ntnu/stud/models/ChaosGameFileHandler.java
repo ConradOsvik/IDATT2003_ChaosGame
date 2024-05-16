@@ -56,8 +56,6 @@ public class ChaosGameFileHandler {
         readJuliaTransforms(lineScanner, transforms);
       }
 
-      System.out.println(transforms);
-
       return new ChaosGameDescription(transforms, lowerLeft, upperRight);
     } catch (InputMismatchException e) {
       throw new FileHandlingException("The file is not formatted correctly");
