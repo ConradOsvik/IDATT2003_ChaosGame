@@ -4,9 +4,11 @@ import edu.ntnu.stud.controllers.CLIController;
 
 public class PrintFractalCommand implements Command {
   private final CLIController controller;
+
   public PrintFractalCommand(CLIController controller) {
     this.controller = controller;
   }
+
   @Override
   public String getName() {
     return "Print fractal";

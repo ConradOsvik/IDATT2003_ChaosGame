@@ -7,7 +7,6 @@ import edu.ntnu.stud.models.ChaosGame;
 import edu.ntnu.stud.models.ChaosGameDescription;
 import edu.ntnu.stud.models.ChaosGameFileHandler;
 import edu.ntnu.stud.views.CLI;
-import java.io.FileNotFoundException;
 
 public class ReadFileCommand implements Command {
   private final CLIController controller;
@@ -15,12 +14,13 @@ public class ReadFileCommand implements Command {
   private final ChaosGameFileHandler chaosGameFileHandler;
   private final ValidatedInput validatedInput;
 
-  public ReadFileCommand(CLIController controller, CLI cli, ValidatedInput validatedInput){
+  public ReadFileCommand(CLIController controller, CLI cli, ValidatedInput validatedInput) {
     this.controller = controller;
     this.cli = cli;
     this.validatedInput = validatedInput;
     this.chaosGameFileHandler = new ChaosGameFileHandler();
   }
+
   @Override
   public String getName() {
     return "Read file";

@@ -10,12 +10,14 @@ public class RunStepsCommand implements Command {
   private final CLI cli;
   private final ChaosGameFileHandler chaosGameFileHandler;
   private final ValidatedInput validatedInput;
+
   public RunStepsCommand(CLIController controller, CLI cli, ValidatedInput validatedInput) {
     this.controller = controller;
     this.cli = cli;
     this.validatedInput = validatedInput;
     this.chaosGameFileHandler = new ChaosGameFileHandler();
   }
+
   @Override
   public String getName() {
     return "Run steps";

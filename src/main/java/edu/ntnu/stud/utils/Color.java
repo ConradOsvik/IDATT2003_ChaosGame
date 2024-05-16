@@ -3,7 +3,9 @@ package edu.ntnu.stud.utils;
 /**
  * A utility class making it easier to color text and background in terminal.
  *
- * @see <a href="https://github.com/ConradOsvik/TrainDispatchSystem/blob/main/src/main/java/edu/ntnu/stud/utils/Color.java">winter assignment</a>
+ * @see <a
+ *     href="https://github.com/ConradOsvik/TrainDispatchSystem/blob/main/src/main/java/edu/ntnu/stud/utils/Color.java">winter
+ *     assignment</a>
  */
 public final class Color {
 
@@ -30,7 +32,7 @@ public final class Color {
    * Method for coloring a string.
    *
    * @param string the string to color
-   * @param color  the color to use
+   * @param color the color to use
    */
   public static String colorString(String string, String color) {
     return color + string + RESET;
@@ -39,8 +41,8 @@ public final class Color {
   /**
    * Method for coloring a string.
    *
-   * @param string          the string to color
-   * @param textColor       the text color to use
+   * @param string the string to color
+   * @param textColor the text color to use
    * @param backgroundColor the background color to use
    */
   public static String colorString(String string, String textColor, String backgroundColor) {
@@ -51,9 +53,9 @@ public final class Color {
    * Method for coloring a string.
    *
    * @param string the string to color
-   * @param red    the red value of the color to use
-   * @param green  the green value of the color to use
-   * @param blue   the blue value of the color to use
+   * @param red the red value of the color to use
+   * @param green the green value of the color to use
+   * @param blue the blue value of the color to use
    */
   public static String colorString(String string, int red, int green, int blue) {
     String textColor = "\\u001B[38;2;" + red + ";" + green + ";" + blue + "m";
@@ -64,13 +66,13 @@ public final class Color {
   /**
    * Method for coloring a string.
    *
-   * @param string          the string to color
-   * @param textRed         the red value of the text color to use
-   * @param textGreen       the green value of the text color to use
-   * @param textBlue        the blue value of the text color to use
-   * @param backgroundRed   the red value of the background color to use
+   * @param string the string to color
+   * @param textRed the red value of the text color to use
+   * @param textGreen the green value of the text color to use
+   * @param textBlue the blue value of the text color to use
+   * @param backgroundRed the red value of the background color to use
    * @param backgroundGreen the green value of the background color to use
-   * @param backgroundBlue  the blue value of the background color to use
+   * @param backgroundBlue the blue value of the background color to use
    */
   public static String colorString(
       String string,
@@ -79,8 +81,7 @@ public final class Color {
       int textBlue,
       int backgroundRed,
       int backgroundGreen,
-      int backgroundBlue
-  ) {
+      int backgroundBlue) {
     String textColor = "\\u001B[38;2;" + textRed + ";" + textGreen + ";" + textBlue + "m";
     String backgroundColor =
         "\\u001B[48;2;" + backgroundRed + ";" + backgroundGreen + ";" + backgroundBlue + "m";

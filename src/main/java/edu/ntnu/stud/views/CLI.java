@@ -6,13 +6,16 @@ import edu.ntnu.stud.utils.Color;
 import java.util.List;
 
 public class CLI {
-  public void displayMenu(CLICommandGroup commands){
+  public void displayMenu(CLICommandGroup commands) {
     System.out.println(commands.getTitle());
     List<Command> commandList = commands.getCommands();
     for (int i = 0; i < commandList.size(); i++) {
       System.out.println(
-          Color.colorString(Integer.toString(i + 1), Color.WHITE) + ": " + Color.colorString(
-              commandList.get(i).getName(), Color.CYAN) + " - " + commandList.get(i).getDescription());
+          Color.colorString(Integer.toString(i + 1), Color.WHITE)
+              + ": "
+              + Color.colorString(commandList.get(i).getName(), Color.CYAN)
+              + " - "
+              + commandList.get(i).getDescription());
     }
   }
 

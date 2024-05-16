@@ -4,8 +4,8 @@ import edu.ntnu.stud.controllers.CLIController;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.views.CLI;
 
-public class CLICommandGroup extends CommandGroup{
-  public CLICommandGroup(CLIController controller, CLI cli, ValidatedInput validatedInput){
+public class CLICommandGroup extends CommandGroup {
+  public CLICommandGroup(CLIController controller, CLI cli, ValidatedInput validatedInput) {
     super("Select a command:");
 
     this.addCommand(new ReadFileCommand(controller, cli, validatedInput));
