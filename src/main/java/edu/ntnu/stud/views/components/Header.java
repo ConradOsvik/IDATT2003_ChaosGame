@@ -1,5 +1,3 @@
 package edu.ntnu.stud.views.components;
 
-public class Header {
-
-}
+public class Header {}

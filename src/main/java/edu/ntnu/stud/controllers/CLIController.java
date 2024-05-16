@@ -11,13 +11,14 @@ public class CLIController {
   private ChaosGame chaosGame;
   private final CLICommandGroup commands;
   private final ValidatedInput validatedInput;
-  public CLIController(CLI cli){
+
+  public CLIController(CLI cli) {
     this.cli = cli;
     this.validatedInput = new ValidatedInput(cli);
     this.commands = new CLICommandGroup(this, this.cli, this.validatedInput);
   }
 
-  public void handleRequest(){
+  public void handleRequest() {
     cli.displayMenu(commands);
     int choice = validatedInput.getInt("Enter your choice:");
 
@@ -25,12 +26,12 @@ public class CLIController {
     command.execute();
   }
 
-  public void setChaosGame(ChaosGame chaosGame){
+  public void setChaosGame(ChaosGame chaosGame) {
     this.chaosGame = chaosGame;
   }
 
-  public void runSteps(int steps){
-    if(chaosGame == null){
+  public void runSteps(int steps) {
+    if (chaosGame == null) {
       cli.displayErrorMessage("No ChaosGame loaded");
       return;
     }
@@ -39,8 +40,8 @@ public class CLIController {
     cli.displayMessage(steps + " steps executed");
   }
 
-  public void printFractal(){
-    if(chaosGame == null){
+  public void printFractal() {
+    if (chaosGame == null) {
       cli.displayErrorMessage("No ChaosGame loaded");
       return;
     }

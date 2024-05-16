@@ -1,6 +1,5 @@
 package edu.ntnu.stud.commands;
 
-import edu.ntnu.stud.controllers.CLIController;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.AffineTransform2D;
 import edu.ntnu.stud.models.ChaosGameDescription;
@@ -14,16 +13,17 @@ import edu.ntnu.stud.views.CLI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WriteToFileCommand implements Command{
+public class WriteToFileCommand implements Command {
   private final CLI cli;
   private final ChaosGameFileHandler chaosGameFileHandler;
   private final ValidatedInput validatedInput;
-  public WriteToFileCommand(CLI cli, ValidatedInput validatedInput){
+
+  public WriteToFileCommand(CLI cli, ValidatedInput validatedInput) {
     this.cli = cli;
     this.validatedInput = validatedInput;
     this.chaosGameFileHandler = new ChaosGameFileHandler();
-
   }
+
   @Override
   public String getName() {
     return "Write to file";
@@ -47,13 +47,14 @@ public class WriteToFileCommand implements Command{
     double maxX0 = validatedInput.getDouble("Enter maxX: ");
     double maxX1 = validatedInput.getDouble("Enter maxY: ");
 
-    String transformType = validatedInput.getTransformType("Enter the type of transform to write: ");
+    String transformType =
+        validatedInput.getTransformType("Enter the type of transform to write: ");
 
     int iterations = validatedInput.getInt("Enter the number of transformations to write: ");
     List<Transform2D> transforms = new ArrayList<>();
 
-    if(transformType.equals("affine")){
-      for(int i = 0; i < iterations; i++){
+    if (transformType.equals("affine")) {
+      for (int i = 0; i < iterations; i++) {
         cli.displayMessage("Enter the values for the affine transformation matrix:");
         double a00 = validatedInput.getDouble("Enter a00: ");
         double a01 = validatedInput.getDouble("Enter a01: ");
@@ -64,11 +65,12 @@ public class WriteToFileCommand implements Command{
         double x0 = validatedInput.getDouble("Enter x0: ");
         double x1 = validatedInput.getDouble("Enter x1: ");
 
-        transforms.add(new AffineTransform2D(new Matrix2x2(a00, a01, a10, a11), new Vector2D(x0, x1)));
+        transforms.add(
+            new AffineTransform2D(new Matrix2x2(a00, a01, a10, a11), new Vector2D(x0, x1)));
       }
     }
-    if(transformType.equals("julia")){
-      for(int i = 0; i < iterations; i++){
+    if (transformType.equals("julia")) {
+      for (int i = 0; i < iterations; i++) {
         cli.displayMessage("Enter the values for the julia complex number: ");
         double real = validatedInput.getDouble("Enter the real part: ");
         double imaginary = validatedInput.getDouble("Enter the imaginary part: ");
@@ -80,7 +82,9 @@ public class WriteToFileCommand implements Command{
       }
     }
 
-    ChaosGameDescription description = new ChaosGameDescription(transforms, new Vector2D(minX0, minX1), new Vector2D(maxX0, maxX1));
+    ChaosGameDescription description =
+        new ChaosGameDescription(
+            transforms, new Vector2D(minX0, minX1), new Vector2D(maxX0, maxX1));
 
     try {
       chaosGameFileHandler.writeToFile(description, path);

@@ -4,7 +4,6 @@ import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
 import edu.ntnu.stud.enums.Event;
 import edu.ntnu.stud.enums.Route;
-import edu.ntnu.stud.utils.Observer;
 import edu.ntnu.stud.utils.Router;
 import edu.ntnu.stud.views.RootView;
 import javafx.application.Application;
@@ -36,7 +35,7 @@ public class RootController extends Controller {
 
   @Override
   public void update(Event event) {
-    if(event == Event.DARK_MODE_TOGGLED) {
+    if (event == Event.DARK_MODE_TOGGLED) {
       this.toggleDarkMode();
     }
   }
@@ -44,7 +43,7 @@ public class RootController extends Controller {
   private void toggleDarkMode() {
     darkMode = !darkMode;
 
-    if(darkMode) {
+    if (darkMode) {
       Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
       view.getDarkModeButton().setText("Light");
     } else {

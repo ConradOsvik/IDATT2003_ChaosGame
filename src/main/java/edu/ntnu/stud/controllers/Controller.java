@@ -6,12 +6,8 @@ import edu.ntnu.stud.utils.Observer;
 public abstract class Controller implements Observer {
 
   @Override
-  public void update(Event event) {
-
-  }
+  public void update(Event event) {}
 
   @Override
-  public void update(Event event, Object data) {
-
-  }
+  public void update(Event event, Object data) {}
 }

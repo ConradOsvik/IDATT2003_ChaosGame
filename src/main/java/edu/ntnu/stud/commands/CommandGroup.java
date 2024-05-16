@@ -7,15 +7,15 @@ abstract class CommandGroup {
   private final String title;
   private final List<Command> commands;
 
-  public CommandGroup(String title){
+  public CommandGroup(String title) {
     this.title = title;
     this.commands = new ArrayList<>();
   }
 
-  public CommandGroup(String title, CommandGroup parentCommandGroup){
+  public CommandGroup(String title, CommandGroup parentCommandGroup) {
     this.title = title;
     this.commands = new ArrayList<>();
-    if(parentCommandGroup != null){
+    if (parentCommandGroup != null) {
       commands.add(new GoBackCommand(parentCommandGroup));
     }
   }
@@ -24,7 +24,7 @@ abstract class CommandGroup {
     return title;
   }
 
-  public void addCommand(Command command){
+  public void addCommand(Command command) {
     commands.add(command);
   }
 

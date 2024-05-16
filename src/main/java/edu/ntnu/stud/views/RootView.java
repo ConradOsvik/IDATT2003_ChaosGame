@@ -2,7 +2,6 @@ package edu.ntnu.stud.views;
 
 import edu.ntnu.stud.controllers.RootController;
 import edu.ntnu.stud.enums.Event;
-import edu.ntnu.stud.utils.Observer;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -35,9 +34,10 @@ public class RootView extends View {
   public void addDarkModeButton() {
     darkModeButton = new Button("Dark");
 
-    darkModeButton.setOnAction(event -> {
-      notifyObservers(Event.DARK_MODE_TOGGLED);
-    });
+    darkModeButton.setOnAction(
+        event -> {
+          notifyObservers(Event.DARK_MODE_TOGGLED);
+        });
 
     header.getChildren().add(darkModeButton);
   }

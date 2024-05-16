@@ -11,18 +11,22 @@ public class Router {
   private final Stage stage;
   private final RootView rootView;
   private final Map<Route, Scene> views;
-  public Router(Stage stage, RootView rootView){
+
+  public Router(Stage stage, RootView rootView) {
     this.stage = stage;
     this.rootView = rootView;
     this.views = new HashMap<>();
   }
-  public void addView(Route route, Scene view){
+
+  public void addView(Route route, Scene view) {
     this.views.put(route, view);
   }
-  public void removeView(Route route){
+
+  public void removeView(Route route) {
     this.views.remove(route);
   }
-  public void setView(Route route){
+
+  public void setView(Route route) {
     Scene scene = this.views.get(route);
     this.rootView.setChildView(scene);
     stage.setTitle("ChaosGame - " + route.toString());

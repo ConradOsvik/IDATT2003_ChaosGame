@@ -7,39 +7,40 @@ import edu.ntnu.stud.views.CLI;
 public class ValidatedInput {
   private final CLI cli;
   private final InputHandler inputHandler;
-  public ValidatedInput(CLI cli){
+
+  public ValidatedInput(CLI cli) {
     this.cli = cli;
     this.inputHandler = new InputHandler();
   }
-  public <T> T execute(ThrowingSupplier<T> supplier, String prompt){
-    while(true){
+
+  public <T> T execute(ThrowingSupplier<T> supplier, String prompt) {
+    while (true) {
       cli.displayMessage(prompt);
-      try{
+      try {
         return supplier.get();
-      } catch (InvalidFormatException | InvalidInputException e){
+      } catch (InvalidFormatException | InvalidInputException e) {
         cli.displayErrorMessage(e.getMessage());
       }
     }
   }
 
-  public String getString(String prompt){
+  public String getString(String prompt) {
     return execute(inputHandler::getString, prompt);
   }
 
-  public String getTransformType(String prompt){
+  public String getTransformType(String prompt) {
     return execute(inputHandler::getTransformType, prompt);
   }
 
-  public int getInt(String prompt){
+  public int getInt(String prompt) {
     return execute(inputHandler::getInt, prompt);
   }
 
-  public int getSign(String prompt){
+  public int getSign(String prompt) {
     return execute(inputHandler::getSign, prompt);
   }
 
-  public double getDouble(String prompt){
+  public double getDouble(String prompt) {
     return execute(inputHandler::getDouble, prompt);
   }
-
 }

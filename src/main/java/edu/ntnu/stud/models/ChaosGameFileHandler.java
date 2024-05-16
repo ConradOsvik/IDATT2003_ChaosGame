@@ -141,7 +141,19 @@ public class ChaosGameFileHandler {
       throws IOException {
     for (Transform2D transform : transforms) {
       AffineTransform2D affine = (AffineTransform2D) transform;
-      writer.write(affine.getMatrix().a00() + ", " + affine.getMatrix().a01() + ", " + affine.getMatrix().a10() + ", " + affine.getMatrix().a11() + ", " + affine.getVector().getX0() + ", " + affine.getVector().getX1() + "\n");
+      writer.write(
+          affine.getMatrix().a00()
+              + ", "
+              + affine.getMatrix().a01()
+              + ", "
+              + affine.getMatrix().a10()
+              + ", "
+              + affine.getMatrix().a11()
+              + ", "
+              + affine.getVector().getX0()
+              + ", "
+              + affine.getVector().getX1()
+              + "\n");
     }
   }
 
