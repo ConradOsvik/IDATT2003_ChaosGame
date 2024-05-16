@@ -85,7 +85,7 @@ public class ChaosGameFileHandler {
    * Reads a list of AffineTransform2D objects from a Scanner.
    *
    * @param lineScanner The Scanner to read from.
-   * @param transforms  The list to add the read transforms to.
+   * @param transforms The list to add the read transforms to.
    */
   private void readAffineTransforms(Scanner lineScanner, List<Transform2D> transforms)
       throws FileHandlingException {
@@ -116,7 +116,7 @@ public class ChaosGameFileHandler {
    * Reads a list of JuliaTransform objects from a Scanner.
    *
    * @param lineScanner The Scanner to read from.
-   * @param transforms  The list to add the read transforms to.
+   * @param transforms The list to add the read transforms to.
    */
   private void readJuliaTransforms(Scanner lineScanner, List<Transform2D> transforms)
       throws FileHandlingException {
@@ -128,7 +128,8 @@ public class ChaosGameFileHandler {
           for (int i = 0; i < 2; i++) {
             if (!scanner.hasNext()) {
               throw new FileHandlingException(
-                  "The file is not formatted correctly. Expected 2 parts for each Julia transform.");
+                  "The file is not formatted correctly. Expected 2 parts for each Julia"
+                      + " transform.");
             }
             parts[i] = scanner.nextDouble();
           }
@@ -144,7 +145,7 @@ public class ChaosGameFileHandler {
    * Writes a ChaosGameDescription to a file.
    *
    * @param description The ChaosGameDescription to write.
-   * @param path        The path of the file to write to.
+   * @param path The path of the file to write to.
    * @throws FileHandlingException If there is an error writing to the file.
    */
   public void writeToFile(ChaosGameDescription description, String path)
@@ -207,7 +208,7 @@ public class ChaosGameFileHandler {
   /**
    * Writes the coordinates of a ChaosGameDescription to a BufferedWriter.
    *
-   * @param writer      The BufferedWriter to write to.
+   * @param writer The BufferedWriter to write to.
    * @param description The ChaosGameDescription whose coordinates to write.
    * @throws IOException If there is an error writing to the BufferedWriter.
    */
@@ -222,7 +223,7 @@ public class ChaosGameFileHandler {
   /**
    * Writes a list of AffineTransform2D objects to a BufferedWriter.
    *
-   * @param writer     The BufferedWriter to write to.
+   * @param writer The BufferedWriter to write to.
    * @param transforms The list of transforms to write.
    * @throws IOException If there is an error writing to the BufferedWriter.
    */
@@ -231,17 +232,25 @@ public class ChaosGameFileHandler {
     for (Transform2D transform : transforms) {
       AffineTransform2D affine = (AffineTransform2D) transform;
       writer.write(
-          formatNumber(affine.getMatrix().a00()) + ", " + formatNumber(affine.getMatrix().a01())
-              + ", " + formatNumber(affine.getMatrix().a10()) + ", " + formatNumber(
-              affine.getMatrix().a11()) + ", " + formatNumber(affine.getVector().getX0()) + ", "
-              + formatNumber(affine.getVector().getX1()) + "\n");
+          formatNumber(affine.getMatrix().a00())
+              + ", "
+              + formatNumber(affine.getMatrix().a01())
+              + ", "
+              + formatNumber(affine.getMatrix().a10())
+              + ", "
+              + formatNumber(affine.getMatrix().a11())
+              + ", "
+              + formatNumber(affine.getVector().getX0())
+              + ", "
+              + formatNumber(affine.getVector().getX1())
+              + "\n");
     }
   }
 
   /**
    * Writes a list of JuliaTransform objects to a BufferedWriter.
    *
-   * @param writer     The BufferedWriter to write to.
+   * @param writer The BufferedWriter to write to.
    * @param transforms The list of transforms to write.
    * @throws IOException If there is an error writing to the BufferedWriter.
    */
@@ -250,7 +259,9 @@ public class ChaosGameFileHandler {
     for (Transform2D transform : transforms) {
       JuliaTransform julia = (JuliaTransform) transform;
       writer.write(
-          formatNumber(julia.getC().getReal()) + ", " + formatNumber(julia.getC().getImaginary())
+          formatNumber(julia.getC().getReal())
+              + ", "
+              + formatNumber(julia.getC().getImaginary())
               + "\n");
     }
   }
