@@ -77,4 +77,9 @@ public class AffineTransform2D implements Transform2D {
     AffineTransform2D transform = (AffineTransform2D) obj;
     return matrix.equals(transform.matrix) && vector.equals(transform.vector);
   }
+
+  @Override
+  public String toString(){
+    return "Matrix: " + matrix.toString() + ", Vector: " + vector.toString();
+  }
 }
