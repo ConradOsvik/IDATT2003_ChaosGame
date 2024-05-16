@@ -1,8 +1,6 @@
 package edu.ntnu.stud.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -79,5 +77,31 @@ class TestMatrix2x2 {
 
     assertTrue(Double.isInfinite(vec3.getX0()));
     assertTrue(Double.isInfinite(vec3.getX1()));
+  }
+
+  @Test
+  @DisplayName("Test equals is true with same Matrix2x2")
+  void equals_sameMatrix2x2_isTrue() {
+    Matrix2x2 matrix2 = new Matrix2x2(1, 3, 2, 4);
+    assertTrue(matrix.equals(matrix2));
+  }
+
+  @Test
+  @DisplayName("Test equals is false with different Matrix2x2")
+  void equals_differentMatrix2x2_isFalse() {
+    Matrix2x2 matrix2 = new Matrix2x2(1, 3, 2, 5);
+    assertFalse(matrix.equals(matrix2));
+  }
+
+  @Test
+  @DisplayName("Test equals is false with null Matrix2x2")
+  void equals_nullMatrix2x2_isFalse() {
+    assertFalse(matrix.equals(null));
+  }
+
+  @Test
+  @DisplayName("Test toString is correct")
+  void toString_isCorrect() {
+    assertEquals("[[1.0, 3.0], [2.0, 4.0]]", matrix.toString());
   }
 }
