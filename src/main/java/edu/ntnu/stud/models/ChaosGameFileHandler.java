@@ -62,8 +62,6 @@ public class ChaosGameFileHandler {
     } catch (NoSuchElementException e) {
       throw new FileHandlingException("The file is missing elements");
     } catch (Exception e) {
-      System.err.println(e.getMessage());
-      System.err.println(Arrays.toString(e.getStackTrace()));
       throw new FileHandlingException("An error occurred reading the file");
     }
   }
@@ -93,7 +91,6 @@ public class ChaosGameFileHandler {
       String line = removeComment(lineScanner.nextLine().trim());
       try (Scanner scanner = new Scanner(line)) {
         scanner.useDelimiter(", ");
-        System.out.println(line);
         while (scanner.hasNext()) {
           double[] parts = new double[6];
           for (int i = 0; i < 6; i++) {
@@ -123,6 +120,7 @@ public class ChaosGameFileHandler {
     while (lineScanner.hasNextLine()) {
       String line = removeComment(lineScanner.nextLine().trim());
       try (Scanner scanner = new Scanner(line)) {
+        scanner.useDelimiter(", ");
         while (scanner.hasNext()) {
           double[] parts = new double[2];
           for (int i = 0; i < 2; i++) {
@@ -133,6 +131,7 @@ public class ChaosGameFileHandler {
             }
             parts[i] = scanner.nextDouble();
           }
+
           Complex c = new Complex(parts[0], parts[1]);
           int sign = (int) Math.signum(c.getImaginary());
           transforms.add(new JuliaTransform(c, sign));
@@ -152,9 +151,11 @@ public class ChaosGameFileHandler {
       throws FileHandlingException {
     File file = new File(path);
     File parentDir = file.getParentFile();
-    if (!parentDir.exists()) {
-      if (!parentDir.mkdirs()) {
-        throw new FileHandlingException("Could not create directory: " + parentDir);
+    if (parentDir != null) {
+      if (!parentDir.exists()) {
+        if (!parentDir.mkdirs()) {
+          throw new FileHandlingException("Could not create directory: " + parentDir);
+        }
       }
     }
 
@@ -177,8 +178,6 @@ public class ChaosGameFileHandler {
         writeJuliaTransforms(writer, description.getTransforms());
       }
     } catch (Exception e) {
-      System.err.println(e.getMessage());
-      System.err.println(Arrays.toString(e.getStackTrace()));
       throw new FileHandlingException("An error occurred writing to the file");
     }
   }
@@ -192,13 +191,16 @@ public class ChaosGameFileHandler {
    * @return the formatted number.
    */
   private String formatNumber(double number) {
-    if (number % 1 == 0) {
-      return String.format("%.0f", number);
+    // Convert doubles to ints if they are ints
+    if (number == (int) number) {
+      return String.valueOf((int) number);
     } else {
-      String formattedNumber = String.format("%.1f", number);
-      if (number > 0 && number < 1) {
+      String formattedNumber = String.valueOf(number);
+
+      // Remove leading zeros
+      if (formattedNumber.startsWith("0.")) {
         formattedNumber = formattedNumber.substring(1);
-      } else if (number < 0 && number > -1) {
+      } else if (formattedNumber.startsWith("-0.")) {
         formattedNumber = "-" + formattedNumber.substring(2);
       }
       return formattedNumber;
