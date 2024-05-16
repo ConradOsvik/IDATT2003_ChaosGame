@@ -9,4 +9,9 @@ public abstract class Controller implements Observer {
   public void update(Event event) {
 
   }
+
+  @Override
+  public void update(Event event, Object data) {
+
+  }
 }
