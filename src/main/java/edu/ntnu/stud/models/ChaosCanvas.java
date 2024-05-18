@@ -53,7 +53,7 @@ public class ChaosCanvas {
                     / (this.maxCoords.getX1() - this.minCoords.getX1()),
                 (this.width - 1)
                     * this.minCoords.getX0()
-                    / (this.maxCoords.getX0() - this.minCoords.getX0())));
+                    / (this.minCoords.getX0() - this.maxCoords.getX0())));
   }
 
   /**
