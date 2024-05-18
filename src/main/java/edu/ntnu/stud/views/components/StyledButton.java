@@ -1,8 +1,6 @@
 package edu.ntnu.stud.views.components;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javafx.scene.control.Button;
 
@@ -35,37 +33,37 @@ public class StyledButton extends Button {
       }
     }
 
-    public Builder accent(){
+    public Builder accent() {
       addClassIfNotExists("accent");
       return this;
     }
 
-    public Builder success(){
+    public Builder success() {
       addClassIfNotExists("success");
       return this;
     }
 
-    public Builder danger(){
+    public Builder danger() {
       addClassIfNotExists("danger");
       return this;
     }
 
-    public Builder flat(){
+    public Builder flat() {
       addClassIfNotExists("flat");
       return this;
     }
 
-    public Builder small(){
+    public Builder small() {
       addClassIfNotExists("small");
       return this;
     }
 
-    public Builder large(){
+    public Builder large() {
       addClassIfNotExists("large");
       return this;
     }
 
-    public Builder rounded(){
+    public Builder rounded() {
       addClassIfNotExists("rounded");
       return this;
     }
