@@ -25,9 +25,9 @@ public class RootController extends Controller {
     stage.setScene(view);
 
     // Add views to router
-    HomeController homeController = new HomeController();
-    router.addView(Route.HOME, homeController.getView());
-    router.setView(Route.HOME);
+    GameController gameController = new GameController();
+    router.addView(Route.GAME, gameController.getView());
+    router.setView(Route.GAME);
 
     // Show stage
     stage.show();
@@ -35,8 +35,21 @@ public class RootController extends Controller {
 
   @Override
   public void update(Event event) {
+    if (event == Event.NEW_GAME) {
+      router.setView(Route.GAME);
+    }
+    
+    if (event == Event.LOAD_PREVIOUS_GAME) {
+      //LOAD GAME FROM FILE
+    }
+    if (event == Event.SAVE_GAME) {
+      //SAVE GAME
+    }
     if (event == Event.DARK_MODE_TOGGLED) {
       this.toggleDarkMode();
+    }
+    if (event == Event.HELP) {
+      //SHOW HELP POPUP
     }
   }
 

@@ -4,7 +4,10 @@ import edu.ntnu.stud.controllers.RootController;
 import edu.ntnu.stud.enums.Event;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class RootView extends View {
@@ -21,7 +24,7 @@ public class RootView extends View {
 
     root.getChildren().addAll(header, content);
 
-    addDarkModeButton();
+    addHeaderButtons();
 
     addObserver(controller);
   }
@@ -31,6 +34,20 @@ public class RootView extends View {
     content.getChildren().add(scene.getRoot());
   }
 
+  public void addHeaderButtons() {
+    addNewGameButton();
+    addLoadPreviousGameButton();
+    addSaveButton();
+    
+    Region spacer = new Region();
+    HBox.setHgrow(spacer, Priority.ALWAYS);
+    header.getChildren().add(spacer);
+    
+    addDarkModeButton();
+    addHelpButton();
+  }
+  
+  
   public void addDarkModeButton() {
     darkModeButton = new Button("Dark");
 
@@ -38,11 +55,64 @@ public class RootView extends View {
         event -> {
           notifyObservers(Event.DARK_MODE_TOGGLED);
         });
-
+    
+    Tooltip darkModeTooltip = new Tooltip("Switch between dark and light mode");
+    darkModeButton.setTooltip(darkModeTooltip);
+    
     header.getChildren().add(darkModeButton);
   }
 
   public Button getDarkModeButton() {
     return darkModeButton;
+  }
+  
+  public void addNewGameButton(){
+    Button newGameButton = new Button("New game");
+    newGameButton.setOnAction(
+        event -> {
+          notifyObservers(Event.NEW_GAME);
+        });
+    
+    Tooltip newGameTooltip = new Tooltip("Start a new game");
+    newGameButton.setTooltip(newGameTooltip);
+    
+    header.getChildren().add(newGameButton);
+  }
+  
+  public void addLoadPreviousGameButton(){
+    Button loadGameButton = new Button("Load game");
+    loadGameButton.setOnAction(
+        event -> {
+          notifyObservers(Event.LOAD_PREVIOUS_GAME);
+        });
+   
+    Tooltip loadGameTooltip = new Tooltip("Load an old game");
+    loadGameButton.setTooltip(loadGameTooltip);
+   
+    header.getChildren().add(loadGameButton);
+  }
+  
+  public void addSaveButton() {
+    Button saveButton = new Button("Save");
+    
+    saveButton.setOnAction(
+        event -> {
+          notifyObservers(Event.SAVE_GAME);
+        });
+    
+    Tooltip saveButtonTooltip = new Tooltip("Save this fractal");
+    saveButton.setTooltip(saveButtonTooltip);
+    
+    header.getChildren().add(saveButton);
+  }
+  
+  public void addHelpButton(){
+    Button homeButton = new Button("Help");
+    homeButton.setOnAction(
+        event -> {
+          notifyObservers(Event.HELP);
+        });
+    
+    header.getChildren().add(homeButton);
   }
 }

@@ -1,7 +1,7 @@
 package edu.ntnu.stud.enums;
 
 public enum Route {
-  HOME;
+  HOME, GAME;
 
   @Override
   public String toString() {
