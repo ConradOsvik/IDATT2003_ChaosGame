@@ -2,6 +2,7 @@ package edu.ntnu.stud.views;
 
 import edu.ntnu.stud.controllers.RootController;
 import edu.ntnu.stud.enums.Event;
+import edu.ntnu.stud.views.components.StyledButton;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -49,7 +50,7 @@ public class RootView extends View {
   
   
   public void addDarkModeButton() {
-    darkModeButton = new Button("Dark");
+    darkModeButton = new StyledButton.Builder("Dark").build();
 
     darkModeButton.setOnAction(
         event -> {
@@ -67,7 +68,7 @@ public class RootView extends View {
   }
   
   public void addNewGameButton(){
-    Button newGameButton = new Button("New game");
+    Button newGameButton = new StyledButton.Builder("New game").build();
     newGameButton.setOnAction(
         event -> {
           notifyObservers(Event.NEW_GAME);
@@ -80,7 +81,7 @@ public class RootView extends View {
   }
   
   public void addLoadPreviousGameButton(){
-    Button loadGameButton = new Button("Load game");
+    Button loadGameButton = new StyledButton.Builder("Load game").build();
     loadGameButton.setOnAction(
         event -> {
           notifyObservers(Event.LOAD_PREVIOUS_GAME);
@@ -93,7 +94,7 @@ public class RootView extends View {
   }
   
   public void addSaveButton() {
-    Button saveButton = new Button("Save");
+    Button saveButton = new StyledButton.Builder("Save").build();
     
     saveButton.setOnAction(
         event -> {
@@ -107,7 +108,7 @@ public class RootView extends View {
   }
   
   public void addHelpButton(){
-    Button homeButton = new Button("Help");
+    Button homeButton = new StyledButton.Builder("Help").build();
     homeButton.setOnAction(
         event -> {
           notifyObservers(Event.HELP);

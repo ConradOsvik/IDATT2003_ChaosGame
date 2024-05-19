@@ -6,19 +6,22 @@ import edu.ntnu.stud.models.ChaosCanvas;
 import edu.ntnu.stud.models.Vector2D;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 
 public class GameView extends View {
   private final GameController controller;
   private final ChaosCanvas chaosCanvas;
+  private final WritableImage fractal;
   
   public GameView(GameController controller) {
     super();
     this.controller = controller;
-    
+
     chaosCanvas = new ChaosCanvas(800, 600, new Vector2D(0, 0), new Vector2D(800, 800));
+    fractal = new WritableImage(800, 800);
     
     BorderPane rootPane = new BorderPane();
     rootPane.setPadding(new Insets(10));
@@ -35,24 +38,28 @@ public class GameView extends View {
     addVectorControl(controlPane);
     
     rootPane.setLeft(controlPane);
-    //rootPane.setCenter(chaosCanvas);
+    rootPane.setCenter(getImageView());
+    
+    
     
     root.getChildren().add(rootPane);
     
     addObserver(controller);
   }
-  
-  public ChaosCanvas getChaosCanvas() {
-    return chaosCanvas;
+  public ImageView getImageView() {
+    return new ImageView(fractal);
   }
   
   public void addFractalMenu(Pane controlPane) {
     MenuButton fractalMenu = new MenuButton("Fractals");
-    fractalMenu.getItems().addAll(
-        new MenuItem("Julia"),
-        new MenuItem("Barnsley"),
-        new MenuItem("Sierpinski")
-    );
+    MenuItem julia = new MenuItem("Julia");
+    MenuItem barnsley = new MenuItem("Barnsley");
+    MenuItem sierpinski = new MenuItem("Sierpinski");
+    fractalMenu.getItems().addAll(julia, barnsley, sierpinski);
+    
+    julia.setOnAction(event -> notifyObservers(Event.JULIA));
+    barnsley.setOnAction(event -> notifyObservers(Event.BARNSLEY));
+    sierpinski.setOnAction(event -> notifyObservers(Event.SIERPINSKI));
     
     Tooltip fractalMenuTooltip = new Tooltip("Use a set fractal");
     fractalMenu.setTooltip(fractalMenuTooltip);
@@ -83,6 +90,8 @@ public class GameView extends View {
     TextField stepsField = new TextField();
     stepsField.setPromptText("Enter number of steps");
     
+    stepsField.setOnAction(event -> notifyObservers(Event.STEPS, stepsField.getText()));
+    
     Tooltip stepsTooltip = new Tooltip("Set the number of steps (iterations) for the fractal");
     stepsLabel.setTooltip(stepsTooltip);
     stepsField.setTooltip(stepsTooltip);
@@ -92,10 +101,11 @@ public class GameView extends View {
   }
   
   public void addConstantControl(Pane controlPane) {
-    Label constantLabel = new Label("Constant:");
+    Label constantLabel = new Label("Constant for a Julia transformation:");
     TextField constantField = new TextField();
     constantField.setPromptText("Enter constant C");
     
+    constantField.setOnAction(event -> notifyObservers(Event.CONSTANT, constantField.getText()));
     Tooltip constantTooltip = new Tooltip("Set a constant C for a Julia transformation");
     constantLabel.setTooltip(constantTooltip);
     constantField.setTooltip(constantTooltip);
@@ -105,7 +115,7 @@ public class GameView extends View {
   }
   
   public void addMatrixControl(Pane controlPane) {
-    Label matrixLabel = new Label("Set matrix (2x2):");
+    Label matrixLabel = new Label("Set matrix for an affine transformation:");
     TextField a00 = new TextField();
     a00.setPromptText("Enter a00 value");
     TextField a01 = new TextField();
@@ -114,6 +124,11 @@ public class GameView extends View {
     a10.setPromptText("Enter a10 value");
     TextField a11 = new TextField();
     a11.setPromptText("Enter a11 value");
+    
+    a00.setOnAction(event -> notifyObservers(Event.MATRIX00, a00.getText()));
+    a01.setOnAction(event -> notifyObservers(Event.MATRIX01, a01.getText()));
+    a10.setOnAction(event -> notifyObservers(Event.MATRIX10, a10.getText()));
+    a11.setOnAction(event -> notifyObservers(Event.MATRIX11, a11.getText()));
     
     Tooltip matrixTooltip = new Tooltip("Set a matrix for an affine transformation");
     matrixLabel.setTooltip(matrixTooltip);
@@ -135,13 +150,13 @@ public class GameView extends View {
   }
   
   public void addVectorControl(Pane controlPane) {
-    Label vectorLabel = new Label("Set vector (2D):");
+    Label vectorLabel = new Label("Set vector for an affine transformation:");
     TextField x0 = new TextField();
     x0.setPromptText("Enter x0 value");
     TextField x1 = new TextField();
     x1.setPromptText("Enter x1 value");
     
-    Tooltip vectorTooltip = new Tooltip("Set a vector B for an affine transformation");
+    Tooltip vectorTooltip = new Tooltip("Set a vector for an affine transformation");
     vectorLabel.setTooltip(vectorTooltip);
     x0.setTooltip(vectorTooltip);
     x1.setTooltip(vectorTooltip);
@@ -150,5 +165,13 @@ public class GameView extends View {
     
     VBox vectorBox = new VBox(5, vectorLabel, vectorPane);
     controlPane.getChildren().add(vectorBox);
+  }
+  
+  public void displayErrorMessage(String message) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error");
+    alert.setHeaderText("Something went wrong");
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 }
