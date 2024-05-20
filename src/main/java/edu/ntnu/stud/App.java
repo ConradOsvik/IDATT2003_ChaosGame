@@ -11,23 +11,19 @@ import javafx.stage.Stage;
  * The main class of the application.
  *
  * <p>The application can take in arguments. By passing in the argument <b>terminal</b>, it will
- * launch the application in terminal mode</p>
+ * launch the application in terminal mode
  */
 public class App extends Application {
 
   private static CLIController cliController;
 
-  /**
-   * Launches the JavaFX application.
-   */
+  /** Launches the JavaFX application. */
   @Override
   public void start(Stage stage) throws IOException {
     RootController rootController = new RootController(this, stage);
   }
 
-  /**
-   * Initializes the terminal view and controller
-   */
+  /** Initializes the terminal view and controller */
   public void initTerminal() {
     CLI cli = new CLI();
     cliController = new CLIController(cli);
@@ -46,7 +42,7 @@ public class App extends Application {
    * Launches the terminal application
    *
    * <p>The application runs in a loop until you quit, making it possible to perform multiple
-   * actions</p>
+   * actions
    */
   public static void launchTerminal() {
     App app = new App();
@@ -60,8 +56,7 @@ public class App extends Application {
   /**
    * The main method of the application
    *
-   * <p>It launches the application in terminal mode if the argument <b>terminal</b> is passed
-   * in</p>
+   * <p>It launches the application in terminal mode if the argument <b>terminal</b> is passed in
    *
    * @param args the arguments passed in. <b>terminal</b> to launch in terminal mode
    */
