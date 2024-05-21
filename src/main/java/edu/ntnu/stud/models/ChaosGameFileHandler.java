@@ -87,29 +87,33 @@ public class ChaosGameFileHandler {
    *
    * @param lineScanner The Scanner to read from.
    * @param transforms  The list to add the read transforms to.
+   * @throws RuntimeException If there is an error reading the file.
    */
   private void readAffineTransforms(Scanner lineScanner, List<Transform2D> transforms)
-      throws FileHandlingException {
-    while (lineScanner.hasNextLine()) {
-      String line = removeComment(lineScanner.nextLine().trim());
-      try (Scanner scanner = new Scanner(line)) {
-        scanner.useDelimiter(", ");
-        while (scanner.hasNext()) {
-          double[] parts = new double[6];
-          for (int i = 0; i < 6; i++) {
-            if (!scanner.hasNext()) {
-              throw new FileHandlingException(
-                  "The file is not formatted correctly. Expected 6 parts for each transform.");
+      throws RuntimeException {
+    lineScanner.useDelimiter("\\n")
+        .tokens().map(this::removeComment).map(String::trim)
+        .forEach(line -> {
+          try (Scanner scanner = new Scanner(line)) {
+            scanner.useDelimiter(", ");
+            List<Double> parts = new ArrayList<>();
+            while (scanner.hasNext()) {
+              parts.add(scanner.nextDouble());
             }
-            parts[i] = scanner.nextDouble();
+            if (parts.size() != 6) {
+              try {
+                throw new FileHandlingException("The file is not formatted correctly. "
+                    + "Expected 6 parts for each transform.");
+              } catch (FileHandlingException e) {
+                throw new RuntimeException(e);
+              }
+            }
+            Matrix2x2 matrix = new Matrix2x2(parts.get(0), parts.get(1), parts.get(2),
+                parts.get(3));
+            Vector2D vector = new Vector2D(parts.get(4), parts.get(5));
+            transforms.add(new AffineTransform2D(matrix, vector));
           }
-
-          Matrix2x2 matrix = new Matrix2x2(parts[0], parts[1], parts[2], parts[3]);
-          Vector2D vector = new Vector2D(parts[4], parts[5]);
-          transforms.add(new AffineTransform2D(matrix, vector));
-        }
-      }
-    }
+        });
   }
 
   /**
@@ -117,30 +121,32 @@ public class ChaosGameFileHandler {
    *
    * @param lineScanner The Scanner to read from.
    * @param transforms  The list to add the read transforms to.
+   * @throws RuntimeException If there is an error reading the file.
    */
   private void readJuliaTransforms(Scanner lineScanner, List<Transform2D> transforms)
-      throws FileHandlingException {
-    while (lineScanner.hasNextLine()) {
-      String line = removeComment(lineScanner.nextLine().trim());
-      try (Scanner scanner = new Scanner(line)) {
-        scanner.useDelimiter(", ");
-        while (scanner.hasNext()) {
-          double[] parts = new double[2];
-          for (int i = 0; i < 2; i++) {
-            if (!scanner.hasNext()) {
-              throw new FileHandlingException(
-                  "The file is not formatted correctly. Expected 2 parts for each Julia"
-                      + " transform.");
+      throws RuntimeException {
+    lineScanner.useDelimiter("\\n")
+        .tokens().map(this::removeComment).map(String::trim)
+        .forEach(line -> {
+          try (Scanner scanner = new Scanner(line)) {
+            scanner.useDelimiter(", ");
+            List<Double> parts = new ArrayList<>();
+            while (scanner.hasNext()) {
+              parts.add(scanner.nextDouble());
             }
-            parts[i] = scanner.nextDouble();
+            if (parts.size() != 2) {
+              try {
+                throw new FileHandlingException("The file is not formatted correctly. "
+                    + "Expected 2 parts for each Julia transform.");
+              } catch (FileHandlingException e) {
+                throw new RuntimeException(e);
+              }
+            }
+            Complex c = new Complex(parts.get(0), parts.get(1));
+            transforms.add(new JuliaTransform(c, 1));
+            transforms.add(new JuliaTransform(c, -1));
           }
-
-          Complex c = new Complex(parts[0], parts[1]);
-          transforms.add(new JuliaTransform(c, 1));
-          transforms.add(new JuliaTransform(c, -1));
-        }
-      }
-    }
+        });
   }
 
   /**
@@ -230,26 +236,25 @@ public class ChaosGameFileHandler {
    *
    * @param writer     The BufferedWriter to write to.
    * @param transforms The list of transforms to write.
-   * @throws IOException If there is an error writing to the BufferedWriter.
+   * @throws RuntimeException If there is an error writing to the BufferedWriter.
    */
   private void writeAffineTransforms(BufferedWriter writer, List<Transform2D> transforms)
-      throws IOException {
-    for (Transform2D transform : transforms) {
-      AffineTransform2D affine = (AffineTransform2D) transform;
-      writer.write(
-          formatNumber(affine.getMatrix().a00())
-              + ", "
-              + formatNumber(affine.getMatrix().a01())
-              + ", "
-              + formatNumber(affine.getMatrix().a10())
-              + ", "
-              + formatNumber(affine.getMatrix().a11())
-              + ", "
-              + formatNumber(affine.getVector().getX0())
-              + ", "
-              + formatNumber(affine.getVector().getX1())
-              + "\n");
-    }
+      throws RuntimeException {
+    transforms.stream()
+        .map(transform -> (AffineTransform2D) transform)
+        .forEach(affine -> {
+          try {
+            writer.write(
+                formatNumber(affine.getMatrix().a00()) + ", "
+                    + formatNumber(affine.getMatrix().a01()) + ", "
+                    + formatNumber(affine.getMatrix().a10()) + ", "
+                    + formatNumber(affine.getMatrix().a11()) + ", "
+                    + formatNumber(affine.getVector().getX0()) + ", "
+                    + formatNumber(affine.getVector().getX1()) + "\n");
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        });
   }
 
   /**
@@ -257,22 +262,22 @@ public class ChaosGameFileHandler {
    *
    * @param writer     The BufferedWriter to write to.
    * @param transforms The list of transforms to write.
-   * @throws IOException If there is an error writing to the BufferedWriter.
+   * @throws RuntimeException If there is an error writing to the BufferedWriter.
    */
   private void writeJuliaTransforms(BufferedWriter writer, List<Transform2D> transforms)
-      throws IOException {
-    List<Complex> previousC = new ArrayList<>();
-    for (Transform2D transform : transforms) {
-      JuliaTransform julia = (JuliaTransform) transform;
-      Complex c = julia.getC();
-      if (!previousC.contains(c)) {
-        previousC.add(c);
-        writer.write(
-            formatNumber(julia.getC().getReal())
-                + ", "
-                + formatNumber(julia.getC().getImaginary())
-                + "\n");
-      }
-    }
+      throws RuntimeException {
+    transforms.stream()
+        .map(transform -> (JuliaTransform) transform)
+        .forEach(julia -> {
+          try {
+            writer.write(
+                formatNumber(julia.getC().getReal())
+                    + ", "
+                    + formatNumber(julia.getC().getImaginary())
+                    + "\n");
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          }
+        });
   }
 }

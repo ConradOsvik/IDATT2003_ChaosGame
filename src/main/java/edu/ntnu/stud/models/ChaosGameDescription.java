@@ -1,6 +1,7 @@
 package edu.ntnu.stud.models;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javafx.util.Pair;
 
@@ -38,7 +39,16 @@ public class ChaosGameDescription {
     this.weighted = false;
   }
 
-  public ChaosGameDescription(List<Pair<Transform2D, Double>> weightedTransforms, Vector2D minCoords, Vector2D maxCoords, boolean weighted){
+  /**
+   * Constructs a new ChaosGameDescription with the given weighted transformations and coordinates.
+   *
+   * @param weightedTransforms the list of weighted transformations for the Chaos Game
+   * @param minCoords the minimum coordinates for the Chaos Game
+   * @param maxCoords the maximum coordinates for the Chaos Game
+   * @param weighted whether the transformations are weighted
+   */
+  public ChaosGameDescription(List<Pair<Transform2D, Double>> weightedTransforms,
+                              Vector2D minCoords, Vector2D maxCoords, boolean weighted) {
     if (weightedTransforms == null || minCoords == null || maxCoords == null) {
       throw new IllegalArgumentException("Arguments cannot be null");
     }
@@ -65,7 +75,7 @@ public class ChaosGameDescription {
     return this.transforms;
   }
 
-  public boolean isWeighted(){
+  public boolean isWeighted() {
     return this.weighted;
   }
 
@@ -100,9 +110,9 @@ public class ChaosGameDescription {
       return false;
     }
     ChaosGameDescription description = (ChaosGameDescription) obj;
-    return transforms.equals(description.transforms)
-        && minCoords.equals(description.minCoords)
-        && maxCoords.equals(description.maxCoords);
+    return Objects.equals(transforms, description.transforms)
+        && Objects.equals(minCoords, description.minCoords)
+        && Objects.equals(maxCoords, description.maxCoords);
   }
 
   @Override
