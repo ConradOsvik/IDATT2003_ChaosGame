@@ -51,12 +51,10 @@ public class JuliaTransform implements Transform2D {
       throw new IllegalArgumentException("The complex point z cannot be null");
     }
 
-    Complex zComplex = new Complex(z.getX0(), z.getX1());
-    Complex result = zComplex.subtract(c).sqrt();
-
-    if (this.sign < 0) {
-      return result.multiply(sign);
-    }
+    Complex result = new Complex(z.getX0(), z.getX1());
+    result = result.subtract(c);
+    result = result.sqrt();
+    result = result.multiply(sign);
 
     return result;
   }
