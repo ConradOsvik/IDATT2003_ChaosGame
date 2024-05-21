@@ -46,6 +46,7 @@ public class JuliaTransform implements Transform2D {
    * @return the transformed vector
    * @throws IllegalArgumentException if the complex point z is null
    */
+  @Override
   public Vector2D transform(Vector2D z) {
     if (z == null) {
       throw new IllegalArgumentException("The complex point z cannot be null");
