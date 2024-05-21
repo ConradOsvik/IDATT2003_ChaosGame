@@ -136,8 +136,8 @@ public class ChaosGameFileHandler {
           }
 
           Complex c = new Complex(parts[0], parts[1]);
-          int sign = (int) Math.signum(c.getImaginary());
-          transforms.add(new JuliaTransform(c, sign));
+          transforms.add(new JuliaTransform(c, 1));
+          transforms.add(new JuliaTransform(c, -1));
         }
       }
     }
