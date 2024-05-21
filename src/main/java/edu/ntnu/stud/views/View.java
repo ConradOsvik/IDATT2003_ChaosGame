@@ -39,7 +39,7 @@ abstract class View extends Scene implements Observable {
   public void notifyObservers(Event event, Object data) {
     observers.forEach(observer -> observer.update(event, data));
   }
-  
+
   @Override
   public void notifyObservers(Event event, Object... data) {
     observers.forEach(observer -> observer.update(event, data));

@@ -41,8 +41,8 @@ public class ChaosGameController extends Controller {
     this.chaosGameView = new ChaosGameView(this);
 
     this.currentChaosGameDescription = ChaosGameDescriptionFactory.createSierpinskiDescription();
-    this.chaosGame = new ChaosGame(currentChaosGameDescription, DEFAULT_CANVAS_WIDTH,
-        DEFAULT_CANVAS_HEIGHT);
+    this.chaosGame =
+        new ChaosGame(currentChaosGameDescription, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
     chaosGame.addObserver(this);
 
     this.resetImage();
@@ -53,15 +53,23 @@ public class ChaosGameController extends Controller {
   private void setup(Stage stage) {
     Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
-    stage.widthProperty().addListener((observable, oldValue, newValue) -> {
-      resizeCanvas(newValue.intValue() - (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH),
-          (int) stage.getHeight() - (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT));
-    });
+    stage
+        .widthProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> {
+              resizeCanvas(
+                  newValue.intValue() - (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH),
+                  (int) stage.getHeight() - (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT));
+            });
 
-    stage.heightProperty().addListener((observable, oldValue, newValue) -> {
-      resizeCanvas((int) stage.getWidth() - (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH),
-          newValue.intValue() - (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT));
-    });
+    stage
+        .heightProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> {
+              resizeCanvas(
+                  (int) stage.getWidth() - (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH),
+                  newValue.intValue() - (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT));
+            });
 
     stage.setScene(chaosGameView);
     stage.setTitle("Chaos Game");
@@ -69,8 +77,8 @@ public class ChaosGameController extends Controller {
   }
 
   private void resizeCanvas(int width, int height) {
-    if (width < (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH) || height < (DEFAULT_HEIGHT
-        - DEFAULT_CANVAS_HEIGHT)) {
+    if (width < (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH)
+        || height < (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT)) {
       return;
     }
 
@@ -118,7 +126,8 @@ public class ChaosGameController extends Controller {
   private void openEditDescriptionDialog() {
     String transformType =
         currentChaosGameDescription.getTransforms().getFirst() instanceof AffineTransform2D
-            ? "Affine" : "Julia";
+            ? "Affine"
+            : "Julia";
 
     int xMinValue = (int) currentChaosGameDescription.getMinCoords().getX0();
     int yMinValue = (int) currentChaosGameDescription.getMinCoords().getX1();
@@ -143,18 +152,18 @@ public class ChaosGameController extends Controller {
       transformValues.add(values);
     }
 
-    chaosGameView.openDescriptionDialog(transformType, xMinValue, yMinValue, xMaxValue, yMaxValue,
-        transformValues);
+    chaosGameView.openDescriptionDialog(
+        transformType, xMinValue, yMinValue, xMaxValue, yMaxValue, transformValues);
   }
 
-  private void updateChaosGameDescription(double xMin, double yMin, double xMax, double yMax,
-      List<List<Double>> transformValues) {
+  private void updateChaosGameDescription(
+      double xMin, double yMin, double xMax, double yMax, List<List<Double>> transformValues) {
     try {
       List<Transform2D> transforms = new ArrayList<>();
       for (List<Double> values : transformValues) {
         if (values.size() == 6) {
-          Matrix2x2 matrix = new Matrix2x2(values.get(0), values.get(1), values.get(2),
-              values.get(3));
+          Matrix2x2 matrix =
+              new Matrix2x2(values.get(0), values.get(1), values.get(2), values.get(3));
           Vector2D vector = new Vector2D(values.get(4), values.get(5));
 
           AffineTransform2D transform = new AffineTransform2D(matrix, vector);
@@ -171,8 +180,8 @@ public class ChaosGameController extends Controller {
       Vector2D minCoords = new Vector2D(xMin, yMin);
       Vector2D maxCoords = new Vector2D(xMax, yMax);
 
-      ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords,
-          maxCoords);
+      ChaosGameDescription chaosGameDescription =
+          new ChaosGameDescription(transforms, minCoords, maxCoords);
       chaosGame.setChaosGameDescription(chaosGameDescription);
       this.currentChaosGameDescription = chaosGameDescription;
     } catch (Exception e) {
@@ -195,8 +204,11 @@ public class ChaosGameController extends Controller {
     for (int x = 0; x < matrix.length; x++) {
       for (int y = 0; y < matrix[0].length; y++) {
         if (matrix[x][y] > 0) {
-          pixelWriter.setColor(x, y, Color.rgb(Math.max(0, 255 - (matrix[x][y] * 10)), 0,
-              Math.min(255, matrix[x][y] * 10)));
+          pixelWriter.setColor(
+              x,
+              y,
+              Color.rgb(
+                  Math.max(0, 255 - (matrix[x][y] * 10)), 0, Math.min(255, matrix[x][y] * 10)));
         } else {
           pixelWriter.setColor(x, y, javafx.scene.paint.Color.WHITE);
         }
@@ -264,8 +276,12 @@ public class ChaosGameController extends Controller {
   public void update(Event event, Object... data) {
     switch (event) {
       case Event.UPDATE_DESCRIPTION:
-        updateChaosGameDescription((double) data[1], (double) data[2], (double) data[3],
-            (double) data[4], (List<List<Double>>) data[5]);
+        updateChaosGameDescription(
+            (double) data[1],
+            (double) data[2],
+            (double) data[3],
+            (double) data[4],
+            (List<List<Double>>) data[5]);
         resetPreset();
         break;
       default:

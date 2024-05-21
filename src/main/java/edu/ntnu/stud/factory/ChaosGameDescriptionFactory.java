@@ -33,7 +33,7 @@ public class ChaosGameDescriptionFactory {
     return new ChaosGameDescription(transforms, minCoords, maxCoords);
   }
 
-  public static ChaosGameDescription createBarnsleyDescription(){
+  public static ChaosGameDescription createBarnsleyDescription() {
     Vector2D minCoords = new Vector2D(-2.65, 0);
     Vector2D maxCoords = new Vector2D(2.65, 10);
     List<Transform2D> transforms = new ArrayList<>();

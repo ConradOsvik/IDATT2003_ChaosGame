@@ -25,8 +25,8 @@ public class ChaosGame implements Observable {
    * Constructs a new ChaosGame with the given description, width, and height.
    *
    * @param description the description of the Chaos Game, including the transformations to use
-   * @param width       the width of the canvas
-   * @param height      the height of the canvas
+   * @param width the width of the canvas
+   * @param height the height of the canvas
    */
   public ChaosGame(ChaosGameDescription description, int width, int height) {
     if (description == null) {
@@ -40,8 +40,8 @@ public class ChaosGame implements Observable {
     this.canvasWidth = width;
     this.canvasHeight = height;
     this.canvas =
-        new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
-            description.getMaxCoords());
+        new ChaosCanvas(
+            canvasWidth, canvasHeight, description.getMinCoords(), description.getMaxCoords());
     this.currentPoint = new Vector2D(0, 0);
   }
 
@@ -53,8 +53,9 @@ public class ChaosGame implements Observable {
   public void setChaosGameDescription(ChaosGameDescription description) {
     this.description = description;
     this.currentPoint = new Vector2D(0, 0);
-    this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
-        description.getMaxCoords());
+    this.canvas =
+        new ChaosCanvas(
+            canvasWidth, canvasHeight, description.getMinCoords(), description.getMaxCoords());
 
     notifyObservers(Event.CHAOS_GAME_DESCRIPTION_UPDATED);
   }
@@ -62,7 +63,7 @@ public class ChaosGame implements Observable {
   /**
    * Sets the canvas size and resets the canvas.
    *
-   * @param width  the width of the canvas
+   * @param width the width of the canvas
    * @param height the height of the canvas
    */
   public void setCanvasSize(int width, int height) {
@@ -73,8 +74,9 @@ public class ChaosGame implements Observable {
     this.canvasWidth = width;
     this.canvasHeight = height;
 
-    this.canvas = new ChaosCanvas(canvasWidth, canvasHeight, description.getMinCoords(),
-        description.getMaxCoords());
+    this.canvas =
+        new ChaosCanvas(
+            canvasWidth, canvasHeight, description.getMinCoords(), description.getMaxCoords());
 
     notifyObservers(Event.CANVAS_SIZE_UPDATED);
   }

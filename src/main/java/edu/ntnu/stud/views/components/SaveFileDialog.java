@@ -28,11 +28,12 @@ public class SaveFileDialog extends Dialog<String> {
 
     getDialogPane().setContent(grid);
 
-    setResultConverter(dialogButton -> {
-      if (dialogButton == submitButtonType) {
-        return textField.getText();
-      }
-      return null;
-    });
+    setResultConverter(
+        dialogButton -> {
+          if (dialogButton == submitButtonType) {
+            return textField.getText();
+          }
+          return null;
+        });
   }
 }

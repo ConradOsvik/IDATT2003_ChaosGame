@@ -31,29 +31,30 @@ public class ChaosGameView extends View {
     this.chaosGameController = chaosGameController;
     addObserver(chaosGameController);
 
-    //Zooming
+    // Zooming
     imageView.setPreserveRatio(true);
-    imageView.setOnScroll(event -> {
-      double zoomFactor = 1.05;
-      double deltaY = event.getDeltaY();
+    imageView.setOnScroll(
+        event -> {
+          double zoomFactor = 1.05;
+          double deltaY = event.getDeltaY();
 
-      if (deltaY < 0){
-        zoomFactor = 1 / zoomFactor;
-      }
+          if (deltaY < 0) {
+            zoomFactor = 1 / zoomFactor;
+          }
 
-      // calculate the zoom anchor point
-      double x = event.getX();
-      double y = event.getY();
+          // calculate the zoom anchor point
+          double x = event.getX();
+          double y = event.getY();
 
-      // create a zoom transform
-      javafx.scene.transform.Affine zoom = new javafx.scene.transform.Affine();
-      zoom.appendScale(zoomFactor, zoomFactor, x, y);
+          // create a zoom transform
+          javafx.scene.transform.Affine zoom = new javafx.scene.transform.Affine();
+          zoom.appendScale(zoomFactor, zoomFactor, x, y);
 
-      // apply the zoom transform to the image view
-      imageView.getTransforms().add(zoom);
+          // apply the zoom transform to the image view
+          imageView.getTransforms().add(zoom);
 
-      event.consume();
-    });
+          event.consume();
+        });
 
     VBox sidebar = createSidebar();
     VBox chaosGameCanvas = createChaosGameCanvasUI();
@@ -83,7 +84,14 @@ public class ChaosGameView extends View {
     VBox descriptionButtonsContainer = createDescriptionButtonsUI();
     VBox zoomInfoContainer = createZoomInfoUI();
 
-    sidebar.getChildren().addAll(mainButtonsContainer, presetContainer, fileContainer, descriptionButtonsContainer, zoomInfoContainer);
+    sidebar
+        .getChildren()
+        .addAll(
+            mainButtonsContainer,
+            presetContainer,
+            fileContainer,
+            descriptionButtonsContainer,
+            zoomInfoContainer);
 
     return sidebar;
   }
@@ -118,7 +126,8 @@ public class ChaosGameView extends View {
 
     Label text = new Label("Preset:");
 
-    presetComboBox.getItems()
+    presetComboBox
+        .getItems()
         .addAll("None", "Sierpinski Triangle", "Barnsley Fern", "Koch Snowflake", "Dragon Curve");
     presetComboBox.setValue("Sierpinski Triangle");
     presetComboBox.setOnAction(
@@ -131,7 +140,7 @@ public class ChaosGameView extends View {
     return container;
   }
 
-  public void resetPresetCombobox(){
+  public void resetPresetCombobox() {
     presetComboBox.setValue("None");
   }
 
@@ -164,7 +173,7 @@ public class ChaosGameView extends View {
     return container;
   }
 
-  private VBox createDescriptionButtonsUI(){
+  private VBox createDescriptionButtonsUI() {
     VBox container = new VBox(10);
     container.setAlignment(Pos.CENTER);
     container.setMinHeight(100);
@@ -176,7 +185,8 @@ public class ChaosGameView extends View {
           notifyObservers(Event.OPEN_EDIT_DESCRIPTION_DIALOG);
         });
 
-    StyledButton createButton = new StyledButton.Builder("Create description").prefWidth(180).build();
+    StyledButton createButton =
+        new StyledButton.Builder("Create description").prefWidth(180).build();
     createButton.setOnAction(
         event -> {
           this.openDescriptionDialog();
@@ -187,19 +197,26 @@ public class ChaosGameView extends View {
     return container;
   }
 
-  public void openDescriptionDialog(String transformType, double xMin, double yMin, double xMax, double yMax, List<List<Double>> transformValues){
-    FractalDialog dialog = new FractalDialog(transformType, xMin, yMin, xMax, yMax, transformValues);
+  public void openDescriptionDialog(
+      String transformType,
+      double xMin,
+      double yMin,
+      double xMax,
+      double yMax,
+      List<List<Double>> transformValues) {
+    FractalDialog dialog =
+        new FractalDialog(transformType, xMin, yMin, xMax, yMax, transformValues);
     dialog.addObserver(chaosGameController);
     dialog.showAndWait();
   }
 
-  public void openDescriptionDialog(){
+  public void openDescriptionDialog() {
     FractalDialog dialog = new FractalDialog();
     dialog.addObserver(chaosGameController);
     dialog.showAndWait();
   }
 
-  private VBox createZoomInfoUI(){
+  private VBox createZoomInfoUI() {
     VBox container = new VBox(10);
     container.setAlignment(Pos.CENTER);
     container.setMinHeight(100);

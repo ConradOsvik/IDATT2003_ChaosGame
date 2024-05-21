@@ -32,8 +32,8 @@ public class NumberField extends TextField {
     public NumberField build() {
       NumberField numberField = new NumberField(this);
       numberField.setPromptText(label);
-      if(valueSet){
-      numberField.setText(String.valueOf(value));
+      if (valueSet) {
+        numberField.setText(String.valueOf(value));
       }
 
       return numberField;
