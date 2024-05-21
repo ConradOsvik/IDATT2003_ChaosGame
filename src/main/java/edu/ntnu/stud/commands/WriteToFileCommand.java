@@ -13,27 +13,62 @@ import edu.ntnu.stud.views.CLI;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents the write to file command in the CLI.
+ * It implements the Command interface and is used to write a ChaosGameDescription to a file.
+ */
 public class WriteToFileCommand implements Command {
+
+  /**
+   * The CLI to be used by the command.
+   */
   private final CLI cli;
+
+  /**
+   * The ChaosGameFileHandler to be used by the command.
+   */
   private final ChaosGameFileHandler chaosGameFileHandler;
+
+  /**
+   * The ValidatedInput to be used by the command.
+   */
   private final ValidatedInput validatedInput;
 
+  /**
+   * Constructs a new WriteToFileCommand with the specified CLI and ValidatedInput.
+   *
+   * @param cli            the CLI to be used by this command
+   * @param validatedInput the ValidatedInput to be used by this command
+   */
   public WriteToFileCommand(CLI cli, ValidatedInput validatedInput) {
     this.cli = cli;
     this.validatedInput = validatedInput;
     this.chaosGameFileHandler = new ChaosGameFileHandler();
   }
 
+  /**
+   * Returns the name of this command.
+   *
+   * @return the name of this command
+   */
   @Override
   public String getName() {
     return "Write to file";
   }
 
+  /**
+   * Returns the description of this command.
+   *
+   * @return the description of this command
+   */
   @Override
   public String getDescription() {
     return "Writes to a file";
   }
 
+  /**
+   * Executes this command. Writes a ChaosGameDescription to a file.
+   */
   @Override
   public void execute() {
     System.out.println("Executing command: " + getName());
