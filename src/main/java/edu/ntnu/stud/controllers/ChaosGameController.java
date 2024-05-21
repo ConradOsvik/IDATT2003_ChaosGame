@@ -136,7 +136,7 @@ public class ChaosGameController extends Controller {
         values.add(affineTransform.getVector().getX0());
         values.add(affineTransform.getVector().getX1());
       }
-      if(transform instanceof JuliaTransform juliaTransform){
+      if (transform instanceof JuliaTransform juliaTransform) {
         values.add(juliaTransform.getC().getReal());
         values.add(juliaTransform.getC().getImaginary());
       }
@@ -147,30 +147,37 @@ public class ChaosGameController extends Controller {
         transformValues);
   }
 
-  private void updateChaosGameDescription(double xMin, double yMin, double xMax, double yMax, List<List<Double>> transformValues){
-    List<Transform2D> transforms = new ArrayList<>();
-    for (List<Double> values : transformValues){
-      if (values.size() == 6){
-        Matrix2x2 matrix = new Matrix2x2(values.get(0), values.get(1), values.get(2), values.get(3));
-        Vector2D vector = new Vector2D(values.get(4), values.get(5));
+  private void updateChaosGameDescription(double xMin, double yMin, double xMax, double yMax,
+      List<List<Double>> transformValues) {
+    try {
+      List<Transform2D> transforms = new ArrayList<>();
+      for (List<Double> values : transformValues) {
+        if (values.size() == 6) {
+          Matrix2x2 matrix = new Matrix2x2(values.get(0), values.get(1), values.get(2),
+              values.get(3));
+          Vector2D vector = new Vector2D(values.get(4), values.get(5));
 
-        AffineTransform2D transform = new AffineTransform2D(matrix, vector);
+          AffineTransform2D transform = new AffineTransform2D(matrix, vector);
 
-        transforms.add(transform);
+          transforms.add(transform);
+        }
+        if (values.size() == 2) {
+          Complex c = new Complex(values.get(0), values.get(1));
+
+          JuliaTransform transform = new JuliaTransform(c, 1);
+          transforms.add(transform);
+        }
       }
-      if (values.size() == 2){
-        Complex c = new Complex(values.get(0), values.get(1));
+      Vector2D minCoords = new Vector2D(xMin, yMin);
+      Vector2D maxCoords = new Vector2D(xMax, yMax);
 
-        JuliaTransform transform = new JuliaTransform(c, 1);
-        transforms.add(transform);
-      }
+      ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords,
+          maxCoords);
+      chaosGame.setChaosGameDescription(chaosGameDescription);
+      this.currentChaosGameDescription = chaosGameDescription;
+    } catch (Exception e) {
+      chaosGameView.showErrorDialog("Error updating description: " + e.getMessage());
     }
-    Vector2D minCoords = new Vector2D(xMin, yMin);
-    Vector2D maxCoords = new Vector2D(xMax, yMax);
-
-    ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords, maxCoords);
-    chaosGame.setChaosGameDescription(chaosGameDescription);
-    this.currentChaosGameDescription = chaosGameDescription;
   }
 
   private void resetImage() {
@@ -254,10 +261,11 @@ public class ChaosGameController extends Controller {
   }
 
   @Override
-  public void update(Event event, Object... data){
-    switch (event){
+  public void update(Event event, Object... data) {
+    switch (event) {
       case Event.UPDATE_DESCRIPTION:
-        updateChaosGameDescription((double) data[1], (double) data[2], (double) data[3], (double) data[4], (List<List<Double>>) data[5]);
+        updateChaosGameDescription((double) data[1], (double) data[2], (double) data[3],
+            (double) data[4], (List<List<Double>>) data[5]);
         resetPreset();
         break;
       default:
