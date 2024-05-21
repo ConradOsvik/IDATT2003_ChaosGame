@@ -2,6 +2,8 @@ package edu.ntnu.stud.factory;
 
 import edu.ntnu.stud.models.AffineTransform2D;
 import edu.ntnu.stud.models.ChaosGameDescription;
+import edu.ntnu.stud.models.Complex;
+import edu.ntnu.stud.models.JuliaTransform;
 import edu.ntnu.stud.models.Matrix2x2;
 import edu.ntnu.stud.models.Transform2D;
 import edu.ntnu.stud.models.Vector2D;
@@ -9,6 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChaosGameDescriptionFactory {
+  public static ChaosGameDescription createDescription(String descriptionType) {
+    return switch (descriptionType) {
+      case "Sierpinski Triangle" -> createSierpinskiDescription();
+      case "Barnsley Fern" -> createBarnsleyDescription();
+      case "Julia Set" -> createJuliaDescription();
+      default -> null;
+    };
+  }
+
   public static ChaosGameDescription createSierpinskiDescription() {
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(1, 1);
@@ -58,6 +69,20 @@ public class ChaosGameDescriptionFactory {
     transforms.add(transform2);
     transforms.add(transform3);
     transforms.add(transform4);
+
+    return new ChaosGameDescription(transforms, minCoords, maxCoords);
+  }
+
+  public static ChaosGameDescription createJuliaDescription(){
+    Vector2D minCoords = new Vector2D(-1.6, -1);
+    Vector2D maxCoords = new Vector2D(1.6, 1);
+    List<Transform2D> transforms = new ArrayList<>();
+
+    JuliaTransform transform1 = new JuliaTransform(new Complex(-0.74543, 0.11301), 1);
+    JuliaTransform transform2 = new JuliaTransform(new Complex(-0.74543, 0.11301), -1);
+
+    transforms.add(transform1);
+    transforms.add(transform2);
 
     return new ChaosGameDescription(transforms, minCoords, maxCoords);
   }
