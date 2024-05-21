@@ -4,15 +4,15 @@ import edu.ntnu.stud.commands.CLICommandGroup;
 import edu.ntnu.stud.commands.Command;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.ChaosGame;
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 
 public class CLIController {
-  private final CLI cli;
+  private final Cli cli;
   private ChaosGame chaosGame;
   private final CLICommandGroup commands;
   private final ValidatedInput validatedInput;
 
-  public CLIController(CLI cli) {
+  public CLIController(Cli cli) {
     this.cli = cli;
     this.validatedInput = new ValidatedInput(cli);
     this.commands = new CLICommandGroup(this, this.cli, this.validatedInput);

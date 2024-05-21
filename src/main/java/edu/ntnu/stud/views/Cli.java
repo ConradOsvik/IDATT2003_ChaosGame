@@ -5,7 +5,7 @@ import edu.ntnu.stud.commands.Command;
 import edu.ntnu.stud.utils.Color;
 import java.util.List;
 
-public class CLI {
+public class Cli {
   public void displayMenu(CLICommandGroup commands) {
     System.out.println(commands.getTitle());
     List<Command> commandList = commands.getCommands();

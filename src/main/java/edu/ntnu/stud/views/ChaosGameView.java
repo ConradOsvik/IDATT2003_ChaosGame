@@ -38,7 +38,7 @@ public class ChaosGameView extends View {
       double zoomFactor = 1.05;
       double deltaY = event.getDeltaY();
 
-      if (deltaY < 0){
+      if (deltaY < 0) {
         zoomFactor = 1 / zoomFactor;
       }
 
@@ -57,7 +57,7 @@ public class ChaosGameView extends View {
     });
 
     VBox sidebar = createSidebar();
-    VBox chaosGameCanvas = createChaosGameCanvasUI();
+    VBox chaosGameCanvas = createChaosGameCanvasUi();
 
     root.getChildren().addAll(chaosGameCanvas, sidebar);
   }
@@ -79,12 +79,13 @@ public class ChaosGameView extends View {
     StyledButton exitButton = createExitButton();
     mainButtonsContainer.getChildren().addAll(darkModeButton, exitButton);
 
-    VBox presetContainer = createPresetUI();
-    HBox fileContainer = createFileUI();
-    VBox descriptionButtonsContainer = createDescriptionButtonsUI();
-    VBox zoomInfoContainer = createZoomInfoUI();
+    VBox presetContainer = createPresetUi();
+    HBox fileContainer = createFileUi();
+    VBox descriptionButtonsContainer = createDescriptionButtonsUi();
+    VBox zoomInfoContainer = createZoomInfoUi();
 
-    sidebar.getChildren().addAll(mainButtonsContainer, presetContainer, fileContainer, descriptionButtonsContainer, zoomInfoContainer);
+    sidebar.getChildren().addAll(mainButtonsContainer, presetContainer, fileContainer,
+        descriptionButtonsContainer, zoomInfoContainer);
 
     return sidebar;
   }
@@ -114,11 +115,7 @@ public class ChaosGameView extends View {
     return exitButton;
   }
 
-  private VBox createPresetUI() {
-    VBox container = new VBox(10);
-
-    Label text = new Label("Preset:");
-
+  private VBox createPresetUi() {
     presetComboBox.getItems()
         .addAll("None", "Sierpinski Triangle", "Barnsley Fern", "Julia Set");
     presetComboBox.setValue("Sierpinski Triangle");
@@ -126,17 +123,19 @@ public class ChaosGameView extends View {
         event -> {
           notifyObservers(Event.SET_PRESET, presetComboBox.getValue());
         });
-
+    
+    VBox container = new VBox(10);
+    Label text = new Label("Preset:");
     container.getChildren().addAll(text, presetComboBox);
 
     return container;
   }
 
-  public void resetPresetCombobox(){
+  public void resetPresetCombobox() {
     presetComboBox.setValue("None");
   }
 
-  private HBox createFileUI() {
+  private HBox createFileUi() {
     HBox container = new HBox(10);
     container.setAlignment(Pos.CENTER);
     container.setMinHeight(100);
@@ -165,7 +164,7 @@ public class ChaosGameView extends View {
     return container;
   }
 
-  private VBox createDescriptionButtonsUI(){
+  private VBox createDescriptionButtonsUi() {
     VBox container = new VBox(10);
     container.setAlignment(Pos.CENTER);
     container.setMinHeight(100);
@@ -177,7 +176,8 @@ public class ChaosGameView extends View {
           notifyObservers(Event.OPEN_EDIT_DESCRIPTION_DIALOG);
         });
 
-    StyledButton createButton = new StyledButton.Builder("Create description").prefWidth(180).build();
+    StyledButton createButton = new StyledButton.Builder("Create description")
+        .prefWidth(180).build();
     createButton.setOnAction(
         event -> {
           this.openDescriptionDialog();
@@ -188,19 +188,21 @@ public class ChaosGameView extends View {
     return container;
   }
 
-  public void openDescriptionDialog(String transformType, double xMin, double yMin, double xMax, double yMax, List<List<Double>> transformValues){
-    FractalDialog dialog = new FractalDialog(transformType, xMin, yMin, xMax, yMax, transformValues);
+  public void openDescriptionDialog(String transformType, double xmin, double ymin, double xmax,
+                                    double ymax, List<List<Double>> transformValues) {
+    FractalDialog dialog = new FractalDialog(transformType, xmin, ymin, xmax, ymax,
+        transformValues);
     dialog.addObserver(chaosGameController);
     dialog.showAndWait();
   }
 
-  public void openDescriptionDialog(){
+  public void openDescriptionDialog() {
     FractalDialog dialog = new FractalDialog();
     dialog.addObserver(chaosGameController);
     dialog.showAndWait();
   }
 
-  private VBox createZoomInfoUI(){
+  private VBox createZoomInfoUi() {
     VBox container = new VBox(10);
     container.setAlignment(Pos.CENTER);
     container.setMinHeight(100);
@@ -217,18 +219,18 @@ public class ChaosGameView extends View {
     return container;
   }
 
-  private VBox createChaosGameCanvasUI() {
+  private VBox createChaosGameCanvasUi() {
     VBox container = new VBox(10);
     container.setStyle("-fx-background-color: #fff");
 
-    HBox controls = createControlsUI();
+    HBox controls = createControlsUi();
 
     container.getChildren().addAll(imageView, controls);
 
     return container;
   }
 
-  private HBox createControlsUI() {
+  private HBox createControlsUi() {
     HBox controls = new HBox(10);
     controls.setAlignment(Pos.TOP_CENTER);
     controls.setMinHeight(100);
