@@ -8,4 +8,8 @@ public interface Observable {
   void removeObserver(Observer observer);
 
   void notifyObservers(Event event);
+
+  void notifyObservers(Event event, Object data);
+
+  void notifyObservers(Event event, Object... data);
 }
