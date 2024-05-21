@@ -33,6 +33,7 @@ public class ChaosGameView extends View {
 
     //Zooming
     imageView.setPreserveRatio(true);
+    imageView.setSmooth(false);
     imageView.setOnScroll(event -> {
       double zoomFactor = 1.05;
       double deltaY = event.getDeltaY();
@@ -119,7 +120,7 @@ public class ChaosGameView extends View {
     Label text = new Label("Preset:");
 
     presetComboBox.getItems()
-        .addAll("None", "Sierpinski Triangle", "Barnsley Fern", "Koch Snowflake", "Dragon Curve");
+        .addAll("None", "Sierpinski Triangle", "Barnsley Fern", "Julia Set");
     presetComboBox.setValue("Sierpinski Triangle");
     presetComboBox.setOnAction(
         event -> {
