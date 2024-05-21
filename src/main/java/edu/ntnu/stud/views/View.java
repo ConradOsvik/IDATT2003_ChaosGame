@@ -6,18 +6,18 @@ import edu.ntnu.stud.utils.Observer;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
-public abstract class View extends Scene implements Observable {
+abstract class View extends Scene implements Observable {
   protected final List<Observer> observers = new ArrayList<>();
-  protected final VBox root = (VBox) getRoot();
+  protected final HBox root = (HBox) getRoot();
 
   public View() {
-    super(new VBox());
+    super(new HBox());
   }
 
   public View(int width, int height) {
-    super(new VBox(), width, height);
+    super(new HBox(), width, height);
   }
 
   @Override
@@ -34,9 +34,14 @@ public abstract class View extends Scene implements Observable {
   public void notifyObservers(Event event) {
     observers.forEach(observer -> observer.update(event));
   }
-  
+
   @Override
   public void notifyObservers(Event event, Object data) {
+    observers.forEach(observer -> observer.update(event, data));
+  }
+  
+  @Override
+  public void notifyObservers(Event event, Object... data) {
     observers.forEach(observer -> observer.update(event, data));
   }
 }
