@@ -4,9 +4,9 @@ edu.ntnu.stud.commands
 edu.ntnu.stud.controllers
 edu.ntnu.stud.enums
 edu.ntnu.stud.exceptions
+edu.ntnu.stud.factory
 edu.ntnu.stud.input
 edu.ntnu.stud.models
 edu.ntnu.stud.utils
 edu.ntnu.stud.views
 edu.ntnu.stud.views.components
-edu.ntnu.stud.views.home
