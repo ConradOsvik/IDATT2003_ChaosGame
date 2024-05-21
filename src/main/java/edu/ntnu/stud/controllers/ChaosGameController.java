@@ -17,12 +17,14 @@ import edu.ntnu.stud.models.Vector2D;
 import edu.ntnu.stud.views.ChaosGameView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 public class ChaosGameController extends Controller {
 
@@ -81,13 +83,11 @@ public class ChaosGameController extends Controller {
     chaosGame.runSteps(iterations);
   }
 
-  private void setPreset(String preset) {
-    if (preset.equals("Sierpinski Triangle")) {
-      this.currentChaosGameDescription = ChaosGameDescriptionFactory.createSierpinskiDescription();
-      chaosGame.setChaosGameDescription(currentChaosGameDescription);
-    }
-    if (preset.equals("Barnsley Fern")) {
-      this.currentChaosGameDescription = ChaosGameDescriptionFactory.createBarnsleyDescription();
+  private void setDescriptionWithPreset(String preset) {
+    ChaosGameDescription chaosGameDescription = ChaosGameDescriptionFactory.createDescription(
+        preset);
+    if (chaosGameDescription != null) {
+      this.currentChaosGameDescription = chaosGameDescription;
       chaosGame.setChaosGameDescription(currentChaosGameDescription);
     }
   }
@@ -101,6 +101,7 @@ public class ChaosGameController extends Controller {
       String path = PATH + fileName + ".txt";
       ChaosGameDescription chaosGameDescription = chaosGameFileHandler.readFromFile(path);
       chaosGame.setChaosGameDescription(chaosGameDescription);
+      currentChaosGameDescription = chaosGameDescription;
     } catch (FileHandlingException e) {
       chaosGameView.showErrorDialog("Error loading file: " + e.getMessage());
     }
@@ -120,10 +121,10 @@ public class ChaosGameController extends Controller {
         currentChaosGameDescription.getTransforms().getFirst() instanceof AffineTransform2D
             ? "Affine" : "Julia";
 
-    int xMinValue = (int) currentChaosGameDescription.getMinCoords().getX0();
-    int yMinValue = (int) currentChaosGameDescription.getMinCoords().getX1();
-    int xMaxValue = (int) currentChaosGameDescription.getMaxCoords().getX0();
-    int yMaxValue = (int) currentChaosGameDescription.getMaxCoords().getX1();
+    double xMinValue = (double) currentChaosGameDescription.getMinCoords().getX0();
+    double yMinValue = (double) currentChaosGameDescription.getMinCoords().getX1();
+    double xMaxValue = (double) currentChaosGameDescription.getMaxCoords().getX0();
+    double yMaxValue = (double) currentChaosGameDescription.getMaxCoords().getX1();
 
     List<List<Double>> transformValues = new ArrayList<>();
     for (Transform2D transform : currentChaosGameDescription.getTransforms()) {
@@ -148,8 +149,10 @@ public class ChaosGameController extends Controller {
   }
 
   private void updateChaosGameDescription(double xMin, double yMin, double xMax, double yMax,
-      List<List<Double>> transformValues) {
+      List<List<Double>> transformValues, List<Double> transformWeights) {
     try {
+      boolean weighted = transformWeights.stream().allMatch(weight -> weight > 0);
+
       List<Transform2D> transforms = new ArrayList<>();
       for (List<Double> values : transformValues) {
         if (values.size() == 6) {
@@ -164,17 +167,31 @@ public class ChaosGameController extends Controller {
         if (values.size() == 2) {
           Complex c = new Complex(values.get(0), values.get(1));
 
-          JuliaTransform transform = new JuliaTransform(c, 1);
-          transforms.add(transform);
+          JuliaTransform transform1 = new JuliaTransform(c, 1);
+          JuliaTransform transform2 = new JuliaTransform(c, -1);
+          transforms.add(transform1);
+          transforms.add(transform2);
         }
       }
       Vector2D minCoords = new Vector2D(xMin, yMin);
       Vector2D maxCoords = new Vector2D(xMax, yMax);
 
-      ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords,
-          maxCoords);
-      chaosGame.setChaosGameDescription(chaosGameDescription);
-      this.currentChaosGameDescription = chaosGameDescription;
+      if (weighted) {
+        List<Pair<Transform2D, Double>> weightedTransforms = IntStream.range(0, transforms.size())
+            .mapToObj(i -> new Pair<>(transforms.get(i), transformWeights.get(i)))
+            .toList();
+
+        this.currentChaosGameDescription = new ChaosGameDescription(weightedTransforms,
+            minCoords, maxCoords,
+            true);
+        chaosGame.setChaosGameDescription(currentChaosGameDescription);
+      } else {
+        this.currentChaosGameDescription = new ChaosGameDescription(transforms, minCoords,
+            maxCoords);
+        chaosGame.setChaosGameDescription(currentChaosGameDescription);
+      }
+
+
     } catch (Exception e) {
       chaosGameView.showErrorDialog("Error updating description: " + e.getMessage());
     }
@@ -195,8 +212,9 @@ public class ChaosGameController extends Controller {
     for (int x = 0; x < matrix.length; x++) {
       for (int y = 0; y < matrix[0].length; y++) {
         if (matrix[x][y] > 0) {
-          pixelWriter.setColor(x, y, Color.rgb(Math.max(0, 255 - (matrix[x][y] * 10)), 0,
-              Math.min(255, matrix[x][y] * 10)));
+          int red = Math.max(0, Math.min(255, 255 - (matrix[x][y] * 10)));
+          int blue = Math.max(0, Math.min(255, matrix[x][y] * 10));
+          pixelWriter.setColor(x, y, Color.rgb(red, 0, blue));
         } else {
           pixelWriter.setColor(x, y, javafx.scene.paint.Color.WHITE);
         }
@@ -246,7 +264,7 @@ public class ChaosGameController extends Controller {
         runIterations((int) data);
         break;
       case Event.SET_PRESET:
-        setPreset((String) data);
+        setDescriptionWithPreset((String) data);
         break;
       case LOAD_FILE:
         loadFromFile((String) data);
@@ -265,7 +283,7 @@ public class ChaosGameController extends Controller {
     switch (event) {
       case Event.UPDATE_DESCRIPTION:
         updateChaosGameDescription((double) data[1], (double) data[2], (double) data[3],
-            (double) data[4], (List<List<Double>>) data[5]);
+            (double) data[4], (List<List<Double>>) data[5], (List<Double>) data[6]);
         resetPreset();
         break;
       default:
