@@ -6,6 +6,7 @@ import edu.ntnu.stud.utils.Observer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javafx.util.Pair;
 
 /**
  * This class represents the Chaos Game. It is used to generate fractal images using a set of
@@ -97,13 +98,33 @@ public class ChaosGame implements Observable {
     if (steps < 0) {
       throw new IllegalArgumentException("The number of steps cannot be negative");
     }
-    for (int i = 0; i < steps; i++) {
-      Transform2D transform =
-          this.description
-              .getTransforms()
-              .get(this.random.nextInt(this.description.getTransforms().size()));
-      this.currentPoint = transform.transform(this.currentPoint);
-      this.canvas.putPixel(this.currentPoint);
+
+    if (description.isWeighted()) {
+      for (int i = 0; i < steps; i++) {
+        double totalWeight = description.getWeightedTransforms().stream()
+            .mapToDouble(Pair::getValue)
+            .sum();
+        double randomWeight = random.nextDouble() * totalWeight;
+        double cumulativeWeight = 0.0;
+        for (Pair<Transform2D, Double> weightedTransform : description.getWeightedTransforms()) {
+          cumulativeWeight += weightedTransform.getValue();
+          if (randomWeight <= cumulativeWeight) {
+            Transform2D transform = weightedTransform.getKey();
+            currentPoint = transform.transform(currentPoint);
+            break;
+          }
+        }
+        this.canvas.putPixel(currentPoint);
+      }
+    } else {
+      for (int i = 0; i < steps; i++) {
+        Transform2D transform =
+            this.description
+                .getTransforms()
+                .get(this.random.nextInt(this.description.getTransforms().size()));
+        this.currentPoint = transform.transform(this.currentPoint);
+        this.canvas.putPixel(this.currentPoint);
+      }
     }
 
     notifyObservers(Event.STEPS_RAN);

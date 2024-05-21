@@ -26,6 +26,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
   private final NumberField xMax;
   private final NumberField yMax;
   private final List<List<NumberField>> transforms = new ArrayList<>();
+  private final List<NumberField> transformWeightFields = new ArrayList<>();
   private final GridPane transformsGrid = new GridPane();
 
   public FractalDialog(String transformType, double xMinValue, double yMinValue, double xMaxValue,
@@ -37,7 +38,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
     GridPane mainGrid = new GridPane();
 
     this.typeComboBox.getItems().addAll("Affine", "Julia");
-    this.typeComboBox.setValue("Affine");
+    this.typeComboBox.setValue(transformType);
     this.typeComboBox.setOnAction(e -> {
       transformsGrid.getChildren().clear();
       transforms.clear();
@@ -70,21 +71,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
       transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
     }
 
-    Button addTransformButton = new Button("Add Transform");
-    addTransformButton.setOnAction(e -> {
-      GridPane transformGrid = null;
-      if (this.typeComboBox.getValue().equals("Affine")) {
-        transformGrid = createAffineTransformUI(null);
-      } else if (this.typeComboBox.getValue().equals("Julia")) {
-        transformGrid = createJuliaTransformUI(null);
-      }
-      transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
-    });
-
-    VBox vbox = new VBox(mainGrid, addTransformButton);
-    ScrollPane scrollableBox = new ScrollPane(vbox);
-    scrollableBox.setFitToWidth(true);
-    scrollableBox.setPrefHeight(400);
+    ScrollPane scrollableBox = getScrollPane(mainGrid);
     getDialogPane().setContent(scrollableBox);
 
     ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
@@ -105,11 +92,34 @@ public class FractalDialog extends Dialog<String> implements Observable {
           }
           transformValuesResult.add(transformValuesRow);
         }
-//        return new FractalData(selectedType, minX, minY, maxX, maxY, transformValuesResult);
-        notifyObservers(Event.UPDATE_DESCRIPTION, selectedType, minX, minY, maxX, maxY, transformValuesResult);
+        List<Double> transformWeights = new ArrayList<>();
+        for (NumberField field : transformWeightFields) {
+          transformWeights.add(field.getValue());
+        }
+
+        notifyObservers(Event.UPDATE_DESCRIPTION, selectedType, minX, minY, maxX, maxY, transformValuesResult, transformWeights);
       }
       return null;
     });
+  }
+
+  private ScrollPane getScrollPane(GridPane mainGrid) {
+    Button addTransformButton = new Button("Add Transform");
+    addTransformButton.setOnAction(e -> {
+      GridPane transformGrid = null;
+      if (this.typeComboBox.getValue().equals("Affine")) {
+        transformGrid = createAffineTransformUI(null);
+      } else if (this.typeComboBox.getValue().equals("Julia")) {
+        transformGrid = createJuliaTransformUI(null);
+      }
+      transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
+    });
+
+    VBox vbox = new VBox(mainGrid, addTransformButton);
+    ScrollPane scrollableBox = new ScrollPane(vbox);
+    scrollableBox.setFitToWidth(true);
+    scrollableBox.setPrefHeight(400);
+    return scrollableBox;
   }
 
   public FractalDialog() {
@@ -149,6 +159,13 @@ public class FractalDialog extends Dialog<String> implements Observable {
     grid.add(vectorValue1, 1, 2);
     grid.add(vectorValue2, 2, 2);
 
+    NumberField weightField = new Builder("Weight").prefWidth(60).value(0).build();
+    transformWeightFields.add(weightField);
+
+    grid.add(new Label("Optional weight:"), 0, 3);
+    grid.add(weightField, 1, 3);
+    GridPane.setColumnSpan(weightField, 2);
+
     return grid;
   }
 
@@ -166,6 +183,13 @@ public class FractalDialog extends Dialog<String> implements Observable {
     grid.add(new Label("Complex:"), 0, 0);
     grid.add(realPart, 1, 0);
     grid.add(imaginaryPart, 2, 0);
+
+    NumberField weightField = new Builder("Weight").prefWidth(60).value(0).build();
+    transformWeightFields.add(weightField);
+
+    grid.add(new Label("Optional weight:"), 0, 1);
+    grid.add(weightField, 1, 1);
+    GridPane.setColumnSpan(weightField, 2);
 
     return grid;
   }

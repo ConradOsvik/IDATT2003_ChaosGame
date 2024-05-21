@@ -1,6 +1,8 @@
 package edu.ntnu.stud.models;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import javafx.util.Pair;
 
 /**
  * This class represents the description of a Chaos Game. It includes a list of transformations and
@@ -10,6 +12,8 @@ public class ChaosGameDescription {
   private final List<Transform2D> transforms;
   private final Vector2D minCoords;
   private final Vector2D maxCoords;
+  private final boolean weighted;
+  private List<Pair<Transform2D, Double>> weightedTransforms;
 
   /**
    * Constructs a new ChaosGameDescription with the given transformations and coordinates.
@@ -31,6 +35,25 @@ public class ChaosGameDescription {
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
     this.transforms = transforms;
+    this.weighted = false;
+  }
+
+  public ChaosGameDescription(List<Pair<Transform2D, Double>> weightedTransforms, Vector2D minCoords, Vector2D maxCoords, boolean weighted){
+    if (weightedTransforms == null || minCoords == null || maxCoords == null) {
+      throw new IllegalArgumentException("Arguments cannot be null");
+    }
+    if (minCoords.getX0() >= maxCoords.getX0() || minCoords.getX1() >= maxCoords.getX1()) {
+      throw new IllegalArgumentException(
+          "Minimum coordinates must be less than maximum coordinates");
+    }
+
+    this.minCoords = minCoords;
+    this.maxCoords = maxCoords;
+    this.transforms = weightedTransforms.stream()
+        .map(Pair::getKey)
+        .collect(Collectors.toList());
+    this.weightedTransforms = weightedTransforms;
+    this.weighted = weighted;
   }
 
   /**
@@ -40,6 +63,14 @@ public class ChaosGameDescription {
    */
   public List<Transform2D> getTransforms() {
     return this.transforms;
+  }
+
+  public boolean isWeighted(){
+    return this.weighted;
+  }
+
+  public List<Pair<Transform2D, Double>> getWeightedTransforms() {
+    return weightedTransforms;
   }
 
   /**
