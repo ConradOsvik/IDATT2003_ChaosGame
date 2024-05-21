@@ -22,6 +22,11 @@ public class CLIController {
     cli.displayMenu(commands);
     int choice = validatedInput.getInt("Enter your choice:");
 
+    if (choice < 1 || choice > commands.getCommands().size()) {
+      cli.displayErrorMessage("Invalid choice");
+      return;
+    }
+
     Command command = commands.getCommands().get(choice - 1);
     command.execute();
   }
