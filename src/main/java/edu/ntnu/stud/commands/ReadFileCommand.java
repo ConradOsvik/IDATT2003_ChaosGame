@@ -35,7 +35,7 @@ public class ReadFileCommand implements Command {
   public void execute() {
     cli.displayMessage("Executing command: " + getName());
     String fileName = validatedInput.getString("Enter the name of the file to read: ");
-    String path = "src/main/resources/" + fileName + ".txt";
+    String path = "src/main/resources/transforms/" + fileName + ".txt";
 
     try {
       ChaosGameDescription chaosGameDescription = chaosGameFileHandler.readFromFile(path);

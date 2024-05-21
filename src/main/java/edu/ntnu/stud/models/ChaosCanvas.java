@@ -79,7 +79,7 @@ public class ChaosCanvas {
     int i = (int) Math.round(indices.getX0());
     int j = (int) Math.round(indices.getX1());
     if (i >= 0 && i < width && j >= 0 && j < height) {
-      this.canvas[i][j] = 1;
+      this.canvas[i][j] = this.getPixel(point) + 1;
     }
   }
 

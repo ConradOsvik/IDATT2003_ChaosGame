@@ -38,7 +38,7 @@ public class WriteToFileCommand implements Command {
   public void execute() {
     System.out.println("Executing command: " + getName());
     String fileName = validatedInput.getString("Enter the name of the file to write to: ");
-    String path = "src/main/resources/" + fileName + ".txt";
+    String path = "src/main/resources/transforms/" + fileName + ".txt";
 
     cli.displayMessage("Enter the values for the min coordinates:");
     double minX0 = validatedInput.getDouble("Enter minX: ");

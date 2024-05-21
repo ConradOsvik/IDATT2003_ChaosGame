@@ -61,11 +61,11 @@ public class ChaosGameFileHandler {
 
       return new ChaosGameDescription(transforms, lowerLeft, upperRight);
     } catch (InputMismatchException e) {
-      throw new FileHandlingException("The file is not formatted correctly");
+      throw new FileHandlingException("The file is not formatted correctly: " + e.getMessage());
     } catch (NoSuchElementException e) {
-      throw new FileHandlingException("The file is missing elements");
+      throw new FileHandlingException("The file is missing elements: " + e.getMessage());
     } catch (Exception e) {
-      throw new FileHandlingException("An error occurred reading the file");
+      throw new FileHandlingException("An error occurred reading the file: " + e.getMessage());
     }
   }
 
@@ -167,7 +167,7 @@ public class ChaosGameFileHandler {
         file.createNewFile();
       }
     } catch (IOException e) {
-      throw new FileHandlingException("An error occurred creating the file");
+      throw new FileHandlingException("An error occurred creating the file: " + e.getMessage());
     }
 
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
@@ -181,7 +181,7 @@ public class ChaosGameFileHandler {
         writeJuliaTransforms(writer, description.getTransforms());
       }
     } catch (Exception e) {
-      throw new FileHandlingException("An error occurred writing to the file");
+      throw new FileHandlingException("An error occurred writing to the file: " + e.getMessage());
     }
   }
 

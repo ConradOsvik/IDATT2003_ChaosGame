@@ -1,5 +1,10 @@
 package edu.ntnu.stud.models;
 
+import edu.ntnu.stud.enums.Event;
+import edu.ntnu.stud.utils.Observable;
+import edu.ntnu.stud.utils.Observer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -7,11 +12,14 @@ import java.util.Random;
  * transformations. The game starts with a point, and repeatedly applies a randomly chosen
  * transformation to that point and plots the result.
  */
-public class ChaosGame {
-  private final ChaosCanvas canvas;
-  private final ChaosGameDescription description;
+public class ChaosGame implements Observable {
+
+  private final List<Observer> observers = new ArrayList<>();
+  public final Random random = new Random();
+  private ChaosGameDescription description;
   private Vector2D currentPoint;
-  public final Random random;
+  private ChaosCanvas canvas;
+  private int canvasWidth, canvasHeight;
 
   /**
    * Constructs a new ChaosGame with the given description, width, and height.
@@ -29,10 +37,48 @@ public class ChaosGame {
     }
 
     this.description = description;
+    this.canvasWidth = width;
+    this.canvasHeight = height;
     this.canvas =
-        new ChaosCanvas(width, height, description.getMinCoords(), description.getMaxCoords());
+        new ChaosCanvas(
+            canvasWidth, canvasHeight, description.getMinCoords(), description.getMaxCoords());
     this.currentPoint = new Vector2D(0, 0);
-    this.random = new Random();
+  }
+
+  /**
+   * Sets the Chaos Game description and resets canvas.
+   *
+   * @param description the description of the Chaos Game
+   */
+  public void setChaosGameDescription(ChaosGameDescription description) {
+    this.description = description;
+    this.currentPoint = new Vector2D(0, 0);
+    this.canvas =
+        new ChaosCanvas(
+            canvasWidth, canvasHeight, description.getMinCoords(), description.getMaxCoords());
+
+    notifyObservers(Event.CHAOS_GAME_DESCRIPTION_UPDATED);
+  }
+
+  /**
+   * Sets the canvas size and resets the canvas.
+   *
+   * @param width the width of the canvas
+   * @param height the height of the canvas
+   */
+  public void setCanvasSize(int width, int height) {
+    if (width <= 0 || height <= 0) {
+      throw new IllegalArgumentException("Width and height must be positive");
+    }
+
+    this.canvasWidth = width;
+    this.canvasHeight = height;
+
+    this.canvas =
+        new ChaosCanvas(
+            canvasWidth, canvasHeight, description.getMinCoords(), description.getMaxCoords());
+
+    notifyObservers(Event.CANVAS_SIZE_UPDATED);
   }
 
   /**
@@ -61,5 +107,32 @@ public class ChaosGame {
       this.currentPoint = transform.transform(this.currentPoint);
       this.canvas.putPixel(this.currentPoint);
     }
+
+    notifyObservers(Event.STEPS_RAN);
+  }
+
+  @Override
+  public void addObserver(Observer observer) {
+    this.observers.add(observer);
+  }
+
+  @Override
+  public void removeObserver(Observer observer) {
+    this.observers.remove(observer);
+  }
+
+  @Override
+  public void notifyObservers(Event event) {
+    observers.forEach(observer -> observer.update(event));
+  }
+
+  @Override
+  public void notifyObservers(Event event, Object data) {
+    observers.forEach(observer -> observer.update(event, data));
+  }
+
+  @Override
+  public void notifyObservers(Event event, Object... data) {
+    observers.forEach(observer -> observer.update(event, data));
   }
 }

@@ -1,7 +1,7 @@
 package edu.ntnu.stud;
 
 import edu.ntnu.stud.controllers.CLIController;
-import edu.ntnu.stud.controllers.RootController;
+import edu.ntnu.stud.controllers.ChaosGameController;
 import edu.ntnu.stud.views.CLI;
 import java.io.IOException;
 import javafx.application.Application;
@@ -20,7 +20,7 @@ public class App extends Application {
   /** Launches the JavaFX application. */
   @Override
   public void start(Stage stage) throws IOException {
-    RootController rootController = new RootController(this, stage);
+    ChaosGameController controller = new ChaosGameController(stage);
   }
 
   /** Initializes the terminal view and controller */
