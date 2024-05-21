@@ -272,7 +272,6 @@ public class ChaosGameController extends Controller {
         break;
       case SAVE_FILE:
         saveToFile((String) data);
-        resetPreset();
       default:
         break;
     }
