@@ -26,6 +26,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+/**
+ * This class is the controller for the Chaos Game application.
+ * It extends the Controller interface and is responsible for handling user input and
+ * updating the view and model accordingly.
+ */
 public class ChaosGameController extends Controller {
 
   private final String PATH = "src/main/resources/transforms/";
@@ -34,10 +39,14 @@ public class ChaosGameController extends Controller {
   private final ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
   private final ChaosGameView chaosGameView;
   private final ChaosGame chaosGame;
-
   private ChaosGameDescription currentChaosGameDescription;
   private boolean darkMode = false;
 
+  /**
+   * Constructs a new ChaosGameController with the given stage.
+   *
+   * @param stage the stage to display the application in
+   */
   public ChaosGameController(Stage stage) {
     super();
     this.chaosGameView = new ChaosGameView(this);
@@ -52,6 +61,12 @@ public class ChaosGameController extends Controller {
     setup(stage);
   }
 
+  /**
+   * Sets up the Chaos Game application with the given stage.
+   * Adds listeners to the stage width and height properties to resize the canvas accordingly.
+   *
+   * @param stage the stage to display the application in
+   */
   private void setup(Stage stage) {
     Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
@@ -70,6 +85,14 @@ public class ChaosGameController extends Controller {
     stage.show();
   }
 
+  /**
+   * Resizes the canvas to the given width and height.
+   * The canvas is only resized if the new width and height are greater than the default width and
+   * height minus the default canvas width and height.
+   *
+   * @param width the new width of the canvas
+   * @param height the new height of the canvas
+   */
   private void resizeCanvas(int width, int height) {
     if (width < (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH) || height < (DEFAULT_HEIGHT
         - DEFAULT_CANVAS_HEIGHT)) {
@@ -79,10 +102,20 @@ public class ChaosGameController extends Controller {
     chaosGame.setCanvasSize(width, height);
   }
 
+  /**
+   * Runs the Chaos Game for the given number of iterations.
+   *
+   * @param iterations the number of iterations to run
+   */
   private void runIterations(int iterations) {
     chaosGame.runSteps(iterations);
   }
 
+  /**
+   * Sets the description of the Chaos Game to the given preset.
+   *
+   * @param preset the preset to set the description to
+   */
   private void setDescriptionWithPreset(String preset) {
     ChaosGameDescription chaosGameDescription = ChaosGameDescriptionFactory.createDescription(
         preset);
@@ -92,10 +125,18 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /**
+   * Resets the preset combobox in the view.
+   */
   private void resetPreset() {
     chaosGameView.resetPresetCombobox();
   }
 
+  /**
+   * Loads the Chaos Game description from the given file.
+   *
+   * @param fileName the name of the file to load the description from
+   */
   private void loadFromFile(String fileName) {
     try {
       String path = PATH + fileName + ".txt";
@@ -107,6 +148,11 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /**
+   * Saves the current Chaos Game description to the given file.
+   *
+   * @param fileName the name of the file to save the description to
+   */
   private void saveToFile(String fileName) {
     try {
       String path = PATH + fileName + ".txt";
@@ -116,6 +162,9 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /**
+   * Opens the edit description dialog in the view.
+   */
   private void openEditDescriptionDialog() {
     String transformType =
         currentChaosGameDescription.getTransforms().getFirst() instanceof AffineTransform2D
@@ -148,6 +197,16 @@ public class ChaosGameController extends Controller {
         transformValues);
   }
 
+  /**
+   * Updates the Chaos Game description with the given values for .
+   *
+   * @param xMin the minimum x-coordinate of the canvas
+   * @param yMin the minimum y-coordinate of the canvas
+   * @param xMax the maximum x-coordinate of the canvas
+   * @param yMax the maximum y-coordinate of the canvas
+   * @param transformValues the values of the transforms
+   * @param transformWeights the weights of the transforms
+   */
   private void updateChaosGameDescription(double xMin, double yMin, double xMax, double yMax,
       List<List<Double>> transformValues, List<Double> transformWeights) {
     try {
@@ -197,14 +256,26 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /**
+   * Resets the image of the Chaos Game.
+   */
   private void resetImage() {
     chaosGameView.setImage(createImageFromMatrix(chaosGame.getCanvas().getCanvas()));
   }
 
+  /**
+   * Resets the zoom of the image.
+   */
   private void resetImageZoom() {
     chaosGameView.resetZoom();
   }
 
+  /**
+   * Creates an image from the given matrix.
+   *
+   * @param matrix the matrix to create the image from
+   * @return the image created from the matrix
+   */
   private Image createImageFromMatrix(int[][] matrix) {
     WritableImage writableImage = new WritableImage(matrix.length, matrix[0].length);
     PixelWriter pixelWriter = writableImage.getPixelWriter();
@@ -224,6 +295,9 @@ public class ChaosGameController extends Controller {
     return writableImage;
   }
 
+  /**
+   * Toggles the dark mode of the application.
+   */
   private void toggleDarkMode() {
     darkMode = !darkMode;
 
@@ -236,6 +310,13 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /**
+   * Updates the Chaos Game view when an event occurs
+   * The event can be related to dark mode, running steps, updating the canvas size, or
+   * opening the description dialogue
+   *
+   * @param event the event that occurred
+   */
   @Override
   public void update(Event event) {
     switch (event) {
@@ -256,7 +337,14 @@ public class ChaosGameController extends Controller {
         break;
     }
   }
-
+  /**
+   * Updates the Chaos Game view when an event occurs
+   * The event can be related to running the chaos game, setting a preset,
+   * loading a file, or saving a file
+   *
+   * @param event the event that occurred
+   * @param data the data associated with the event
+   */
   @Override
   public void update(Event event, Object data) {
     switch (event) {
@@ -277,6 +365,13 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /**
+   * Updates the Chaos Game view when an event occurs
+   * The event is related to updating the description of the chaos game
+   *
+   * @param event the event that occurred
+   * @param data the data associated with the event
+   */
   @Override
   public void update(Event event, Object... data) {
     switch (event) {
