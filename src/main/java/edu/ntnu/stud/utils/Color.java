@@ -9,74 +9,55 @@ package edu.ntnu.stud.utils;
  */
 public final class Color {
 
-  /**
-   * The ANSI reset code.
-   */
+  /** The ANSI reset code. */
   public static final String RESET = "\u001B[0m";
-  /**
-   * The ANSI black code.
-   */
+
+  /** The ANSI black code. */
   public static final String BLACK = "\u001B[30m";
-  /**
-   * The ANSI red code.
-   */
+
+  /** The ANSI red code. */
   public static final String RED = "\u001B[31m";
-  /**
-   * The ANSI green code.
-   */
+
+  /** The ANSI green code. */
   public static final String GREEN = "\u001B[32m";
-  /**
-   * The ANSI yellow code.
-   */
+
+  /** The ANSI yellow code. */
   public static final String YELLOW = "\u001B[33m";
-  /**
-   * The ANSI blue code.
-   */
+
+  /** The ANSI blue code. */
   public static final String BLUE = "\u001B[34m";
-  /**
-   * The ANSI purple code.
-   */
+
+  /** The ANSI purple code. */
   public static final String PURPLE = "\u001B[35m";
-  /**
-   * The ANSI cyan code.
-   */
+
+  /** The ANSI cyan code. */
   public static final String CYAN = "\u001B[36m";
-  /**
-   * The ANSI white code.
-   */
+
+  /** The ANSI white code. */
   public static final String WHITE = "\u001B[37m";
 
-  /**
-   * The ANSI black background code.
-   */
+  /** The ANSI black background code. */
   public static final String BLACK_BACKGROUND = "\u001B[40m";
-  /**
-   * The ANSI red background code.
-   */
+
+  /** The ANSI red background code. */
   public static final String RED_BACKGROUND = "\u001B[41m";
-  /**
-   * The ANSI green background code.
-   */
+
+  /** The ANSI green background code. */
   public static final String GREEN_BACKGROUND = "\u001B[42m";
-  /**
-   * The ANSI yellow background code.
-   */
+
+  /** The ANSI yellow background code. */
   public static final String YELLOW_BACKGROUND = "\u001B[43m";
-  /**
-   * The ANSI blue background code.
-   */
+
+  /** The ANSI blue background code. */
   public static final String BLUE_BACKGROUND = "\u001B[44m";
-  /**
-   * The ANSI purple background code.
-   */
+
+  /** The ANSI purple background code. */
   public static final String PURPLE_BACKGROUND = "\u001B[45m";
-  /**
-   * The ANSI cyan background code.
-   */
+
+  /** The ANSI cyan background code. */
   public static final String CYAN_BACKGROUND = "\u001B[46m";
-  /**
-   * The ANSI white background code.
-   */
+
+  /** The ANSI white background code. */
   public static final String WHITE_BACKGROUND = "\u001B[47m";
 
   /**

@@ -15,14 +15,10 @@ import javafx.scene.layout.HBox;
  */
 abstract class View extends Scene implements Observable {
 
-  /**
-   * The list of observers of the View.
-   */
+  /** The list of observers of the View. */
   protected final List<Observer> observers = new ArrayList<>();
 
-  /**
-   * The root HBox of the View.
-   */
+  /** The root HBox of the View. */
   protected final HBox root = (HBox) getRoot();
 
   /** Constructor for the View class. Initializes the View with a root HBox. */

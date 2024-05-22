@@ -15,34 +15,22 @@ import javafx.util.Pair;
  */
 public class ChaosGame implements Observable {
 
-  /**
-   * The list of observers of the Chaos Game.
-   */
+  /** The list of observers of the Chaos Game. */
   private final List<Observer> observers = new ArrayList<>();
 
-  /**
-   * The random number generator used to choose transformations.
-   */
+  /** The random number generator used to choose transformations. */
   public final Random random = new Random();
 
-  /**
-   * The Chaos Game description, including the transformations to use.
-   */
+  /** The Chaos Game description, including the transformations to use. */
   private ChaosGameDescription description;
 
-  /**
-   * The current point in the Chaos Game.
-   */
+  /** The current point in the Chaos Game. */
   private Vector2D currentPoint;
 
-  /**
-   * The canvas used to plot the points in the Chaos Game.
-   */
+  /** The canvas used to plot the points in the Chaos Game. */
   private ChaosCanvas canvas;
 
-  /**
-   * The width and height of the canvas.
-   */
+  /** The width and height of the canvas. */
   private int canvasWidth, canvasHeight;
 
   /**
