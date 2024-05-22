@@ -18,8 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 /**
- * This class represents a dialog box for editing or creating fractals.
- * It extends the Dialog class from the JavaFX library and implements the Observable interface.
+ * This class represents a dialog box for editing or creating fractals. It extends the Dialog class
+ * from the JavaFX library and implements the Observable interface.
  */
 public class FractalDialog extends Dialog<String> implements Observable {
 
@@ -34,14 +34,14 @@ public class FractalDialog extends Dialog<String> implements Observable {
   private final GridPane transformsGrid = new GridPane();
 
   /**
-   * Constructor for the FractalDialog class.
-   * Initializes the dialog box with the specified transform type, min and max coordinates, and transform values.
+   * Constructor for the FractalDialog class. Initializes the dialog box with the specified
+   * transform type, min and max coordinates, and transform values.
    *
-   * @param transformType the type of transform
-   * @param xMinValue the minimum x-coordinate
-   * @param yMinValue the minimum y-coordinate
-   * @param xMaxValue the maximum x-coordinate
-   * @param yMaxValue the maximum y-coordinate
+   * @param transformType   the type of transform
+   * @param xMinValue       the minimum x-coordinate
+   * @param yMinValue       the minimum y-coordinate
+   * @param xMaxValue       the maximum x-coordinate
+   * @param yMaxValue       the maximum y-coordinate
    * @param transformValues the values of the transforms
    */
   public FractalDialog(String transformType, double xMinValue, double yMinValue, double xMaxValue,
@@ -87,38 +87,23 @@ public class FractalDialog extends Dialog<String> implements Observable {
     }
 
     ScrollPane scrollableBox = getScrollPane(mainGrid);
-    
     getDialogPane().setContent(scrollableBox);
 
     ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
     getDialogPane().getButtonTypes().addAll(buttonTypeOk, ButtonType.CANCEL);
 
-    setResultConverter(
-        dialogButton -> {
-          if (dialogButton == buttonTypeOk) {
-            String selectedType = typeComboBox.getValue();
-            double minX = xMin.getValue();
-            double minY = yMin.getValue();
-            double maxX = xMax.getValue();
-            double maxY = yMax.getValue();
-            List<List<Double>> transformValuesResult = new ArrayList<>();
-            for (List<NumberField> transformFields : transforms) {
-              List<Double> transformValuesRow = new ArrayList<>();
-              for (NumberField field : transformFields) {
-                transformValuesRow.add(field.getValue());
-              }
-              transformValuesResult.add(transformValuesRow);
-            }
-            //        return new FractalData(selectedType, minX, minY, maxX, maxY,
-            // transformValuesResult);
-            notifyObservers(
-                Event.UPDATE_DESCRIPTION,
-                selectedType,
-                minX,
-                minY,
-                maxX,
-                maxY,
-                transformValuesResult);
+    setResultConverter(dialogButton -> {
+      if (dialogButton == buttonTypeOk) {
+        String selectedType = typeComboBox.getValue();
+        double minX = xMin.getValue();
+        double minY = yMin.getValue();
+        double maxX = xMax.getValue();
+        double maxY = yMax.getValue();
+        List<List<Double>> transformValuesResult = new ArrayList<>();
+        for (List<NumberField> transformFields : transforms) {
+          List<Double> transformValuesRow = new ArrayList<>();
+          for (NumberField field : transformFields) {
+            transformValuesRow.add(field.getValue());
           }
           transformValuesResult.add(transformValuesRow);
         }
@@ -127,15 +112,16 @@ public class FractalDialog extends Dialog<String> implements Observable {
           transformWeights.add(field.getValue());
         }
 
-        notifyObservers(Event.UPDATE_DESCRIPTION, selectedType, minX, minY, maxX, maxY, transformValuesResult, transformWeights);
+        notifyObservers(Event.UPDATE_DESCRIPTION, selectedType, minX, minY, maxX, maxY,
+            transformValuesResult, transformWeights);
       }
       return null;
     });
   }
 
   /**
-   * Default constructor for the FractalDialog class.
-   * Initializes the dialog box with default values.
+   * Default constructor for the FractalDialog class. Initializes the dialog box with default
+   * values.
    */
   public FractalDialog() {
     this("Affine", 0, 0, 0, 0, new ArrayList<>());
@@ -143,6 +129,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
 
   /**
    * Returns a scrollable box containing the main grid and an "Add Transform" button.
+   *
    * @param mainGrid
    * @return a scrollable box containing the main grid and an "Add Transform" button
    */
@@ -285,7 +272,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
    * Notifies all observers of an event and a single data object.
    *
    * @param event the event to be notified
-   * @param data the data to be sent with the event
+   * @param data  the data to be sent with the event
    */
   @Override
   public void notifyObservers(Event event, Object data) {
@@ -296,7 +283,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
    * Notifies all observers of an event and multiple data objects.
    *
    * @param event the event to be notified
-   * @param data the data to be sent with the event
+   * @param data  the data to be sent with the event
    */
   @Override
   public void notifyObservers(Event event, Object... data) {
