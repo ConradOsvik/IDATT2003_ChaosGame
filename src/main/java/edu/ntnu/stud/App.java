@@ -1,7 +1,7 @@
 package edu.ntnu.stud;
 
-import edu.ntnu.stud.controllers.CliController;
 import edu.ntnu.stud.controllers.ChaosGameController;
+import edu.ntnu.stud.controllers.CliController;
 import edu.ntnu.stud.views.Cli;
 import javafx.application.Application;
 import javafx.stage.Stage;

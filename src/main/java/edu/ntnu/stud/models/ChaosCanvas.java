@@ -44,12 +44,8 @@ public class ChaosCanvas {
                 (double) (this.width - 1) / (maxCoords.getX0() - minCoords.getX0()),
                 0),
             new Vector2D(
-                (this.height - 1)
-                    * maxCoords.getX1()
-                    / (maxCoords.getX1() - minCoords.getX1()),
-                (this.width - 1)
-                    * minCoords.getX0()
-                    / (minCoords.getX0() - maxCoords.getX0())));
+                (this.height - 1) * maxCoords.getX1() / (maxCoords.getX1() - minCoords.getX1()),
+                (this.width - 1) * minCoords.getX0() / (minCoords.getX0() - maxCoords.getX0())));
   }
 
   /**
