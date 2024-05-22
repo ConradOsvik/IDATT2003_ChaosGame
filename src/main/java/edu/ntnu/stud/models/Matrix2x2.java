@@ -4,6 +4,11 @@ package edu.ntnu.stud.models;
  * Represents a 2x2 matrix. This class is a record, which is a special kind of class in Java. Good
  * for representing immutable data classes. The Matrix2x2 record has four fields representing the
  * elements of the matrix.
+ *
+ * @param a00 the element in the first row and first column
+ * @param a01 the element in the first row and second column
+ * @param a10 the element in the second row and first column
+ * @param a11 the element in the second row and second column
  */
 public record Matrix2x2(double a00, double a01, double a10, double a11) {
 

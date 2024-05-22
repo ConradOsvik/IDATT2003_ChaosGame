@@ -39,10 +39,9 @@ public class StyledButton extends Button {
     private Set<String> classes = new HashSet<>();
 
     /**
-     * Sets the text of the StyledButton.
+     * Constructor for the Builder class. Initializes the Builder with the specified text.
      *
      * @param text the text of the StyledButton
-     * @return this Builder instance
      */
     public Builder(String text) {
       this.text = text;

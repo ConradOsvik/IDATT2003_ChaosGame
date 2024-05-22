@@ -9,6 +9,7 @@ import javafx.scene.control.Alert.AlertType;
  * acknowledge the error before it is closed.
  */
 public class ErrorDialog {
+  // This class is used to display error messages to the user in a dialog box
 
   /**
    * Displays an error dialog with a specified error message.

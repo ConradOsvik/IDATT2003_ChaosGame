@@ -16,6 +16,7 @@ import java.util.List;
  * such as the Sierpinski Triangle, Barnsley Fern, and Julia Set.
  */
 public class ChaosGameDescriptionFactory {
+  // This class is a factory for creating ChaosGameDescription objects for different types of chaos
 
   /**
    * Creates a ChaosGameDescription object based on the provided description type.

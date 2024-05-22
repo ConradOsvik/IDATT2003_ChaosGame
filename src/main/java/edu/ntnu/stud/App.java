@@ -14,6 +14,7 @@ import javafx.stage.Stage;
  * launch the application in terminal mode
  */
 public class App extends Application {
+  // This class is the main class of the application. It launches the JavaFX application or the CLI
 
   private static CLIController cliController;
 

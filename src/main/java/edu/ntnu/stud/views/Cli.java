@@ -10,6 +10,7 @@ import java.util.List;
  * user. It includes methods for displaying a menu, a message, and an error message.
  */
 public class Cli {
+  // This class is the Command Line Interface (CLI) for displaying menus and messages to the user
 
   /**
    * Displays the menu of commands to the user.

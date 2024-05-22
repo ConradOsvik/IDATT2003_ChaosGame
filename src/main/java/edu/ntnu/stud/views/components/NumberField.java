@@ -31,6 +31,11 @@ public class NumberField extends TextField {
     private boolean valueSet = false;
     private String label;
 
+    /**
+     * Constructor for the Builder class. Initializes the Builder with the specified label.
+     *
+     * @param label the label of the NumberField
+     */
     public Builder(String label) {
       this.label = label;
     }

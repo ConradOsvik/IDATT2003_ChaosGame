@@ -29,6 +29,7 @@ public class ValidatedInput {
   /**
    * Executes the supplier's get method with exception handling and a prompt.
    *
+   * @param <T> The type of the result.
    * @param supplier The supplier whose get method is to be executed.
    * @param prompt The prompt to display before getting the input.
    * @return The result of the supplier's get method.

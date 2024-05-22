@@ -38,6 +38,14 @@ public class ChaosGameDescription {
     this.weighted = false;
   }
 
+  /**
+   * Constructs a new ChaosGameDescription with the given weighted transformations and coordinates.
+   *
+   * @param weightedTransforms the list of weighted transformations for the Chaos Game
+   * @param minCoords the minimum coordinates for the Chaos Game
+   * @param maxCoords the maximum coordinates for the Chaos Game
+   * @param weighted whether the transformations are weighted
+   */
   public ChaosGameDescription(
       List<Pair<Transform2D, Double>> weightedTransforms,
       Vector2D minCoords,
@@ -67,10 +75,20 @@ public class ChaosGameDescription {
     return this.transforms;
   }
 
+  /**
+   * Returns whether the transformations are weighted.
+   *
+   * @return true if the transformations are weighted, false otherwise
+   */
   public boolean isWeighted() {
     return this.weighted;
   }
 
+  /**
+   * Returns the list of weighted transformations for the Chaos Game.
+   *
+   * @return the list of weighted transformations
+   */
   public List<Pair<Transform2D, Double>> getWeightedTransforms() {
     return weightedTransforms;
   }

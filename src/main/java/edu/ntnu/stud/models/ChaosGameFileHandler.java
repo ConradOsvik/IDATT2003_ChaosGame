@@ -17,6 +17,7 @@ import java.util.Scanner;
  * ChaosGameDescription from a file and write a ChaosGameDescription to a file.
  */
 public class ChaosGameFileHandler {
+  // This class is responsible for handling file operations related to the ChaosGame.
 
   /**
    * Removes the comment from a line.

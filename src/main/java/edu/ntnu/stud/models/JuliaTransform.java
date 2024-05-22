@@ -33,6 +33,11 @@ public class JuliaTransform implements Transform2D {
     this.sign = sign;
   }
 
+  /**
+   * Returns the complex point c used in the transformation.
+   *
+   * @return the complex point c
+   */
   public Complex getC() {
     return this.c;
   }

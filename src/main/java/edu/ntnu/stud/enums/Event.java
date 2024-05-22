@@ -21,14 +21,44 @@ package edu.ntnu.stud.enums;
  * </ul>
  */
 public enum Event {
+  /**
+   * Represents the event of toggling the dark mode.
+   */
   DARK_MODE_TOGGLED,
+  /**
+   * Represents the event of updating the description of the chaos game.
+   */
   CHAOS_GAME_DESCRIPTION_UPDATED,
+  /**
+   * Represents the event of updating the size of the canvas.
+   */
   CANVAS_SIZE_UPDATED,
+  /**
+   * Represents the event of setting a preset.
+   */
   SET_PRESET,
+  /**
+   * Represents the event of running the chaos game.
+   */
   RUN_CHAOS_GAME,
+  /**
+   * Represents the event of running steps.
+   */
   STEPS_RAN,
+  /**
+   * Represents the event of loading a file.
+   */
   LOAD_FILE,
+  /**
+   * Represents the event of saving a file.
+   */
   SAVE_FILE,
+  /**
+   * Represents the event of opening the edit description dialog.
+   */
   OPEN_EDIT_DESCRIPTION_DIALOG,
+  /**
+   * Represents the event of updating a description.
+   */
   UPDATE_DESCRIPTION;
 }
