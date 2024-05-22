@@ -87,23 +87,38 @@ public class FractalDialog extends Dialog<String> implements Observable {
     }
 
     ScrollPane scrollableBox = getScrollPane(mainGrid);
+    
     getDialogPane().setContent(scrollableBox);
 
     ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
     getDialogPane().getButtonTypes().addAll(buttonTypeOk, ButtonType.CANCEL);
 
-    setResultConverter(dialogButton -> {
-      if(dialogButton == buttonTypeOk) {
-        String selectedType = typeComboBox.getValue();
-        double minX = xMin.getValue();
-        double minY = yMin.getValue();
-        double maxX = xMax.getValue();
-        double maxY = yMax.getValue();
-        List<List<Double>> transformValuesResult = new ArrayList<>();
-        for (List<NumberField> transformFields : transforms) {
-          List<Double> transformValuesRow = new ArrayList<>();
-          for (NumberField field : transformFields) {
-            transformValuesRow.add(field.getValue());
+    setResultConverter(
+        dialogButton -> {
+          if (dialogButton == buttonTypeOk) {
+            String selectedType = typeComboBox.getValue();
+            double minX = xMin.getValue();
+            double minY = yMin.getValue();
+            double maxX = xMax.getValue();
+            double maxY = yMax.getValue();
+            List<List<Double>> transformValuesResult = new ArrayList<>();
+            for (List<NumberField> transformFields : transforms) {
+              List<Double> transformValuesRow = new ArrayList<>();
+              for (NumberField field : transformFields) {
+                transformValuesRow.add(field.getValue());
+              }
+              transformValuesResult.add(transformValuesRow);
+            }
+            //        return new FractalData(selectedType, minX, minY, maxX, maxY,
+            // transformValuesResult);
+            notifyObservers(
+                Event.UPDATE_DESCRIPTION,
+                selectedType,
+                minX,
+                minY,
+                maxX,
+                maxY,
+                transformValuesResult);
           }
           transformValuesResult.add(transformValuesRow);
         }
@@ -159,22 +174,28 @@ public class FractalDialog extends Dialog<String> implements Observable {
   private GridPane createAffineTransformUI(List<Double> values) {
     GridPane grid = new GridPane();
 
-    NumberField matrixValue1 = new Builder("a00").prefWidth(60)
-        .value(values != null ? values.get(0) : 0).build();
-    NumberField matrixValue2 = new Builder("a01").prefWidth(60)
-        .value(values != null ? values.get(1) : 0).build();
-    NumberField matrixValue3 = new Builder("a10").prefWidth(60)
-        .value(values != null ? values.get(2) : 0).build();
-    NumberField matrixValue4 = new Builder("a11").prefWidth(60)
-        .value(values != null ? values.get(3) : 0).build();
-    NumberField vectorValue1 = new Builder("x").prefWidth(60)
-        .value(values != null ? values.get(4) : 0).build();
-    NumberField vectorValue2 = new Builder("y").prefWidth(60)
-        .value(values != null ? values.get(5) : 0).build();
+    NumberField matrixValue1 =
+        new Builder("a00").prefWidth(60).value(values != null ? values.get(0) : 0).build();
+    NumberField matrixValue2 =
+        new Builder("a01").prefWidth(60).value(values != null ? values.get(1) : 0).build();
+    NumberField matrixValue3 =
+        new Builder("a10").prefWidth(60).value(values != null ? values.get(2) : 0).build();
+    NumberField matrixValue4 =
+        new Builder("a11").prefWidth(60).value(values != null ? values.get(3) : 0).build();
+    NumberField vectorValue1 =
+        new Builder("x").prefWidth(60).value(values != null ? values.get(4) : 0).build();
+    NumberField vectorValue2 =
+        new Builder("y").prefWidth(60).value(values != null ? values.get(5) : 0).build();
 
-    List<NumberField> transformFields = new ArrayList<>(
-        Arrays.asList(matrixValue1, matrixValue2, matrixValue3, matrixValue4, vectorValue1,
-            vectorValue2));
+    List<NumberField> transformFields =
+        new ArrayList<>(
+            Arrays.asList(
+                matrixValue1,
+                matrixValue2,
+                matrixValue3,
+                matrixValue4,
+                vectorValue1,
+                vectorValue2));
     transforms.add(transformFields);
 
     grid.add(new Label("Matrix Row 1:"), 0, 0);
@@ -208,10 +229,10 @@ public class FractalDialog extends Dialog<String> implements Observable {
   private GridPane createJuliaTransformUI(List<Double> values) {
     GridPane grid = new GridPane();
 
-    NumberField realPart = new Builder("Real").prefWidth(60)
-        .value(values != null ? values.get(0) : 0).build();
-    NumberField imaginaryPart = new Builder("Imaginary").prefWidth(60)
-        .value(values != null ? values.get(1) : 0).build();
+    NumberField realPart =
+        new Builder("Real").prefWidth(60).value(values != null ? values.get(0) : 0).build();
+    NumberField imaginaryPart =
+        new Builder("Imaginary").prefWidth(60).value(values != null ? values.get(1) : 0).build();
 
     List<NumberField> transformFields = new ArrayList<>(Arrays.asList(realPart, imaginaryPart));
     transforms.add(transformFields);

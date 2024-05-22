@@ -52,8 +52,8 @@ public class ChaosGameController extends Controller {
     this.chaosGameView = new ChaosGameView(this);
 
     this.currentChaosGameDescription = ChaosGameDescriptionFactory.createSierpinskiDescription();
-    this.chaosGame = new ChaosGame(currentChaosGameDescription, DEFAULT_CANVAS_WIDTH,
-        DEFAULT_CANVAS_HEIGHT);
+    this.chaosGame =
+        new ChaosGame(currentChaosGameDescription, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
     chaosGame.addObserver(this);
 
     this.resetImage();
@@ -70,15 +70,23 @@ public class ChaosGameController extends Controller {
   private void setup(Stage stage) {
     Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
-    stage.widthProperty().addListener((observable, oldValue, newValue) -> {
-      resizeCanvas(newValue.intValue() - (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH),
-          (int) stage.getHeight() - (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT));
-    });
+    stage
+        .widthProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> {
+              resizeCanvas(
+                  newValue.intValue() - (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH),
+                  (int) stage.getHeight() - (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT));
+            });
 
-    stage.heightProperty().addListener((observable, oldValue, newValue) -> {
-      resizeCanvas((int) stage.getWidth() - (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH),
-          newValue.intValue() - (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT));
-    });
+    stage
+        .heightProperty()
+        .addListener(
+            (observable, oldValue, newValue) -> {
+              resizeCanvas(
+                  (int) stage.getWidth() - (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH),
+                  newValue.intValue() - (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT));
+            });
 
     stage.setScene(chaosGameView);
     stage.setTitle("Chaos Game");
@@ -94,8 +102,8 @@ public class ChaosGameController extends Controller {
    * @param height the new height of the canvas
    */
   private void resizeCanvas(int width, int height) {
-    if (width < (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH) || height < (DEFAULT_HEIGHT
-        - DEFAULT_CANVAS_HEIGHT)) {
+    if (width < (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH)
+        || height < (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT)) {
       return;
     }
 
@@ -168,7 +176,8 @@ public class ChaosGameController extends Controller {
   private void openEditDescriptionDialog() {
     String transformType =
         currentChaosGameDescription.getTransforms().getFirst() instanceof AffineTransform2D
-            ? "Affine" : "Julia";
+            ? "Affine"
+            : "Julia";
 
     double xMinValue = (double) currentChaosGameDescription.getMinCoords().getX0();
     double yMinValue = (double) currentChaosGameDescription.getMinCoords().getX1();
@@ -193,8 +202,8 @@ public class ChaosGameController extends Controller {
       transformValues.add(values);
     }
 
-    chaosGameView.openDescriptionDialog(transformType, xMinValue, yMinValue, xMaxValue, yMaxValue,
-        transformValues);
+    chaosGameView.openDescriptionDialog(
+        transformType, xMinValue, yMinValue, xMaxValue, yMaxValue, transformValues);
   }
 
   /**
@@ -215,8 +224,8 @@ public class ChaosGameController extends Controller {
       List<Transform2D> transforms = new ArrayList<>();
       for (List<Double> values : transformValues) {
         if (values.size() == 6) {
-          Matrix2x2 matrix = new Matrix2x2(values.get(0), values.get(1), values.get(2),
-              values.get(3));
+          Matrix2x2 matrix =
+              new Matrix2x2(values.get(0), values.get(1), values.get(2), values.get(3));
           Vector2D vector = new Vector2D(values.get(4), values.get(5));
 
           AffineTransform2D transform = new AffineTransform2D(matrix, vector);
@@ -249,8 +258,6 @@ public class ChaosGameController extends Controller {
             maxCoords);
         chaosGame.setChaosGameDescription(currentChaosGameDescription);
       }
-
-
     } catch (Exception e) {
       chaosGameView.showErrorDialog("Error updating description: " + e.getMessage());
     }

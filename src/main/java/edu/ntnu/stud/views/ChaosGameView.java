@@ -43,7 +43,7 @@ public class ChaosGameView extends View {
     this.chaosGameController = chaosGameController;
     addObserver(chaosGameController);
 
-    //Zooming
+    // Zooming
     imageView.setPreserveRatio(true);
     imageView.setSmooth(false);
     imageView.setOnScroll(event -> {

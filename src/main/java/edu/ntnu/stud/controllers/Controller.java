@@ -13,8 +13,7 @@ abstract class Controller implements Observer {
    * Handles the user request.
    */
   @Override
-  public void update(Event event) {
-  }
+  public void update(Event event) {}
 
   /**
    * Handles the user request with the specified data.
@@ -23,8 +22,7 @@ abstract class Controller implements Observer {
    * @param data the data to be used
    */
   @Override
-  public void update(Event event, Object data) {
-  }
+  public void update(Event event, Object data) {}
 
   /**
    * Handles the user request with the more than one specified data.
@@ -32,6 +30,5 @@ abstract class Controller implements Observer {
    * @param data the data to be used
    */
   @Override
-  public void update(Event event, Object... data) {
-  }
+  public void update(Event event, Object... data) {}
 }
