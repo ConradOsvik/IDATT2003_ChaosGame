@@ -27,9 +27,8 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 /**
- * This class is the controller for the Chaos Game application.
- * It extends the Controller interface and is responsible for handling user input and
- * updating the view and model accordingly.
+ * This class is the controller for the Chaos Game application. It extends the Controller interface
+ * and is responsible for handling user input and updating the view and model accordingly.
  */
 public class ChaosGameController extends Controller {
 
@@ -62,8 +61,8 @@ public class ChaosGameController extends Controller {
   }
 
   /**
-   * Sets up the Chaos Game application with the given stage.
-   * Adds listeners to the stage width and height properties to resize the canvas accordingly.
+   * Sets up the Chaos Game application with the given stage. Adds listeners to the stage width and
+   * height properties to resize the canvas accordingly.
    *
    * @param stage the stage to display the application in
    */
@@ -94,9 +93,9 @@ public class ChaosGameController extends Controller {
   }
 
   /**
-   * Resizes the canvas to the given width and height.
-   * The canvas is only resized if the new width and height are greater than the default width and
-   * height minus the default canvas width and height.
+   * Resizes the canvas to the given width and height. The canvas is only resized if the new width
+   * and height are greater than the default width and height minus the default canvas width and
+   * height.
    *
    * @param width the new width of the canvas
    * @param height the new height of the canvas
@@ -125,17 +124,15 @@ public class ChaosGameController extends Controller {
    * @param preset the preset to set the description to
    */
   private void setDescriptionWithPreset(String preset) {
-    ChaosGameDescription chaosGameDescription = ChaosGameDescriptionFactory.createDescription(
-        preset);
+    ChaosGameDescription chaosGameDescription =
+        ChaosGameDescriptionFactory.createDescription(preset);
     if (chaosGameDescription != null) {
       this.currentChaosGameDescription = chaosGameDescription;
       chaosGame.setChaosGameDescription(currentChaosGameDescription);
     }
   }
 
-  /**
-   * Resets the preset combobox in the view.
-   */
+  /** Resets the preset combobox in the view. */
   private void resetPreset() {
     chaosGameView.resetPresetCombobox();
   }
@@ -170,9 +167,7 @@ public class ChaosGameController extends Controller {
     }
   }
 
-  /**
-   * Opens the edit description dialog in the view.
-   */
+  /** Opens the edit description dialog in the view. */
   private void openEditDescriptionDialog() {
     String transformType =
         currentChaosGameDescription.getTransforms().getFirst() instanceof AffineTransform2D
@@ -216,8 +211,13 @@ public class ChaosGameController extends Controller {
    * @param transformValues the values of the transforms
    * @param transformWeights the weights of the transforms
    */
-  private void updateChaosGameDescription(double xMin, double yMin, double xMax, double yMax,
-      List<List<Double>> transformValues, List<Double> transformWeights) {
+  private void updateChaosGameDescription(
+      double xMin,
+      double yMin,
+      double xMax,
+      double yMax,
+      List<List<Double>> transformValues,
+      List<Double> transformWeights) {
     try {
       boolean weighted = transformWeights.stream().allMatch(weight -> weight > 0);
 
@@ -245,17 +245,17 @@ public class ChaosGameController extends Controller {
       Vector2D maxCoords = new Vector2D(xMax, yMax);
 
       if (weighted) {
-        List<Pair<Transform2D, Double>> weightedTransforms = IntStream.range(0, transforms.size())
-            .mapToObj(i -> new Pair<>(transforms.get(i), transformWeights.get(i)))
-            .toList();
+        List<Pair<Transform2D, Double>> weightedTransforms =
+            IntStream.range(0, transforms.size())
+                .mapToObj(i -> new Pair<>(transforms.get(i), transformWeights.get(i)))
+                .toList();
 
-        this.currentChaosGameDescription = new ChaosGameDescription(weightedTransforms,
-            minCoords, maxCoords,
-            true);
+        this.currentChaosGameDescription =
+            new ChaosGameDescription(weightedTransforms, minCoords, maxCoords, true);
         chaosGame.setChaosGameDescription(currentChaosGameDescription);
       } else {
-        this.currentChaosGameDescription = new ChaosGameDescription(transforms, minCoords,
-            maxCoords);
+        this.currentChaosGameDescription =
+            new ChaosGameDescription(transforms, minCoords, maxCoords);
         chaosGame.setChaosGameDescription(currentChaosGameDescription);
       }
     } catch (Exception e) {
@@ -263,16 +263,12 @@ public class ChaosGameController extends Controller {
     }
   }
 
-  /**
-   * Resets the image of the Chaos Game.
-   */
+  /** Resets the image of the Chaos Game. */
   private void resetImage() {
     chaosGameView.setImage(createImageFromMatrix(chaosGame.getCanvas().getCanvas()));
   }
 
-  /**
-   * Resets the zoom of the image.
-   */
+  /** Resets the zoom of the image. */
   private void resetImageZoom() {
     chaosGameView.resetZoom();
   }
@@ -302,9 +298,7 @@ public class ChaosGameController extends Controller {
     return writableImage;
   }
 
-  /**
-   * Toggles the dark mode of the application.
-   */
+  /** Toggles the dark mode of the application. */
   private void toggleDarkMode() {
     darkMode = !darkMode;
 
@@ -318,9 +312,8 @@ public class ChaosGameController extends Controller {
   }
 
   /**
-   * Updates the Chaos Game view when an event occurs
-   * The event can be related to dark mode, running steps, updating the canvas size, or
-   * opening the description dialogue
+   * Updates the Chaos Game view when an event occurs The event can be related to dark mode, running
+   * steps, updating the canvas size, or opening the description dialogue
    *
    * @param event the event that occurred
    */
@@ -344,10 +337,10 @@ public class ChaosGameController extends Controller {
         break;
     }
   }
+
   /**
-   * Updates the Chaos Game view when an event occurs
-   * The event can be related to running the chaos game, setting a preset,
-   * loading a file, or saving a file
+   * Updates the Chaos Game view when an event occurs The event can be related to running the chaos
+   * game, setting a preset, loading a file, or saving a file
    *
    * @param event the event that occurred
    * @param data the data associated with the event
@@ -373,8 +366,8 @@ public class ChaosGameController extends Controller {
   }
 
   /**
-   * Updates the Chaos Game view when an event occurs
-   * The event is related to updating the description of the chaos game
+   * Updates the Chaos Game view when an event occurs The event is related to updating the
+   * description of the chaos game
    *
    * @param event the event that occurred
    * @param data the data associated with the event
@@ -383,8 +376,13 @@ public class ChaosGameController extends Controller {
   public void update(Event event, Object... data) {
     switch (event) {
       case Event.UPDATE_DESCRIPTION:
-        updateChaosGameDescription((double) data[1], (double) data[2], (double) data[3],
-            (double) data[4], (List<List<Double>>) data[5], (List<Double>) data[6]);
+        updateChaosGameDescription(
+            (double) data[1],
+            (double) data[2],
+            (double) data[3],
+            (double) data[4],
+            (List<List<Double>>) data[5],
+            (List<Double>) data[6]);
         resetPreset();
         break;
       default:

@@ -8,13 +8,10 @@ import java.util.List;
  * retrieve the list of commands, and get the title of the command group.
  */
 abstract class CommandGroup {
-  /**
-   * The title of the command group. This is displayed to the user in the UI.
-   */
+  /** The title of the command group. This is displayed to the user in the UI. */
   private final String title;
-  /**
-   * The list of commands in the command group.
-   */
+
+  /** The list of commands in the command group. */
   private final List<Command> commands;
 
   /**

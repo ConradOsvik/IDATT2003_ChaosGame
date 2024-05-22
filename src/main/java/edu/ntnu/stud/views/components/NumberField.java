@@ -14,8 +14,7 @@ public class NumberField extends TextField {
    * Constructor for the NumberField class. Initializes the NumberField with the specified preferred
    * width.
    *
-   * @param builder the Builder used to set the preferred width and initial value of the
-   *                NumberField
+   * @param builder the Builder used to set the preferred width and initial value of the NumberField
    */
   private NumberField(Builder builder) {
     setPrefWidth(builder.prefWidth);
@@ -85,8 +84,8 @@ public class NumberField extends TextField {
   }
 
   /**
-   * Replaces a portion of the text in the NumberField.
-   * Only allows the replacement if the resulting text is a valid number.
+   * Replaces a portion of the text in the NumberField. Only allows the replacement if the resulting
+   * text is a valid number.
    *
    * @param start the start index of the text to replace
    * @param end the end index of the text to replace
@@ -100,8 +99,8 @@ public class NumberField extends TextField {
   }
 
   /**
-   * Replaces the currently selected text in the NumberField.
-   * Only allows the replacement if the resulting text is a valid number.
+   * Replaces the currently selected text in the NumberField. Only allows the replacement if the
+   * resulting text is a valid number.
    *
    * @param text the text to insert
    */
@@ -113,8 +112,7 @@ public class NumberField extends TextField {
   }
 
   /**
-   * Validates the specified text.
-   * Returns true if the text is a valid number, and false otherwise.
+   * Validates the specified text. Returns true if the text is a valid number, and false otherwise.
    *
    * @param text the text to validate
    * @return true if the text is a valid number, and false otherwise

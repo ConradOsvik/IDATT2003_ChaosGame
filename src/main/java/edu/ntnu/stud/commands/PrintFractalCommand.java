@@ -3,13 +3,11 @@ package edu.ntnu.stud.commands;
 import edu.ntnu.stud.controllers.CLIController;
 
 /**
- * This class represents the print fractal command in the CLI.
- * It implements the Command interface and is used to print the fractal to the console.
+ * This class represents the print fractal command in the CLI. It implements the Command interface
+ * and is used to print the fractal to the console.
  */
 public class PrintFractalCommand implements Command {
-  /**
-   * The CLIController to be used by the command.
-   */
+  /** The CLIController to be used by the command. */
   private final CLIController controller;
 
   /**
@@ -41,9 +39,7 @@ public class PrintFractalCommand implements Command {
     return "Prints the fractal to the console";
   }
 
-  /**
-   * Executes this command. Prints the fractal to the console.
-   */
+  /** Executes this command. Prints the fractal to the console. */
   @Override
   public void execute() {
     System.out.println("Executing command: " + getName());

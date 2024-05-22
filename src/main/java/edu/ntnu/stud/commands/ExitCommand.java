@@ -2,15 +2,10 @@ package edu.ntnu.stud.commands;
 
 import edu.ntnu.stud.views.Cli;
 
-/**
- * This class represents the exit command in the CLI.
- * It implements the Command interface.
- */
+/** This class represents the exit command in the CLI. It implements the Command interface. */
 public class ExitCommand implements Command {
 
-  /**
-   * The CLI to be used by this command.
-   */
+  /** The CLI to be used by this command. */
   private final Cli cli;
 
   /**
@@ -42,9 +37,7 @@ public class ExitCommand implements Command {
     return "Exit the program";
   }
 
-  /**
-   * Executes this command. Displays a message and exits the program.
-   */
+  /** Executes this command. Displays a message and exits the program. */
   @Override
   public void execute() {
     cli.displayMessage("Exiting program...");

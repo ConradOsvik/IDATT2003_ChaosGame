@@ -21,9 +21,9 @@ public class ChaosGameDescriptionFactory {
    * Creates a ChaosGameDescription object based on the provided description type.
    *
    * @param descriptionType The type of the chaos game description to create. It can be "Sierpinski
-   *                        Triangle", "Barnsley Fern", or "Julia Set".
+   *     Triangle", "Barnsley Fern", or "Julia Set".
    * @return A ChaosGameDescription object of the specified type, or null if the type is not
-   * recognized.
+   *     recognized.
    */
   public static ChaosGameDescription createDescription(String descriptionType) {
     return switch (descriptionType) {

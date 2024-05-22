@@ -6,36 +6,28 @@ import edu.ntnu.stud.models.ChaosGameFileHandler;
 import edu.ntnu.stud.views.Cli;
 
 /**
- * This class represents the run steps command in the CLI.
- * It implements the Command interface and is used to run a specified number of steps in the ChaosGame.
+ * This class represents the run steps command in the CLI. It implements the Command interface and
+ * is used to run a specified number of steps in the ChaosGame.
  */
 public class RunStepsCommand implements Command {
 
-  /**
-   * The CLIController to be used by the command.
-   */
+  /** The CLIController to be used by the command. */
   private final CLIController controller;
 
-  /**
-   * The CLI to be used by the command.
-   */
+  /** The CLI to be used by the command. */
   private final Cli cli;
 
-  /**
-   * The ChaosGameFileHandler to be used by the command.
-   */
+  /** The ChaosGameFileHandler to be used by the command. */
   private final ChaosGameFileHandler chaosGameFileHandler;
 
-  /**
-   * The ValidatedInput to be used by the command.
-   */
+  /** The ValidatedInput to be used by the command. */
   private final ValidatedInput validatedInput;
 
   /**
    * Constructs a new RunStepsCommand with the specified CLIController, CLI, and ValidatedInput.
    *
-   * @param controller     the CLIController to be used by this command
-   * @param cli            the CLI to be used by this command
+   * @param controller the CLIController to be used by this command
+   * @param cli the CLI to be used by this command
    * @param validatedInput the ValidatedInput to be used by this command
    */
   public RunStepsCommand(CLIController controller, Cli cli, ValidatedInput validatedInput) {
@@ -65,9 +57,7 @@ public class RunStepsCommand implements Command {
     return "Runs the steps";
   }
 
-  /**
-   * Executes this command. Runs a specified number of steps in the ChaosGame.
-   */
+  /** Executes this command. Runs a specified number of steps in the ChaosGame. */
   @Override
   public void execute() {
     System.out.println("Executing command: " + getName());

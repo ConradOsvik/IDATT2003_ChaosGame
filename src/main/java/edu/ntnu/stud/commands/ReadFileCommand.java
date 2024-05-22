@@ -14,31 +14,23 @@ import edu.ntnu.stud.views.Cli;
  */
 public class ReadFileCommand implements Command {
 
-  /**
-   * The CLIController to be used by the command.
-   */
+  /** The CLIController to be used by the command. */
   private final CLIController controller;
 
-  /**
-   * The CLI to be used by the command.
-   */
+  /** The CLI to be used by the command. */
   private final Cli cli;
 
-  /**
-   * The ChaosGameFileHandler to be used by the command.
-   */
+  /** The ChaosGameFileHandler to be used by the command. */
   private final ChaosGameFileHandler chaosGameFileHandler;
 
-  /**
-   * The ValidatedInput to be used by the command.
-   */
+  /** The ValidatedInput to be used by the command. */
   private final ValidatedInput validatedInput;
 
   /**
    * Constructs a new ReadFileCommand with the specified CLIController, CLI, and ValidatedInput.
    *
-   * @param controller     the CLIController to be used by this command
-   * @param cli            the CLI to be used by this command
+   * @param controller the CLIController to be used by this command
+   * @param cli the CLI to be used by this command
    * @param validatedInput the ValidatedInput to be used by this command
    */
   public ReadFileCommand(CLIController controller, Cli cli, ValidatedInput validatedInput) {

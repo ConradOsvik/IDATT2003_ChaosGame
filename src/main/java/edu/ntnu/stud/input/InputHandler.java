@@ -4,25 +4,21 @@ import edu.ntnu.stud.exceptions.InvalidFormatException;
 import edu.ntnu.stud.exceptions.InvalidInputException;
 
 /**
- * The InputHandler class is responsible for handling user input.
- * It uses an instance of PrimitiveInputHandler to get primitive types of input.
+ * The InputHandler class is responsible for handling user input. It uses an instance of
+ * PrimitiveInputHandler to get primitive types of input.
  */
 class InputHandler {
-  /**
-   * The PrimitiveInputHandler used to get primitive types of input.
-   */
+  /** The PrimitiveInputHandler used to get primitive types of input. */
   private final PrimitiveInputHandler primitiveInputHandler;
 
-  /**
-   * Constructor for the InputHandler class.
-   * Initializes the PrimitiveInputHandler instance.
-   */
+  /** Constructor for the InputHandler class. Initializes the PrimitiveInputHandler instance. */
   public InputHandler() {
     this.primitiveInputHandler = new PrimitiveInputHandler();
   }
 
   /**
    * Gets a string input from the user.
+   *
    * @return The string input from the user.
    * @throws InvalidFormatException If the format of the input is invalid.
    * @throws InvalidInputException If the input is logically invalid.
@@ -32,8 +28,9 @@ class InputHandler {
   }
 
   /**
-   * Gets a transform type input from the user.
-   * The transform type must be either 'affine' or 'julia'.
+   * Gets a transform type input from the user. The transform type must be either 'affine' or
+   * 'julia'.
+   *
    * @return The transform type input from the user.
    * @throws InvalidFormatException If the format of the input is invalid.
    * @throws InvalidInputException If the input is not 'affine' or 'julia'.
@@ -50,6 +47,7 @@ class InputHandler {
 
   /**
    * Gets an integer input from the user.
+   *
    * @return The integer input from the user.
    * @throws InvalidFormatException If the format of the input is invalid.
    * @throws InvalidInputException If the input is logically invalid.
@@ -59,8 +57,8 @@ class InputHandler {
   }
 
   /**
-   * Gets a sign input from the user.
-   * The sign must be either 1 or -1.
+   * Gets a sign input from the user. The sign must be either 1 or -1.
+   *
    * @return The sign input from the user.
    * @throws InvalidFormatException If the format of the input is invalid.
    * @throws InvalidInputException If the input is not 1 or -1.
@@ -77,6 +75,7 @@ class InputHandler {
 
   /**
    * Gets a double input from the user.
+   *
    * @return The double input from the user.
    * @throws InvalidFormatException If the format of the input is invalid.
    * @throws InvalidInputException If the input is logically invalid.

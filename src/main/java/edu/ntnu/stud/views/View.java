@@ -9,25 +9,22 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 
 /**
- * This class represents a View in the Model-View-Controller (MVC) architecture.
- * It extends the Scene class from the JavaFX library and implements the Observable interface.
- * The class includes methods for adding, removing, and notifying observers.
+ * This class represents a View in the Model-View-Controller (MVC) architecture. It extends the
+ * Scene class from the JavaFX library and implements the Observable interface. The class includes
+ * methods for adding, removing, and notifying observers.
  */
 abstract class View extends Scene implements Observable {
   protected final List<Observer> observers = new ArrayList<>();
   protected final HBox root = (HBox) getRoot();
 
-  /**
-   * Constructor for the View class.
-   * Initializes the View with a root HBox.
-   */
+  /** Constructor for the View class. Initializes the View with a root HBox. */
   public View() {
     super(new HBox());
   }
 
   /**
-   * Constructor for the View class.
-   * Initializes the View with a root HBox and the specified width and height.
+   * Constructor for the View class. Initializes the View with a root HBox and the specified width
+   * and height.
    *
    * @param width the width of the View
    * @param height the height of the View

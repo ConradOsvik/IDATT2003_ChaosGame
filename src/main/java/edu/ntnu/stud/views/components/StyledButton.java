@@ -5,17 +5,18 @@ import java.util.Set;
 import javafx.scene.control.Button;
 
 /**
- * This class represents a Button with customizable styles.
- * It extends the Button class from the JavaFX library.
- * The class includes a Builder for setting the text, preferred width and height, style, and classes of the StyledButton.
+ * This class represents a Button with customizable styles. It extends the Button class from the
+ * JavaFX library. The class includes a Builder for setting the text, preferred width and height,
+ * style, and classes of the StyledButton.
  */
 public class StyledButton extends Button {
 
   /**
-   * Constructor for the StyledButton class.
-   * Initializes the StyledButton with the specified text, preferred width and height, style, and classes.
+   * Constructor for the StyledButton class. Initializes the StyledButton with the specified text,
+   * preferred width and height, style, and classes.
    *
-   * @param builder the Builder used to set the text, preferred width and height, style, and classes of the StyledButton
+   * @param builder the Builder used to set the text, preferred width and height, style, and classes
+   *     of the StyledButton
    */
   private StyledButton(Builder builder) {
     setText(builder.text);
@@ -26,8 +27,8 @@ public class StyledButton extends Button {
   }
 
   /**
-   * This class represents a Builder for the StyledButton class.
-   * It includes methods for setting the text, preferred width and height, style, and classes of the StyledButton.
+   * This class represents a Builder for the StyledButton class. It includes methods for setting the
+   * text, preferred width and height, style, and classes of the StyledButton.
    */
   public static class Builder {
     private String text;

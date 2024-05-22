@@ -37,14 +37,18 @@ public class FractalDialog extends Dialog<String> implements Observable {
    * Constructor for the FractalDialog class. Initializes the dialog box with the specified
    * transform type, min and max coordinates, and transform values.
    *
-   * @param transformType   the type of transform
-   * @param xMinValue       the minimum x-coordinate
-   * @param yMinValue       the minimum y-coordinate
-   * @param xMaxValue       the maximum x-coordinate
-   * @param yMaxValue       the maximum y-coordinate
+   * @param transformType the type of transform
+   * @param xMinValue the minimum x-coordinate
+   * @param yMinValue the minimum y-coordinate
+   * @param xMaxValue the maximum x-coordinate
+   * @param yMaxValue the maximum y-coordinate
    * @param transformValues the values of the transforms
    */
-  public FractalDialog(String transformType, double xMinValue, double yMinValue, double xMaxValue,
+  public FractalDialog(
+      String transformType,
+      double xMinValue,
+      double yMinValue,
+      double xMaxValue,
       double yMaxValue,
       List<List<Double>> transformValues) {
     setTitle("Fractal");
@@ -54,10 +58,11 @@ public class FractalDialog extends Dialog<String> implements Observable {
 
     this.typeComboBox.getItems().addAll("Affine", "Julia");
     this.typeComboBox.setValue(transformType);
-    this.typeComboBox.setOnAction(e -> {
-      transformsGrid.getChildren().clear();
-      transforms.clear();
-    });
+    this.typeComboBox.setOnAction(
+        e -> {
+          transformsGrid.getChildren().clear();
+          transforms.clear();
+        });
     mainGrid.add(new Label("Type:"), 0, 0);
     mainGrid.add(this.typeComboBox, 1, 0);
 
@@ -92,31 +97,39 @@ public class FractalDialog extends Dialog<String> implements Observable {
     ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
     getDialogPane().getButtonTypes().addAll(buttonTypeOk, ButtonType.CANCEL);
 
-    setResultConverter(dialogButton -> {
-      if (dialogButton == buttonTypeOk) {
-        String selectedType = typeComboBox.getValue();
-        double minX = xMin.getValue();
-        double minY = yMin.getValue();
-        double maxX = xMax.getValue();
-        double maxY = yMax.getValue();
-        List<List<Double>> transformValuesResult = new ArrayList<>();
-        for (List<NumberField> transformFields : transforms) {
-          List<Double> transformValuesRow = new ArrayList<>();
-          for (NumberField field : transformFields) {
-            transformValuesRow.add(field.getValue());
-          }
-          transformValuesResult.add(transformValuesRow);
-        }
-        List<Double> transformWeights = new ArrayList<>();
-        for (NumberField field : transformWeightFields) {
-          transformWeights.add(field.getValue());
-        }
+    setResultConverter(
+        dialogButton -> {
+          if (dialogButton == buttonTypeOk) {
+            String selectedType = typeComboBox.getValue();
+            double minX = xMin.getValue();
+            double minY = yMin.getValue();
+            double maxX = xMax.getValue();
+            double maxY = yMax.getValue();
+            List<List<Double>> transformValuesResult = new ArrayList<>();
+            for (List<NumberField> transformFields : transforms) {
+              List<Double> transformValuesRow = new ArrayList<>();
+              for (NumberField field : transformFields) {
+                transformValuesRow.add(field.getValue());
+              }
+              transformValuesResult.add(transformValuesRow);
+            }
+            List<Double> transformWeights = new ArrayList<>();
+            for (NumberField field : transformWeightFields) {
+              transformWeights.add(field.getValue());
+            }
 
-        notifyObservers(Event.UPDATE_DESCRIPTION, selectedType, minX, minY, maxX, maxY,
-            transformValuesResult, transformWeights);
-      }
-      return null;
-    });
+            notifyObservers(
+                Event.UPDATE_DESCRIPTION,
+                selectedType,
+                minX,
+                minY,
+                maxX,
+                maxY,
+                transformValuesResult,
+                transformWeights);
+          }
+          return null;
+        });
   }
 
   /**
@@ -135,15 +148,16 @@ public class FractalDialog extends Dialog<String> implements Observable {
    */
   private ScrollPane getScrollPane(GridPane mainGrid) {
     Button addTransformButton = new Button("Add Transform");
-    addTransformButton.setOnAction(e -> {
-      GridPane transformGrid = null;
-      if (this.typeComboBox.getValue().equals("Affine")) {
-        transformGrid = createAffineTransformUI(null);
-      } else if (this.typeComboBox.getValue().equals("Julia")) {
-        transformGrid = createJuliaTransformUI(null);
-      }
-      transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
-    });
+    addTransformButton.setOnAction(
+        e -> {
+          GridPane transformGrid = null;
+          if (this.typeComboBox.getValue().equals("Affine")) {
+            transformGrid = createAffineTransformUI(null);
+          } else if (this.typeComboBox.getValue().equals("Julia")) {
+            transformGrid = createJuliaTransformUI(null);
+          }
+          transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
+        });
 
     VBox vbox = new VBox(mainGrid, addTransformButton);
     ScrollPane scrollableBox = new ScrollPane(vbox);
@@ -272,7 +286,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
    * Notifies all observers of an event and a single data object.
    *
    * @param event the event to be notified
-   * @param data  the data to be sent with the event
+   * @param data the data to be sent with the event
    */
   @Override
   public void notifyObservers(Event event, Object data) {
@@ -283,7 +297,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
    * Notifies all observers of an event and multiple data objects.
    *
    * @param event the event to be notified
-   * @param data  the data to be sent with the event
+   * @param data the data to be sent with the event
    */
   @Override
   public void notifyObservers(Event event, Object... data) {

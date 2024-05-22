@@ -38,7 +38,11 @@ public class ChaosGameDescription {
     this.weighted = false;
   }
 
-  public ChaosGameDescription(List<Pair<Transform2D, Double>> weightedTransforms, Vector2D minCoords, Vector2D maxCoords, boolean weighted){
+  public ChaosGameDescription(
+      List<Pair<Transform2D, Double>> weightedTransforms,
+      Vector2D minCoords,
+      Vector2D maxCoords,
+      boolean weighted) {
     if (weightedTransforms == null || minCoords == null || maxCoords == null) {
       throw new IllegalArgumentException("Arguments cannot be null");
     }
@@ -49,9 +53,7 @@ public class ChaosGameDescription {
 
     this.minCoords = minCoords;
     this.maxCoords = maxCoords;
-    this.transforms = weightedTransforms.stream()
-        .map(Pair::getKey)
-        .collect(Collectors.toList());
+    this.transforms = weightedTransforms.stream().map(Pair::getKey).collect(Collectors.toList());
     this.weightedTransforms = weightedTransforms;
     this.weighted = weighted;
   }
@@ -65,7 +67,7 @@ public class ChaosGameDescription {
     return this.transforms;
   }
 
-  public boolean isWeighted(){
+  public boolean isWeighted() {
     return this.weighted;
   }
 

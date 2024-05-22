@@ -9,9 +9,7 @@ import edu.ntnu.stud.utils.Observer;
  */
 abstract class Controller implements Observer {
 
-  /**
-   * Handles the user request.
-   */
+  /** Handles the user request. */
   @Override
   public void update(Event event) {}
 
@@ -26,6 +24,7 @@ abstract class Controller implements Observer {
 
   /**
    * Handles the user request with the more than one specified data.
+   *
    * @param event the event to be used
    * @param data the data to be used
    */

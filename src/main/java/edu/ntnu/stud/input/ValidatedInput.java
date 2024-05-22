@@ -5,24 +5,19 @@ import edu.ntnu.stud.exceptions.InvalidInputException;
 import edu.ntnu.stud.views.Cli;
 
 /**
- * The ValidatedInput class is responsible for handling user input validation.
- * It uses an instance of InputHandler to get the input and a CLI instance to display messages.
+ * The ValidatedInput class is responsible for handling user input validation. It uses an instance
+ * of InputHandler to get the input and a CLI instance to display messages.
  */
 public class ValidatedInput {
 
-  /**
-   * The CLI instance used to display messages.
-   */
+  /** The CLI instance used to display messages. */
   private final Cli cli;
 
-  /**
-   * The InputHandler instance used to get the input.
-   */
+  /** The InputHandler instance used to get the input. */
   private final InputHandler inputHandler;
 
   /**
-   * Constructor for the ValidatedInput class.
-   * Initializes the CLI and InputHandler instances.
+   * Constructor for the ValidatedInput class. Initializes the CLI and InputHandler instances.
    *
    * @param cli The CLI instance used to display messages.
    */

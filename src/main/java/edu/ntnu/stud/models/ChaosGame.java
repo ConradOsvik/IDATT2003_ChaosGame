@@ -103,9 +103,8 @@ public class ChaosGame implements Observable {
 
     if (description.isWeighted()) {
       for (int i = 0; i < steps; i++) {
-        double totalWeight = description.getWeightedTransforms().stream()
-            .mapToDouble(Pair::getValue)
-            .sum();
+        double totalWeight =
+            description.getWeightedTransforms().stream().mapToDouble(Pair::getValue).sum();
         double randomWeight = random.nextDouble() * totalWeight;
         double cumulativeWeight = 0.0;
         for (Pair<Transform2D, Double> weightedTransform : description.getWeightedTransforms()) {
@@ -166,7 +165,7 @@ public class ChaosGame implements Observable {
    * Notifies all observers of an event with data.
    *
    * @param event the event to notify observers of
-   * @param data  the data to send to observers
+   * @param data the data to send to observers
    */
   @Override
   public void notifyObservers(Event event, Object data) {
@@ -177,7 +176,7 @@ public class ChaosGame implements Observable {
    * Notifies all observers of an event with multiple data objects.
    *
    * @param event the event to notify observers of
-   * @param data  the data to send to observers
+   * @param data the data to send to observers
    */
   @Override
   public void notifyObservers(Event event, Object... data) {

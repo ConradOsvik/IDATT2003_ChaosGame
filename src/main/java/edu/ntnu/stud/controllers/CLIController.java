@@ -5,9 +5,10 @@ import edu.ntnu.stud.commands.Command;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.ChaosGame;
 import edu.ntnu.stud.views.Cli;
+
 /**
- * This class represents the controller for the command line interface (CLI).
- * It is used to handle user input and execute commands.
+ * This class represents the controller for the command line interface (CLI). It is used to handle
+ * user input and execute commands.
  */
 public class CLIController {
   private final Cli cli;
@@ -26,9 +27,7 @@ public class CLIController {
     this.commands = new CLICommandGroup(this, this.cli, this.validatedInput);
   }
 
-  /**
-   * Handles the user request by displaying the menu and executing the selected command.
-   */
+  /** Handles the user request by displaying the menu and executing the selected command. */
   public void handleRequest() {
     cli.displayMenu(commands);
     int choice = validatedInput.getInt("Enter your choice:");
@@ -66,9 +65,7 @@ public class CLIController {
     cli.displayMessage(steps + " steps executed");
   }
 
-  /**
-   * Prints the fractal to the console.
-   */
+  /** Prints the fractal to the console. */
   public void printFractal() {
     if (chaosGame == null) {
       cli.displayErrorMessage("No ChaosGame loaded");
