@@ -91,6 +91,6 @@ public class AffineTransform2D implements Transform2D {
 
   @Override
   public String toString() {
-    return "Matrix: " + matrix.toString() + ", Vector: " + vector.toString();
+    return "Matrix: " + matrix + ", Vector: " + vector;
   }
 }

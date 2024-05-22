@@ -143,7 +143,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
   /**
    * Returns a scrollable box containing the main grid and an "Add Transform" button.
    *
-   * @param mainGrid
+   * @param mainGrid the main grid containing the user interface elements
    * @return a scrollable box containing the main grid and an "Add Transform" button
    */
   private ScrollPane getScrollPane(GridPane mainGrid) {

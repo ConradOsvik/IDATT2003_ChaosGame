@@ -14,12 +14,6 @@ public class RunStepsCommand implements Command {
   /** The CLIController to be used by the command. */
   private final CLIController controller;
 
-  /** The CLI to be used by the command. */
-  private final Cli cli;
-
-  /** The ChaosGameFileHandler to be used by the command. */
-  private final ChaosGameFileHandler chaosGameFileHandler;
-
   /** The ValidatedInput to be used by the command. */
   private final ValidatedInput validatedInput;
 
@@ -32,9 +26,10 @@ public class RunStepsCommand implements Command {
    */
   public RunStepsCommand(CLIController controller, Cli cli, ValidatedInput validatedInput) {
     this.controller = controller;
-    this.cli = cli;
+    /** The CLI to be used by the command. */
     this.validatedInput = validatedInput;
-    this.chaosGameFileHandler = new ChaosGameFileHandler();
+    /** The ChaosGameFileHandler to be used by the command. */
+    ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
   }
 
   /**

@@ -10,8 +10,6 @@ package edu.ntnu.stud.models;
 public class ChaosCanvas {
   private final int width;
   private final int height;
-  private final Vector2D minCoords;
-  private final Vector2D maxCoords;
   private final AffineTransform2D transformCoordsToIndices;
   private int[][] canvas;
 
@@ -37,23 +35,21 @@ public class ChaosCanvas {
 
     this.width = width;
     this.height = height;
-    this.minCoords = minCoords;
-    this.maxCoords = maxCoords;
     this.canvas = new int[width][height];
     this.transformCoordsToIndices =
         new AffineTransform2D(
             new Matrix2x2(
                 0,
-                (double) (this.height - 1) / (this.minCoords.getX1() - this.maxCoords.getX1()),
-                (double) (this.width - 1) / (this.maxCoords.getX0() - this.minCoords.getX0()),
+                (double) (this.height - 1) / (minCoords.getX1() - maxCoords.getX1()),
+                (double) (this.width - 1) / (maxCoords.getX0() - minCoords.getX0()),
                 0),
             new Vector2D(
                 (this.height - 1)
-                    * this.maxCoords.getX1()
-                    / (this.maxCoords.getX1() - this.minCoords.getX1()),
+                    * maxCoords.getX1()
+                    / (maxCoords.getX1() - minCoords.getX1()),
                 (this.width - 1)
-                    * this.minCoords.getX0()
-                    / (this.minCoords.getX0() - this.maxCoords.getX0())));
+                    * minCoords.getX0()
+                    / (minCoords.getX0() - maxCoords.getX0())));
   }
 
   /**

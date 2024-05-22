@@ -126,14 +126,12 @@ class TestChaosGameDescription {
   @DisplayName("Test getMinCoords works")
   void getMinCoords_getsMinCoords_works() {
     assertNotNull(this.chaosGameDescription.getMinCoords());
-    ;
   }
 
   @Test
   @DisplayName("Test getMaxCoords works")
   void getMaxCoords_getsMaxCoords_works() {
     assertNotNull(this.chaosGameDescription.getMaxCoords());
-    ;
   }
 
   @Test

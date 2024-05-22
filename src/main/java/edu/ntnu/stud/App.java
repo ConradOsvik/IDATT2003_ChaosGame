@@ -3,7 +3,6 @@ package edu.ntnu.stud;
 import edu.ntnu.stud.controllers.CLIController;
 import edu.ntnu.stud.controllers.ChaosGameController;
 import edu.ntnu.stud.views.Cli;
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -20,7 +19,7 @@ public class App extends Application {
 
   /** Launches the JavaFX application. */
   @Override
-  public void start(Stage stage) throws IOException {
+  public void start(Stage stage) {
     ChaosGameController controller = new ChaosGameController(stage);
   }
 

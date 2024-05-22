@@ -1,7 +1,6 @@
 package edu.ntnu.stud.models;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -157,19 +156,19 @@ class TestVector2D {
   @DisplayName("Test equals is true with same Vector2D")
   void equals_sameVector2D_isTrue() {
     Vector2D vec3 = new Vector2D(1, 0);
-    assertTrue(vec1.equals(vec3));
+    assertEquals(vec1, vec3);
   }
 
   @Test
   @DisplayName("Test equals is false with different Vector2D")
   void equals_differentVector2D_isFalse() {
-    assertFalse(vec1.equals(vec2));
+    assertNotEquals(vec1, vec2);
   }
 
   @Test
   @DisplayName("Test equals is false with null Vector2D")
   void equals_nullVector2D_isFalse() {
-    assertFalse(vec1.equals(null));
+    assertNotEquals(null, vec1);
   }
 
   @Test

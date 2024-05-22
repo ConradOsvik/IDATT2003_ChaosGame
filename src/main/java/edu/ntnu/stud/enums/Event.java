@@ -40,5 +40,5 @@ public enum Event {
   /** Represents the event of opening the edit description dialog. */
   OPEN_EDIT_DESCRIPTION_DIALOG,
   /** Represents the event of updating a description. */
-  UPDATE_DESCRIPTION;
+  UPDATE_DESCRIPTION
 }

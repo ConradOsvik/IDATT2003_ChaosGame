@@ -83,20 +83,20 @@ class TestMatrix2x2 {
   @DisplayName("Test equals is true with same Matrix2x2")
   void equals_sameMatrix2x2_isTrue() {
     Matrix2x2 matrix2 = new Matrix2x2(1, 3, 2, 4);
-    assertTrue(matrix.equals(matrix2));
+    assertEquals(matrix, matrix2);
   }
 
   @Test
   @DisplayName("Test equals is false with different Matrix2x2")
   void equals_differentMatrix2x2_isFalse() {
     Matrix2x2 matrix2 = new Matrix2x2(1, 3, 2, 5);
-    assertFalse(matrix.equals(matrix2));
+    assertNotEquals(matrix, matrix2);
   }
 
   @Test
   @DisplayName("Test equals is false with null Matrix2x2")
   void equals_nullMatrix2x2_isFalse() {
-    assertFalse(matrix.equals(null));
+    assertNotEquals(null, matrix);
   }
 
   @Test

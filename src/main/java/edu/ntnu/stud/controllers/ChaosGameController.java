@@ -174,10 +174,10 @@ public class ChaosGameController extends Controller {
             ? "Affine"
             : "Julia";
 
-    double xMinValue = (double) currentChaosGameDescription.getMinCoords().getX0();
-    double yMinValue = (double) currentChaosGameDescription.getMinCoords().getX1();
-    double xMaxValue = (double) currentChaosGameDescription.getMaxCoords().getX0();
-    double yMaxValue = (double) currentChaosGameDescription.getMaxCoords().getX1();
+    double xMinValue = currentChaosGameDescription.getMinCoords().getX0();
+    double yMinValue = currentChaosGameDescription.getMinCoords().getX1();
+    double xMaxValue = currentChaosGameDescription.getMaxCoords().getX0();
+    double yMaxValue = currentChaosGameDescription.getMaxCoords().getX1();
 
     List<List<Double>> transformValues = new ArrayList<>();
     for (Transform2D transform : currentChaosGameDescription.getTransforms()) {
@@ -221,26 +221,7 @@ public class ChaosGameController extends Controller {
     try {
       boolean weighted = transformWeights.stream().allMatch(weight -> weight > 0);
 
-      List<Transform2D> transforms = new ArrayList<>();
-      for (List<Double> values : transformValues) {
-        if (values.size() == 6) {
-          Matrix2x2 matrix =
-              new Matrix2x2(values.get(0), values.get(1), values.get(2), values.get(3));
-          Vector2D vector = new Vector2D(values.get(4), values.get(5));
-
-          AffineTransform2D transform = new AffineTransform2D(matrix, vector);
-
-          transforms.add(transform);
-        }
-        if (values.size() == 2) {
-          Complex c = new Complex(values.get(0), values.get(1));
-
-          JuliaTransform transform1 = new JuliaTransform(c, 1);
-          JuliaTransform transform2 = new JuliaTransform(c, -1);
-          transforms.add(transform1);
-          transforms.add(transform2);
-        }
-      }
+      List<Transform2D> transforms = getTransform2DS(transformValues);
       Vector2D minCoords = new Vector2D(xMin, yMin);
       Vector2D maxCoords = new Vector2D(xMax, yMax);
 
@@ -261,6 +242,36 @@ public class ChaosGameController extends Controller {
     } catch (Exception e) {
       chaosGameView.showErrorDialog("Error updating description: " + e.getMessage());
     }
+  }
+
+  /**
+   * Returns a list of Transform2D objects from the given list of transform values.
+   *
+   * @param transformValues the values of the transforms
+   * @return a list of Transform2D objects from the given list of transform values
+   */
+  private static List<Transform2D> getTransform2DS(List<List<Double>> transformValues) {
+    List<Transform2D> transforms = new ArrayList<>();
+    for (List<Double> values : transformValues) {
+      if (values.size() == 6) {
+        Matrix2x2 matrix =
+            new Matrix2x2(values.get(0), values.get(1), values.get(2), values.get(3));
+        Vector2D vector = new Vector2D(values.get(4), values.get(5));
+
+        AffineTransform2D transform = new AffineTransform2D(matrix, vector);
+
+        transforms.add(transform);
+      }
+      if (values.size() == 2) {
+        Complex c = new Complex(values.get(0), values.get(1));
+
+        JuliaTransform transform1 = new JuliaTransform(c, 1);
+        JuliaTransform transform2 = new JuliaTransform(c, -1);
+        transforms.add(transform1);
+        transforms.add(transform2);
+      }
+    }
+    return transforms;
   }
 
   /** Resets the image of the Chaos Game. */

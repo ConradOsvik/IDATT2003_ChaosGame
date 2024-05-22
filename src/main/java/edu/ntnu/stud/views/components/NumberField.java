@@ -29,7 +29,7 @@ public class NumberField extends TextField {
     private double prefWidth = 100;
     private double value = 0;
     private boolean valueSet = false;
-    private String label;
+    private final String label;
 
     /**
      * Constructor for the Builder class. Initializes the Builder with the specified label.

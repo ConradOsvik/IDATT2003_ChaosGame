@@ -31,12 +31,12 @@ public class StyledButton extends Button {
    * text, preferred width and height, style, and classes of the StyledButton.
    */
   public static class Builder {
-    private String text;
+    private final String text;
 
     private double prefWidth = 100;
     private double prefHeight = 30;
     private String style = "";
-    private Set<String> classes = new HashSet<>();
+    private final Set<String> classes = new HashSet<>();
 
     /**
      * Constructor for the Builder class. Initializes the Builder with the specified text.

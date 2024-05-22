@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 class TestJuliaTransform {
 
   private JuliaTransform juliaTransform;
-  private final double precisionDelta = 0.001;
 
   /**
    * This method is executed before each test. It initializes a JuliaTransform object with a
@@ -74,6 +73,7 @@ class TestJuliaTransform {
     Vector2D z = new Vector2D(0.4, 0.2);
     Vector2D result = juliaTransform.transform(z);
 
+    double precisionDelta = 0.001;
     assertEquals(0.506, result.getX0(), precisionDelta);
     assertEquals(-0.395, result.getX1(), precisionDelta);
   }

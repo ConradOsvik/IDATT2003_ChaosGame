@@ -182,19 +182,19 @@ class TestComplex {
   @Test
   @DisplayName("Test equals is true with same complex number")
   void equals_sameComplex_true() {
-    assertTrue(complex1.equals(complex1));
+    assertEquals(complex1, complex1);
   }
 
   @Test
   @DisplayName("Test equals is false with different complex number")
   void equals_differentComplex_false() {
-    assertFalse(complex1.equals(complex2));
+    assertNotEquals(complex1, complex2);
   }
 
   @Test
   @DisplayName("Test equals is false with null complex number")
   void equals_nnullComplex_false() {
-    assertFalse(complex1.equals(null));
+    assertNotEquals(null, complex1);
   }
 
   @Test
