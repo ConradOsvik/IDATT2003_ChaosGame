@@ -49,6 +49,7 @@ public class AffineTransform2D implements Transform2D {
    * @return the transformed 2D vector
    * @throws IllegalArgumentException if the point is null
    */
+  @Override
   public Vector2D transform(Vector2D point) {
     if (point == null) {
       throw new IllegalArgumentException("The point cannot be null");

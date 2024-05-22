@@ -7,7 +7,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This class represents a dialog box for loading a file. It extends the Dialog class from the
+ * JavaFX library.
+ */
 public class LoadFileDialog extends Dialog<String> {
+
+  /**
+   * Constructor for the LoadFileDialog class. Initializes the dialog box with a title, header text,
+   * and a TextField for entering the file path.
+   */
   public LoadFileDialog() {
     setTitle("Load file");
     setHeaderText("Choose a file to load");

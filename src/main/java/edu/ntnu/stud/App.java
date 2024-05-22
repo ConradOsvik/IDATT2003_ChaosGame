@@ -2,7 +2,7 @@ package edu.ntnu.stud;
 
 import edu.ntnu.stud.controllers.CLIController;
 import edu.ntnu.stud.controllers.ChaosGameController;
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -23,14 +23,14 @@ public class App extends Application {
     ChaosGameController controller = new ChaosGameController(stage);
   }
 
-  /** Initializes the terminal view and controller */
+  /** Initializes the terminal view and controller. */
   public void initTerminal() {
-    CLI cli = new CLI();
+    Cli cli = new Cli();
     cliController = new CLIController(cli);
   }
 
   /**
-   * Starts the terminal by calling the handleRequest method of cliController
+   * Starts the terminal by calling the handleRequest method of cliController.
    *
    * @see CLIController#handleRequest()
    */
@@ -39,7 +39,7 @@ public class App extends Application {
   }
 
   /**
-   * Launches the terminal application
+   * Launches the terminal application.
    *
    * <p>The application runs in a loop until you quit, making it possible to perform multiple
    * actions
@@ -54,7 +54,7 @@ public class App extends Application {
   }
 
   /**
-   * The main method of the application
+   * The main method of the application.
    *
    * <p>It launches the application in terminal mode if the argument <b>terminal</b> is passed in
    *

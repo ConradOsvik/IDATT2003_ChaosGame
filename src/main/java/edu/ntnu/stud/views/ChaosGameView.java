@@ -18,6 +18,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class represents the view for the Chaos Game. It extends the View class and includes methods
+ * for creating and managing the UI components. The class uses the Observer pattern to notify the
+ * ChaosGameController about the user's actions.
+ */
 public class ChaosGameView extends View {
 
   private final ChaosGameController chaosGameController;
@@ -26,6 +31,13 @@ public class ChaosGameView extends View {
 
   private StyledButton darkModeButton;
 
+  /**
+   * Constructor for the ChaosGameView class. Initializes the ChaosGameView with the specified
+   * ChaosGameController. Adds the ChaosGameController as an observer. Creates the Chaos Game canvas
+   * and sidebar.
+   *
+   * @param chaosGameController the ChaosGameController used to control the Chaos Game
+   */
   public ChaosGameView(ChaosGameController chaosGameController) {
     super(800, 800);
     this.chaosGameController = chaosGameController;
@@ -33,6 +45,7 @@ public class ChaosGameView extends View {
 
     // Zooming
     imageView.setPreserveRatio(true);
+    imageView.setSmooth(false);
     imageView.setOnScroll(
         event -> {
           double zoomFactor = 1.05;
@@ -42,34 +55,42 @@ public class ChaosGameView extends View {
             zoomFactor = 1 / zoomFactor;
           }
 
-          // calculate the zoom anchor point
           double x = event.getX();
           double y = event.getY();
 
-          // create a zoom transform
           javafx.scene.transform.Affine zoom = new javafx.scene.transform.Affine();
           zoom.appendScale(zoomFactor, zoomFactor, x, y);
 
-          // apply the zoom transform to the image view
           imageView.getTransforms().add(zoom);
 
           event.consume();
         });
 
     VBox sidebar = createSidebar();
-    VBox chaosGameCanvas = createChaosGameCanvasUI();
+    VBox chaosGameCanvas = createChaosGameCanvasUi();
 
     root.getChildren().addAll(chaosGameCanvas, sidebar);
   }
 
+  /** Resets the zoom of the image to its original size. */
   public void resetZoom() {
     imageView.getTransforms().clear();
   }
 
+  /**
+   * Returns the dark mode button.
+   *
+   * @return the dark mode button
+   */
   public StyledButton getDarkModeButton() {
     return darkModeButton;
   }
 
+  /**
+   * Creates the sidebar of the Chaos Game view.
+   *
+   * @return the sidebar of the Chaos Game view
+   */
   private VBox createSidebar() {
     VBox sidebar = new VBox(10);
     sidebar.setStyle("-fx-background-color: -color-bg-default");
@@ -79,10 +100,10 @@ public class ChaosGameView extends View {
     StyledButton exitButton = createExitButton();
     mainButtonsContainer.getChildren().addAll(darkModeButton, exitButton);
 
-    VBox presetContainer = createPresetUI();
-    HBox fileContainer = createFileUI();
-    VBox descriptionButtonsContainer = createDescriptionButtonsUI();
-    VBox zoomInfoContainer = createZoomInfoUI();
+    VBox presetContainer = createPresetUi();
+    HBox fileContainer = createFileUi();
+    VBox descriptionButtonsContainer = createDescriptionButtonsUi();
+    VBox zoomInfoContainer = createZoomInfoUi();
 
     sidebar
         .getChildren()
@@ -96,6 +117,7 @@ public class ChaosGameView extends View {
     return sidebar;
   }
 
+  /** Creates the dark mode button. */
   private void createDarkModeButton() {
     darkModeButton = new StyledButton.Builder("Dark").build();
 
@@ -108,6 +130,11 @@ public class ChaosGameView extends View {
     darkModeButton.setTooltip(darkModeTooltip);
   }
 
+  /**
+   * Creates the exit button.
+   *
+   * @return the exit button
+   */
   private StyledButton createExitButton() {
     StyledButton exitButton = new StyledButton.Builder("Exit").danger().build();
     exitButton.setOnAction(
@@ -121,30 +148,37 @@ public class ChaosGameView extends View {
     return exitButton;
   }
 
-  private VBox createPresetUI() {
-    VBox container = new VBox(10);
-
-    Label text = new Label("Preset:");
-
-    presetComboBox
-        .getItems()
-        .addAll("None", "Sierpinski Triangle", "Barnsley Fern", "Koch Snowflake", "Dragon Curve");
+  /**
+   * Creates the preset UI. Used for changing the preset of the Chaos Game.
+   *
+   * @return the preset UI
+   */
+  private VBox createPresetUi() {
+    presetComboBox.getItems().addAll("None", "Sierpinski Triangle", "Barnsley Fern", "Julia Set");
     presetComboBox.setValue("Sierpinski Triangle");
     presetComboBox.setOnAction(
         event -> {
           notifyObservers(Event.SET_PRESET, presetComboBox.getValue());
         });
 
+    VBox container = new VBox(10);
+    Label text = new Label("Preset:");
     container.getChildren().addAll(text, presetComboBox);
 
     return container;
   }
 
+  /** Resets the preset combobox to "None". */
   public void resetPresetCombobox() {
     presetComboBox.setValue("None");
   }
 
-  private HBox createFileUI() {
+  /**
+   * Creates the file UI. Used for loading and saving files.
+   *
+   * @return the file UI
+   */
+  private HBox createFileUi() {
     HBox container = new HBox(10);
     container.setAlignment(Pos.CENTER);
     container.setMinHeight(100);
@@ -173,7 +207,12 @@ public class ChaosGameView extends View {
     return container;
   }
 
-  private VBox createDescriptionButtonsUI() {
+  /**
+   * Creates the description buttons UI. Used for editing and creating descriptions.
+   *
+   * @return the description buttons UI
+   */
+  private VBox createDescriptionButtonsUi() {
     VBox container = new VBox(10);
     container.setAlignment(Pos.CENTER);
     container.setMinHeight(100);
@@ -197,26 +236,42 @@ public class ChaosGameView extends View {
     return container;
   }
 
+  /**
+   * Opens a dialog for editing the description of a transform.
+   *
+   * @param transformType the type of transform
+   * @param xmin the minimum x value
+   * @param ymin the minimum y value
+   * @param xmax the maximum x value
+   * @param ymax the maximum y value
+   * @param transformValues the values of the transform
+   */
   public void openDescriptionDialog(
       String transformType,
-      double xMin,
-      double yMin,
-      double xMax,
-      double yMax,
+      double xmin,
+      double ymin,
+      double xmax,
+      double ymax,
       List<List<Double>> transformValues) {
     FractalDialog dialog =
-        new FractalDialog(transformType, xMin, yMin, xMax, yMax, transformValues);
+        new FractalDialog(transformType, xmin, ymin, xmax, ymax, transformValues);
     dialog.addObserver(chaosGameController);
     dialog.showAndWait();
   }
 
+  /** Opens a dialog for creating a description of a transform. */
   public void openDescriptionDialog() {
     FractalDialog dialog = new FractalDialog();
     dialog.addObserver(chaosGameController);
     dialog.showAndWait();
   }
 
-  private VBox createZoomInfoUI() {
+  /**
+   * Creates the zoom info UI. Used for displaying information about zooming.
+   *
+   * @return the zoom info UI
+   */
+  private VBox createZoomInfoUi() {
     VBox container = new VBox(10);
     container.setAlignment(Pos.CENTER);
     container.setMinHeight(100);
@@ -233,18 +288,28 @@ public class ChaosGameView extends View {
     return container;
   }
 
-  private VBox createChaosGameCanvasUI() {
+  /**
+   * Creates the Chaos Game canvas UI. Used for displaying the Chaos Game canvas and controls.
+   *
+   * @return the Chaos Game canvas UI
+   */
+  private VBox createChaosGameCanvasUi() {
     VBox container = new VBox(10);
     container.setStyle("-fx-background-color: #fff");
 
-    HBox controls = createControlsUI();
+    HBox controls = createControlsUi();
 
     container.getChildren().addAll(imageView, controls);
 
     return container;
   }
 
-  private HBox createControlsUI() {
+  /**
+   * Creates the controls UI. Used for controlling the Chaos Game.
+   *
+   * @return the controls UI
+   */
+  private HBox createControlsUi() {
     HBox controls = new HBox(10);
     controls.setAlignment(Pos.TOP_CENTER);
     controls.setMinHeight(100);
@@ -265,10 +330,20 @@ public class ChaosGameView extends View {
     return controls;
   }
 
+  /**
+   * Sets the image of the Chaos Game view.
+   *
+   * @param image the image to set
+   */
   public void setImage(Image image) {
     imageView.setImage(image);
   }
 
+  /**
+   * Shows an error dialog with the specified message.
+   *
+   * @param message the message to show
+   */
   public void showErrorDialog(String message) {
     ErrorDialog.showError(message);
   }

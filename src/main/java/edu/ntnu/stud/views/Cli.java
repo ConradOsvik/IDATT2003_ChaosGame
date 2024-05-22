@@ -5,7 +5,17 @@ import edu.ntnu.stud.commands.Command;
 import edu.ntnu.stud.utils.Color;
 import java.util.List;
 
-public class CLI {
+/**
+ * This class represents a Command Line Interface (CLI) for displaying menus and messages to the
+ * user. It includes methods for displaying a menu, a message, and an error message.
+ */
+public class Cli {
+
+  /**
+   * Displays the menu of commands to the user.
+   *
+   * @param commands the CLICommandGroup containing the commands to display
+   */
   public void displayMenu(CLICommandGroup commands) {
     System.out.println(commands.getTitle());
     List<Command> commandList = commands.getCommands();
@@ -19,10 +29,20 @@ public class CLI {
     }
   }
 
+  /**
+   * Displays a message to the user.
+   *
+   * @param message the message to display
+   */
   public void displayMessage(String message) {
     System.out.println(message);
   }
 
+  /**
+   * Displays an error message to the user.
+   *
+   * @param message the error message to display
+   */
   public void displayErrorMessage(String message) {
     System.err.println(message);
   }

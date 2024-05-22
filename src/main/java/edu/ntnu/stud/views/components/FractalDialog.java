@@ -17,6 +17,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class represents a dialog box for editing or creating fractals. It extends the Dialog class
+ * from the JavaFX library and implements the Observable interface.
+ */
 public class FractalDialog extends Dialog<String> implements Observable {
 
   private final List<Observer> observers = new ArrayList<>();
@@ -26,8 +30,20 @@ public class FractalDialog extends Dialog<String> implements Observable {
   private final NumberField xMax;
   private final NumberField yMax;
   private final List<List<NumberField>> transforms = new ArrayList<>();
+  private final List<NumberField> transformWeightFields = new ArrayList<>();
   private final GridPane transformsGrid = new GridPane();
 
+  /**
+   * Constructor for the FractalDialog class. Initializes the dialog box with the specified
+   * transform type, min and max coordinates, and transform values.
+   *
+   * @param transformType the type of transform
+   * @param xMinValue the minimum x-coordinate
+   * @param yMinValue the minimum y-coordinate
+   * @param xMaxValue the maximum x-coordinate
+   * @param yMaxValue the maximum y-coordinate
+   * @param transformValues the values of the transforms
+   */
   public FractalDialog(
       String transformType,
       double xMinValue,
@@ -41,7 +57,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
     GridPane mainGrid = new GridPane();
 
     this.typeComboBox.getItems().addAll("Affine", "Julia");
-    this.typeComboBox.setValue("Affine");
+    this.typeComboBox.setValue(transformType);
     this.typeComboBox.setOnAction(
         e -> {
           transformsGrid.getChildren().clear();
@@ -75,22 +91,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
       transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
     }
 
-    Button addTransformButton = new Button("Add Transform");
-    addTransformButton.setOnAction(
-        e -> {
-          GridPane transformGrid = null;
-          if (this.typeComboBox.getValue().equals("Affine")) {
-            transformGrid = createAffineTransformUI(null);
-          } else if (this.typeComboBox.getValue().equals("Julia")) {
-            transformGrid = createJuliaTransformUI(null);
-          }
-          transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
-        });
-
-    VBox vbox = new VBox(mainGrid, addTransformButton);
-    ScrollPane scrollableBox = new ScrollPane(vbox);
-    scrollableBox.setFitToWidth(true);
-    scrollableBox.setPrefHeight(400);
+    ScrollPane scrollableBox = getScrollPane(mainGrid);
     getDialogPane().setContent(scrollableBox);
 
     ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
@@ -112,8 +113,11 @@ public class FractalDialog extends Dialog<String> implements Observable {
               }
               transformValuesResult.add(transformValuesRow);
             }
-            //        return new FractalData(selectedType, minX, minY, maxX, maxY,
-            // transformValuesResult);
+            List<Double> transformWeights = new ArrayList<>();
+            for (NumberField field : transformWeightFields) {
+              transformWeights.add(field.getValue());
+            }
+
             notifyObservers(
                 Event.UPDATE_DESCRIPTION,
                 selectedType,
@@ -121,16 +125,53 @@ public class FractalDialog extends Dialog<String> implements Observable {
                 minY,
                 maxX,
                 maxY,
-                transformValuesResult);
+                transformValuesResult,
+                transformWeights);
           }
           return null;
         });
   }
 
+  /**
+   * Default constructor for the FractalDialog class. Initializes the dialog box with default
+   * values.
+   */
   public FractalDialog() {
     this("Affine", 0, 0, 0, 0, new ArrayList<>());
   }
 
+  /**
+   * Returns a scrollable box containing the main grid and an "Add Transform" button.
+   *
+   * @param mainGrid
+   * @return a scrollable box containing the main grid and an "Add Transform" button
+   */
+  private ScrollPane getScrollPane(GridPane mainGrid) {
+    Button addTransformButton = new Button("Add Transform");
+    addTransformButton.setOnAction(
+        e -> {
+          GridPane transformGrid = null;
+          if (this.typeComboBox.getValue().equals("Affine")) {
+            transformGrid = createAffineTransformUI(null);
+          } else if (this.typeComboBox.getValue().equals("Julia")) {
+            transformGrid = createJuliaTransformUI(null);
+          }
+          transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
+        });
+
+    VBox vbox = new VBox(mainGrid, addTransformButton);
+    ScrollPane scrollableBox = new ScrollPane(vbox);
+    scrollableBox.setFitToWidth(true);
+    scrollableBox.setPrefHeight(400);
+    return scrollableBox;
+  }
+
+  /**
+   * Creates the user interface for an affine transform.
+   *
+   * @param values the values of the transform
+   * @return a GridPane representing the user interface for the transform
+   */
   private GridPane createAffineTransformUI(List<Double> values) {
     GridPane grid = new GridPane();
 
@@ -170,9 +211,22 @@ public class FractalDialog extends Dialog<String> implements Observable {
     grid.add(vectorValue1, 1, 2);
     grid.add(vectorValue2, 2, 2);
 
+    NumberField weightField = new Builder("Weight").prefWidth(60).value(0).build();
+    transformWeightFields.add(weightField);
+
+    grid.add(new Label("Optional weight:"), 0, 3);
+    grid.add(weightField, 1, 3);
+    GridPane.setColumnSpan(weightField, 2);
+
     return grid;
   }
 
+  /**
+   * Creates the user interface for a Julia transform.
+   *
+   * @param values the values of the transform
+   * @return a GridPane representing the user interface for the transform
+   */
   private GridPane createJuliaTransformUI(List<Double> values) {
     GridPane grid = new GridPane();
 
@@ -188,29 +242,63 @@ public class FractalDialog extends Dialog<String> implements Observable {
     grid.add(realPart, 1, 0);
     grid.add(imaginaryPart, 2, 0);
 
+    NumberField weightField = new Builder("Weight").prefWidth(60).value(0).build();
+    transformWeightFields.add(weightField);
+
+    grid.add(new Label("Optional weight:"), 0, 1);
+    grid.add(weightField, 1, 1);
+    GridPane.setColumnSpan(weightField, 2);
+
     return grid;
   }
 
+  /**
+   * Adds an observer to the list of observers.
+   *
+   * @param observer the observer to be added
+   */
   @Override
   public void addObserver(Observer observer) {
     observers.add(observer);
   }
 
+  /**
+   * Removes an observer from the list of observers.
+   *
+   * @param observer the observer to be removed
+   */
   @Override
   public void removeObserver(Observer observer) {
     observers.remove(observer);
   }
 
+  /**
+   * Notifies all observers of an event.
+   *
+   * @param event the event to be notified
+   */
   @Override
   public void notifyObservers(Event event) {
     observers.forEach(observer -> observer.update(event));
   }
 
+  /**
+   * Notifies all observers of an event and a single data object.
+   *
+   * @param event the event to be notified
+   * @param data the data to be sent with the event
+   */
   @Override
   public void notifyObservers(Event event, Object data) {
     observers.forEach(observer -> observer.update(event, data));
   }
 
+  /**
+   * Notifies all observers of an event and multiple data objects.
+   *
+   * @param event the event to be notified
+   * @param data the data to be sent with the event
+   */
   @Override
   public void notifyObservers(Event event, Object... data) {
     observers.forEach(observer -> observer.update(event, data));

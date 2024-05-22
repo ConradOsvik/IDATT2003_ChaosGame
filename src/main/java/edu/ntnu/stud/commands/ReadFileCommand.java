@@ -6,31 +6,64 @@ import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.ChaosGame;
 import edu.ntnu.stud.models.ChaosGameDescription;
 import edu.ntnu.stud.models.ChaosGameFileHandler;
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 
+/**
+ * This class represents the read file command in the CLI. It implements the Command interface and
+ * is used to read a file and load a ChaosGame.
+ */
 public class ReadFileCommand implements Command {
+
+  /** The CLIController to be used by the command. */
   private final CLIController controller;
-  private final CLI cli;
+
+  /** The CLI to be used by the command. */
+  private final Cli cli;
+
+  /** The ChaosGameFileHandler to be used by the command. */
   private final ChaosGameFileHandler chaosGameFileHandler;
+
+  /** The ValidatedInput to be used by the command. */
   private final ValidatedInput validatedInput;
 
-  public ReadFileCommand(CLIController controller, CLI cli, ValidatedInput validatedInput) {
+  /**
+   * Constructs a new ReadFileCommand with the specified CLIController, CLI, and ValidatedInput.
+   *
+   * @param controller the CLIController to be used by this command
+   * @param cli the CLI to be used by this command
+   * @param validatedInput the ValidatedInput to be used by this command
+   */
+  public ReadFileCommand(CLIController controller, Cli cli, ValidatedInput validatedInput) {
     this.controller = controller;
     this.cli = cli;
     this.validatedInput = validatedInput;
     this.chaosGameFileHandler = new ChaosGameFileHandler();
   }
 
+  /**
+   * Returns the name of this command.
+   *
+   * @return the name of this command
+   */
   @Override
   public String getName() {
     return "Read file";
   }
 
+  /**
+   * Returns the description of this command.
+   *
+   * @return the description of this command
+   */
   @Override
   public String getDescription() {
     return "Reads a file";
   }
 
+  /**
+   * Executes this command. Reads a file and loads a ChaosGame. Displays an error message if the
+   * file cannot be read.
+   */
   @Override
   public void execute() {
     cli.displayMessage("Executing command: " + getName());

@@ -136,8 +136,8 @@ public class ChaosGameFileHandler {
           }
 
           Complex c = new Complex(parts[0], parts[1]);
-          int sign = (int) Math.signum(c.getImaginary());
-          transforms.add(new JuliaTransform(c, sign));
+          transforms.add(new JuliaTransform(c, 1));
+          transforms.add(new JuliaTransform(c, -1));
         }
       }
     }
@@ -261,13 +261,18 @@ public class ChaosGameFileHandler {
    */
   private void writeJuliaTransforms(BufferedWriter writer, List<Transform2D> transforms)
       throws IOException {
+    List<Complex> previousC = new ArrayList<>();
     for (Transform2D transform : transforms) {
       JuliaTransform julia = (JuliaTransform) transform;
-      writer.write(
-          formatNumber(julia.getC().getReal())
-              + ", "
-              + formatNumber(julia.getC().getImaginary())
-              + "\n");
+      Complex c = julia.getC();
+      if (!previousC.contains(c)) {
+        previousC.add(c);
+        writer.write(
+            formatNumber(julia.getC().getReal())
+                + ", "
+                + formatNumber(julia.getC().getImaginary())
+                + "\n");
+      }
     }
   }
 }

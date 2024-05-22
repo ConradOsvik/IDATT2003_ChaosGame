@@ -17,13 +17,19 @@ import edu.ntnu.stud.models.Vector2D;
 import edu.ntnu.stud.views.ChaosGameView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
+/**
+ * This class is the controller for the Chaos Game application. It extends the Controller interface
+ * and is responsible for handling user input and updating the view and model accordingly.
+ */
 public class ChaosGameController extends Controller {
 
   private final String PATH = "src/main/resources/transforms/";
@@ -32,10 +38,14 @@ public class ChaosGameController extends Controller {
   private final ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
   private final ChaosGameView chaosGameView;
   private final ChaosGame chaosGame;
-
   private ChaosGameDescription currentChaosGameDescription;
   private boolean darkMode = false;
 
+  /**
+   * Constructs a new ChaosGameController with the given stage.
+   *
+   * @param stage the stage to display the application in
+   */
   public ChaosGameController(Stage stage) {
     super();
     this.chaosGameView = new ChaosGameView(this);
@@ -50,6 +60,12 @@ public class ChaosGameController extends Controller {
     setup(stage);
   }
 
+  /**
+   * Sets up the Chaos Game application with the given stage. Adds listeners to the stage width and
+   * height properties to resize the canvas accordingly.
+   *
+   * @param stage the stage to display the application in
+   */
   private void setup(Stage stage) {
     Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
@@ -76,6 +92,14 @@ public class ChaosGameController extends Controller {
     stage.show();
   }
 
+  /**
+   * Resizes the canvas to the given width and height. The canvas is only resized if the new width
+   * and height are greater than the default width and height minus the default canvas width and
+   * height.
+   *
+   * @param width the new width of the canvas
+   * @param height the new height of the canvas
+   */
   private void resizeCanvas(int width, int height) {
     if (width < (DEFAULT_WIDTH - DEFAULT_CANVAS_WIDTH)
         || height < (DEFAULT_HEIGHT - DEFAULT_CANVAS_HEIGHT)) {
@@ -85,35 +109,55 @@ public class ChaosGameController extends Controller {
     chaosGame.setCanvasSize(width, height);
   }
 
+  /**
+   * Runs the Chaos Game for the given number of iterations.
+   *
+   * @param iterations the number of iterations to run
+   */
   private void runIterations(int iterations) {
     chaosGame.runSteps(iterations);
   }
 
-  private void setPreset(String preset) {
-    if (preset.equals("Sierpinski Triangle")) {
-      this.currentChaosGameDescription = ChaosGameDescriptionFactory.createSierpinskiDescription();
-      chaosGame.setChaosGameDescription(currentChaosGameDescription);
-    }
-    if (preset.equals("Barnsley Fern")) {
-      this.currentChaosGameDescription = ChaosGameDescriptionFactory.createBarnsleyDescription();
+  /**
+   * Sets the description of the Chaos Game to the given preset.
+   *
+   * @param preset the preset to set the description to
+   */
+  private void setDescriptionWithPreset(String preset) {
+    ChaosGameDescription chaosGameDescription =
+        ChaosGameDescriptionFactory.createDescription(preset);
+    if (chaosGameDescription != null) {
+      this.currentChaosGameDescription = chaosGameDescription;
       chaosGame.setChaosGameDescription(currentChaosGameDescription);
     }
   }
 
+  /** Resets the preset combobox in the view. */
   private void resetPreset() {
     chaosGameView.resetPresetCombobox();
   }
 
+  /**
+   * Loads the Chaos Game description from the given file.
+   *
+   * @param fileName the name of the file to load the description from
+   */
   private void loadFromFile(String fileName) {
     try {
       String path = PATH + fileName + ".txt";
       ChaosGameDescription chaosGameDescription = chaosGameFileHandler.readFromFile(path);
       chaosGame.setChaosGameDescription(chaosGameDescription);
+      currentChaosGameDescription = chaosGameDescription;
     } catch (FileHandlingException e) {
       chaosGameView.showErrorDialog("Error loading file: " + e.getMessage());
     }
   }
 
+  /**
+   * Saves the current Chaos Game description to the given file.
+   *
+   * @param fileName the name of the file to save the description to
+   */
   private void saveToFile(String fileName) {
     try {
       String path = PATH + fileName + ".txt";
@@ -123,16 +167,17 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /** Opens the edit description dialog in the view. */
   private void openEditDescriptionDialog() {
     String transformType =
         currentChaosGameDescription.getTransforms().getFirst() instanceof AffineTransform2D
             ? "Affine"
             : "Julia";
 
-    int xMinValue = (int) currentChaosGameDescription.getMinCoords().getX0();
-    int yMinValue = (int) currentChaosGameDescription.getMinCoords().getX1();
-    int xMaxValue = (int) currentChaosGameDescription.getMaxCoords().getX0();
-    int yMaxValue = (int) currentChaosGameDescription.getMaxCoords().getX1();
+    double xMinValue = (double) currentChaosGameDescription.getMinCoords().getX0();
+    double yMinValue = (double) currentChaosGameDescription.getMinCoords().getX1();
+    double xMaxValue = (double) currentChaosGameDescription.getMaxCoords().getX0();
+    double yMaxValue = (double) currentChaosGameDescription.getMaxCoords().getX1();
 
     List<List<Double>> transformValues = new ArrayList<>();
     for (Transform2D transform : currentChaosGameDescription.getTransforms()) {
@@ -156,9 +201,26 @@ public class ChaosGameController extends Controller {
         transformType, xMinValue, yMinValue, xMaxValue, yMaxValue, transformValues);
   }
 
+  /**
+   * Updates the Chaos Game description with the given values for .
+   *
+   * @param xMin the minimum x-coordinate of the canvas
+   * @param yMin the minimum y-coordinate of the canvas
+   * @param xMax the maximum x-coordinate of the canvas
+   * @param yMax the maximum y-coordinate of the canvas
+   * @param transformValues the values of the transforms
+   * @param transformWeights the weights of the transforms
+   */
   private void updateChaosGameDescription(
-      double xMin, double yMin, double xMax, double yMax, List<List<Double>> transformValues) {
+      double xMin,
+      double yMin,
+      double xMax,
+      double yMax,
+      List<List<Double>> transformValues,
+      List<Double> transformWeights) {
     try {
+      boolean weighted = transformWeights.stream().allMatch(weight -> weight > 0);
+
       List<Transform2D> transforms = new ArrayList<>();
       for (List<Double> values : transformValues) {
         if (values.size() == 6) {
@@ -173,30 +235,50 @@ public class ChaosGameController extends Controller {
         if (values.size() == 2) {
           Complex c = new Complex(values.get(0), values.get(1));
 
-          JuliaTransform transform = new JuliaTransform(c, 1);
-          transforms.add(transform);
+          JuliaTransform transform1 = new JuliaTransform(c, 1);
+          JuliaTransform transform2 = new JuliaTransform(c, -1);
+          transforms.add(transform1);
+          transforms.add(transform2);
         }
       }
       Vector2D minCoords = new Vector2D(xMin, yMin);
       Vector2D maxCoords = new Vector2D(xMax, yMax);
 
-      ChaosGameDescription chaosGameDescription =
-          new ChaosGameDescription(transforms, minCoords, maxCoords);
-      chaosGame.setChaosGameDescription(chaosGameDescription);
-      this.currentChaosGameDescription = chaosGameDescription;
+      if (weighted) {
+        List<Pair<Transform2D, Double>> weightedTransforms =
+            IntStream.range(0, transforms.size())
+                .mapToObj(i -> new Pair<>(transforms.get(i), transformWeights.get(i)))
+                .toList();
+
+        this.currentChaosGameDescription =
+            new ChaosGameDescription(weightedTransforms, minCoords, maxCoords, true);
+        chaosGame.setChaosGameDescription(currentChaosGameDescription);
+      } else {
+        this.currentChaosGameDescription =
+            new ChaosGameDescription(transforms, minCoords, maxCoords);
+        chaosGame.setChaosGameDescription(currentChaosGameDescription);
+      }
     } catch (Exception e) {
       chaosGameView.showErrorDialog("Error updating description: " + e.getMessage());
     }
   }
 
+  /** Resets the image of the Chaos Game. */
   private void resetImage() {
     chaosGameView.setImage(createImageFromMatrix(chaosGame.getCanvas().getCanvas()));
   }
 
+  /** Resets the zoom of the image. */
   private void resetImageZoom() {
     chaosGameView.resetZoom();
   }
 
+  /**
+   * Creates an image from the given matrix.
+   *
+   * @param matrix the matrix to create the image from
+   * @return the image created from the matrix
+   */
   private Image createImageFromMatrix(int[][] matrix) {
     WritableImage writableImage = new WritableImage(matrix.length, matrix[0].length);
     PixelWriter pixelWriter = writableImage.getPixelWriter();
@@ -204,11 +286,9 @@ public class ChaosGameController extends Controller {
     for (int x = 0; x < matrix.length; x++) {
       for (int y = 0; y < matrix[0].length; y++) {
         if (matrix[x][y] > 0) {
-          pixelWriter.setColor(
-              x,
-              y,
-              Color.rgb(
-                  Math.max(0, 255 - (matrix[x][y] * 10)), 0, Math.min(255, matrix[x][y] * 10)));
+          int red = Math.max(0, Math.min(255, 255 - (matrix[x][y] * 10)));
+          int blue = Math.max(0, Math.min(255, matrix[x][y] * 10));
+          pixelWriter.setColor(x, y, Color.rgb(red, 0, blue));
         } else {
           pixelWriter.setColor(x, y, javafx.scene.paint.Color.WHITE);
         }
@@ -218,6 +298,7 @@ public class ChaosGameController extends Controller {
     return writableImage;
   }
 
+  /** Toggles the dark mode of the application. */
   private void toggleDarkMode() {
     darkMode = !darkMode;
 
@@ -230,6 +311,12 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /**
+   * Updates the Chaos Game view when an event occurs The event can be related to dark mode, running
+   * steps, updating the canvas size, or opening the description dialogue
+   *
+   * @param event the event that occurred
+   */
   @Override
   public void update(Event event) {
     switch (event) {
@@ -251,6 +338,13 @@ public class ChaosGameController extends Controller {
     }
   }
 
+  /**
+   * Updates the Chaos Game view when an event occurs The event can be related to running the chaos
+   * game, setting a preset, loading a file, or saving a file
+   *
+   * @param event the event that occurred
+   * @param data the data associated with the event
+   */
   @Override
   public void update(Event event, Object data) {
     switch (event) {
@@ -258,7 +352,7 @@ public class ChaosGameController extends Controller {
         runIterations((int) data);
         break;
       case Event.SET_PRESET:
-        setPreset((String) data);
+        setDescriptionWithPreset((String) data);
         break;
       case LOAD_FILE:
         loadFromFile((String) data);
@@ -266,12 +360,18 @@ public class ChaosGameController extends Controller {
         break;
       case SAVE_FILE:
         saveToFile((String) data);
-        resetPreset();
       default:
         break;
     }
   }
 
+  /**
+   * Updates the Chaos Game view when an event occurs The event is related to updating the
+   * description of the chaos game
+   *
+   * @param event the event that occurred
+   * @param data the data associated with the event
+   */
   @Override
   public void update(Event event, Object... data) {
     switch (event) {
@@ -281,7 +381,8 @@ public class ChaosGameController extends Controller {
             (double) data[2],
             (double) data[3],
             (double) data[4],
-            (List<List<Double>>) data[5]);
+            (List<List<Double>>) data[5],
+            (List<Double>) data[6]);
         resetPreset();
         break;
       default:
