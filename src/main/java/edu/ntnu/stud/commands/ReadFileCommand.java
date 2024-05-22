@@ -6,7 +6,7 @@ import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.ChaosGame;
 import edu.ntnu.stud.models.ChaosGameDescription;
 import edu.ntnu.stud.models.ChaosGameFileHandler;
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 
 /**
  * This class represents the read file command in the CLI. It implements the Command interface and
@@ -22,7 +22,7 @@ public class ReadFileCommand implements Command {
   /**
    * The CLI to be used by the command.
    */
-  private final CLI cli;
+  private final Cli cli;
 
   /**
    * The ChaosGameFileHandler to be used by the command.
@@ -41,7 +41,7 @@ public class ReadFileCommand implements Command {
    * @param cli            the CLI to be used by this command
    * @param validatedInput the ValidatedInput to be used by this command
    */
-  public ReadFileCommand(CLIController controller, CLI cli, ValidatedInput validatedInput) {
+  public ReadFileCommand(CLIController controller, Cli cli, ValidatedInput validatedInput) {
     this.controller = controller;
     this.cli = cli;
     this.validatedInput = validatedInput;

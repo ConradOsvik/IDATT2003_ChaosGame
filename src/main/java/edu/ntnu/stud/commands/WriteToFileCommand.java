@@ -9,7 +9,7 @@ import edu.ntnu.stud.models.JuliaTransform;
 import edu.ntnu.stud.models.Matrix2x2;
 import edu.ntnu.stud.models.Transform2D;
 import edu.ntnu.stud.models.Vector2D;
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class WriteToFileCommand implements Command {
   /**
    * The CLI to be used by the command.
    */
-  private final CLI cli;
+  private final Cli cli;
 
   /**
    * The ChaosGameFileHandler to be used by the command.
@@ -40,7 +40,7 @@ public class WriteToFileCommand implements Command {
    * @param cli            the CLI to be used by this command
    * @param validatedInput the ValidatedInput to be used by this command
    */
-  public WriteToFileCommand(CLI cli, ValidatedInput validatedInput) {
+  public WriteToFileCommand(Cli cli, ValidatedInput validatedInput) {
     this.cli = cli;
     this.validatedInput = validatedInput;
     this.chaosGameFileHandler = new ChaosGameFileHandler();

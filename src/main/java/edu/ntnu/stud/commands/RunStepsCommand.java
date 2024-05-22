@@ -3,7 +3,7 @@ package edu.ntnu.stud.commands;
 import edu.ntnu.stud.controllers.CLIController;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.ChaosGameFileHandler;
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 
 /**
  * This class represents the run steps command in the CLI.
@@ -19,7 +19,7 @@ public class RunStepsCommand implements Command {
   /**
    * The CLI to be used by the command.
    */
-  private final CLI cli;
+  private final Cli cli;
 
   /**
    * The ChaosGameFileHandler to be used by the command.
@@ -38,7 +38,7 @@ public class RunStepsCommand implements Command {
    * @param cli            the CLI to be used by this command
    * @param validatedInput the ValidatedInput to be used by this command
    */
-  public RunStepsCommand(CLIController controller, CLI cli, ValidatedInput validatedInput) {
+  public RunStepsCommand(CLIController controller, Cli cli, ValidatedInput validatedInput) {
     this.controller = controller;
     this.cli = cli;
     this.validatedInput = validatedInput;

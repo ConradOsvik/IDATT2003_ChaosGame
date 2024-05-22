@@ -2,7 +2,7 @@ package edu.ntnu.stud.input;
 
 import edu.ntnu.stud.exceptions.InvalidFormatException;
 import edu.ntnu.stud.exceptions.InvalidInputException;
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 
 /**
  * The ValidatedInput class is responsible for handling user input validation.
@@ -13,7 +13,7 @@ public class ValidatedInput {
   /**
    * The CLI instance used to display messages.
    */
-  private final CLI cli;
+  private final Cli cli;
 
   /**
    * The InputHandler instance used to get the input.
@@ -26,7 +26,7 @@ public class ValidatedInput {
    *
    * @param cli The CLI instance used to display messages.
    */
-  public ValidatedInput(CLI cli) {
+  public ValidatedInput(Cli cli) {
     this.cli = cli;
     this.inputHandler = new InputHandler();
   }

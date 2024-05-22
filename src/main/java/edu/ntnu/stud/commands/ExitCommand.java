@@ -1,6 +1,6 @@
 package edu.ntnu.stud.commands;
 
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 
 /**
  * This class represents the exit command in the CLI.
@@ -11,14 +11,14 @@ public class ExitCommand implements Command {
   /**
    * The CLI to be used by this command.
    */
-  private final CLI cli;
+  private final Cli cli;
 
   /**
    * Constructs a new ExitCommand with the specified CLI.
    *
    * @param cli the CLI to be used by this command
    */
-  public ExitCommand(CLI cli) {
+  public ExitCommand(Cli cli) {
     this.cli = cli;
   }
 

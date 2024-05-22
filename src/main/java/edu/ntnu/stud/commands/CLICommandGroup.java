@@ -2,7 +2,7 @@ package edu.ntnu.stud.commands;
 
 import edu.ntnu.stud.controllers.CLIController;
 import edu.ntnu.stud.input.ValidatedInput;
-import edu.ntnu.stud.views.CLI;
+import edu.ntnu.stud.views.Cli;
 
 /**
  * This class represents a group of commands that can be executed from the command line interface (CLI).
@@ -21,7 +21,7 @@ public class CLICommandGroup extends CommandGroup {
    * @param cli the command line interface
    * @param validatedInput the input validator
    */
-  public CLICommandGroup(CLIController controller, CLI cli, ValidatedInput validatedInput) {
+  public CLICommandGroup(CLIController controller, Cli cli, ValidatedInput validatedInput) {
     super("Select a command:");
 
     this.addCommand(new ReadFileCommand(controller, cli, validatedInput));
