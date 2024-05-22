@@ -7,7 +7,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This class represents a dialog box for saving a file.
+ * It extends the Dialog class from the JavaFX library.
+ */
 public class SaveFileDialog extends Dialog<String> {
+
+  /**
+   * Constructor for the SaveFileDialog class.
+   * Initializes the dialog box with a title, header text, and a TextField for entering the file name.
+   */
   public SaveFileDialog() {
     setTitle("Save file");
     setHeaderText("Choose a name for the file to save");

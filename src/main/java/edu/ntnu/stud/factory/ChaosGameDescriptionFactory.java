@@ -10,7 +10,21 @@ import edu.ntnu.stud.models.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is responsible for creating different types of ChaosGameDescription objects. It
+ * provides static factory methods for creating descriptions for different types of chaos games,
+ * such as the Sierpinski Triangle, Barnsley Fern, and Julia Set.
+ */
 public class ChaosGameDescriptionFactory {
+
+  /**
+   * Creates a ChaosGameDescription object based on the provided description type.
+   *
+   * @param descriptionType The type of the chaos game description to create. It can be "Sierpinski
+   *                        Triangle", "Barnsley Fern", or "Julia Set".
+   * @return A ChaosGameDescription object of the specified type, or null if the type is not
+   * recognized.
+   */
   public static ChaosGameDescription createDescription(String descriptionType) {
     return switch (descriptionType) {
       case "Sierpinski Triangle" -> createSierpinskiDescription();
@@ -20,6 +34,11 @@ public class ChaosGameDescriptionFactory {
     };
   }
 
+  /**
+   * Creates a ChaosGameDescription object for the Sierpinski Triangle.
+   *
+   * @return A ChaosGameDescription object for the Sierpinski Triangle.
+   */
   public static ChaosGameDescription createSierpinskiDescription() {
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(1, 1);
@@ -44,7 +63,12 @@ public class ChaosGameDescriptionFactory {
     return new ChaosGameDescription(transforms, minCoords, maxCoords);
   }
 
-  public static ChaosGameDescription createBarnsleyDescription(){
+  /**
+   * Creates a ChaosGameDescription object for the Barnsley Fern.
+   *
+   * @return A ChaosGameDescription object for the Barnsley Fern.
+   */
+  public static ChaosGameDescription createBarnsleyDescription() {
     Vector2D minCoords = new Vector2D(-2.65, 0);
     Vector2D maxCoords = new Vector2D(2.65, 10);
     List<Transform2D> transforms = new ArrayList<>();
@@ -73,7 +97,12 @@ public class ChaosGameDescriptionFactory {
     return new ChaosGameDescription(transforms, minCoords, maxCoords);
   }
 
-  public static ChaosGameDescription createJuliaDescription(){
+  /**
+   * Creates a ChaosGameDescription object for the Julia Set.
+   *
+   * @return A ChaosGameDescription object for the Julia Set.
+   */
+  public static ChaosGameDescription createJuliaDescription() {
     Vector2D minCoords = new Vector2D(-1.6, -1);
     Vector2D maxCoords = new Vector2D(1.6, 1);
     List<Transform2D> transforms = new ArrayList<>();

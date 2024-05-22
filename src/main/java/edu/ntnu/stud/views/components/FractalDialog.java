@@ -17,6 +17,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * This class represents a dialog box for editing or creating fractals.
+ * It extends the Dialog class from the JavaFX library and implements the Observable interface.
+ */
 public class FractalDialog extends Dialog<String> implements Observable {
 
   private final List<Observer> observers = new ArrayList<>();
@@ -29,6 +33,17 @@ public class FractalDialog extends Dialog<String> implements Observable {
   private final List<NumberField> transformWeightFields = new ArrayList<>();
   private final GridPane transformsGrid = new GridPane();
 
+  /**
+   * Constructor for the FractalDialog class.
+   * Initializes the dialog box with the specified transform type, min and max coordinates, and transform values.
+   *
+   * @param transformType the type of transform
+   * @param xMinValue the minimum x-coordinate
+   * @param yMinValue the minimum y-coordinate
+   * @param xMaxValue the maximum x-coordinate
+   * @param yMaxValue the maximum y-coordinate
+   * @param transformValues the values of the transforms
+   */
   public FractalDialog(String transformType, double xMinValue, double yMinValue, double xMaxValue,
       double yMaxValue,
       List<List<Double>> transformValues) {
@@ -103,6 +118,19 @@ public class FractalDialog extends Dialog<String> implements Observable {
     });
   }
 
+  /**
+   * Default constructor for the FractalDialog class.
+   * Initializes the dialog box with default values.
+   */
+  public FractalDialog() {
+    this("Affine", 0, 0, 0, 0, new ArrayList<>());
+  }
+
+  /**
+   * Returns a scrollable box containing the main grid and an "Add Transform" button.
+   * @param mainGrid
+   * @return a scrollable box containing the main grid and an "Add Transform" button
+   */
   private ScrollPane getScrollPane(GridPane mainGrid) {
     Button addTransformButton = new Button("Add Transform");
     addTransformButton.setOnAction(e -> {
@@ -122,10 +150,12 @@ public class FractalDialog extends Dialog<String> implements Observable {
     return scrollableBox;
   }
 
-  public FractalDialog() {
-    this("Affine", 0, 0, 0, 0, new ArrayList<>());
-  }
-
+  /**
+   * Creates the user interface for an affine transform.
+   *
+   * @param values the values of the transform
+   * @return a GridPane representing the user interface for the transform
+   */
   private GridPane createAffineTransformUI(List<Double> values) {
     GridPane grid = new GridPane();
 
@@ -169,6 +199,12 @@ public class FractalDialog extends Dialog<String> implements Observable {
     return grid;
   }
 
+  /**
+   * Creates the user interface for a Julia transform.
+   *
+   * @param values the values of the transform
+   * @return a GridPane representing the user interface for the transform
+   */
   private GridPane createJuliaTransformUI(List<Double> values) {
     GridPane grid = new GridPane();
 
@@ -194,26 +230,53 @@ public class FractalDialog extends Dialog<String> implements Observable {
     return grid;
   }
 
+  /**
+   * Adds an observer to the list of observers.
+   *
+   * @param observer the observer to be added
+   */
   @Override
   public void addObserver(Observer observer) {
     observers.add(observer);
   }
 
+  /**
+   * Removes an observer from the list of observers.
+   *
+   * @param observer the observer to be removed
+   */
   @Override
   public void removeObserver(Observer observer) {
     observers.remove(observer);
   }
 
+  /**
+   * Notifies all observers of an event.
+   *
+   * @param event the event to be notified
+   */
   @Override
   public void notifyObservers(Event event) {
     observers.forEach(observer -> observer.update(event));
   }
 
+  /**
+   * Notifies all observers of an event and a single data object.
+   *
+   * @param event the event to be notified
+   * @param data the data to be sent with the event
+   */
   @Override
   public void notifyObservers(Event event, Object data) {
     observers.forEach(observer -> observer.update(event, data));
   }
 
+  /**
+   * Notifies all observers of an event and multiple data objects.
+   *
+   * @param event the event to be notified
+   * @param data the data to be sent with the event
+   */
   @Override
   public void notifyObservers(Event event, Object... data) {
     observers.forEach(observer -> observer.update(event, data));

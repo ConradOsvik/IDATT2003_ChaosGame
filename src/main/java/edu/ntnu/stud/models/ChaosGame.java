@@ -130,26 +130,53 @@ public class ChaosGame implements Observable {
     notifyObservers(Event.STEPS_RAN);
   }
 
+  /**
+   * Adds an observer to the list of observers.
+   *
+   * @param observer the observer to add
+   */
   @Override
   public void addObserver(Observer observer) {
     this.observers.add(observer);
   }
 
+  /**
+   * Removes an observer from the list of observers.
+   *
+   * @param observer the observer to remove
+   */
   @Override
   public void removeObserver(Observer observer) {
     this.observers.remove(observer);
   }
 
+  /**
+   * Notifies all observers of an event.
+   *
+   * @param event the event to notify observers of
+   */
   @Override
   public void notifyObservers(Event event) {
     observers.forEach(observer -> observer.update(event));
   }
 
+  /**
+   * Notifies all observers of an event with data.
+   *
+   * @param event the event to notify observers of
+   * @param data  the data to send to observers
+   */
   @Override
   public void notifyObservers(Event event, Object data) {
     observers.forEach(observer -> observer.update(event, data));
   }
 
+  /**
+   * Notifies all observers of an event with multiple data objects.
+   *
+   * @param event the event to notify observers of
+   * @param data  the data to send to observers
+   */
   @Override
   public void notifyObservers(Event event, Object... data) {
     observers.forEach(observer -> observer.update(event, data));

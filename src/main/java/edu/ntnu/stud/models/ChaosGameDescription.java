@@ -91,6 +91,15 @@ public class ChaosGameDescription {
     return maxCoords;
   }
 
+  /**
+   * Checks if this ChaosGameDescription is equal to the specified object. The result is true if and
+   * only if the argument is not null and is a ChaosGameDescription object that has the same
+   * transformations, minimum coordinates, and maximum coordinates as this ChaosGameDescription.
+   *
+   * @param obj The object to compare this ChaosGameDescription against
+   * @return true if the given object represents a ChaosGameDescription equivalent to this
+   *     ChaosGameDescription, false otherwise
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -105,6 +114,13 @@ public class ChaosGameDescription {
         && maxCoords.equals(description.maxCoords);
   }
 
+  /**
+   * Returns a string representation of the ChaosGameDescription.
+   *
+   * @return A string representation of the ChaosGameDescription in the format
+   *     "ChaosGameDescription{transforms=[transform1, transform2, ...], minCoords=(x, y),
+   *     maxCoords=(x, y)}".
+   */
   @Override
   public String toString() {
     return "ChaosGameDescription{"
