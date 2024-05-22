@@ -1,6 +1,6 @@
 package edu.ntnu.stud.controllers;
 
-import edu.ntnu.stud.commands.CLICommandGroup;
+import edu.ntnu.stud.commands.CliCommandGroup;
 import edu.ntnu.stud.commands.Command;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.ChaosGame;
@@ -10,10 +10,10 @@ import edu.ntnu.stud.views.Cli;
  * This class represents the controller for the command line interface (CLI). It is used to handle
  * user input and execute commands.
  */
-public class CLIController {
+public class CliController {
   private final Cli cli;
   private ChaosGame chaosGame;
-  private final CLICommandGroup commands;
+  private final CliCommandGroup commands;
   private final ValidatedInput validatedInput;
 
   /**
@@ -21,10 +21,10 @@ public class CLIController {
    *
    * @param cli the command line interface
    */
-  public CLIController(Cli cli) {
+  public CliController(Cli cli) {
     this.cli = cli;
     this.validatedInput = new ValidatedInput(cli);
-    this.commands = new CLICommandGroup(this, this.cli, this.validatedInput);
+    this.commands = new CliCommandGroup(this, this.cli, this.validatedInput);
   }
 
   /** Handles the user request by displaying the menu and executing the selected command. */

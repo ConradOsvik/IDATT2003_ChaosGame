@@ -30,8 +30,11 @@ public class ChaosGame implements Observable {
   /** The canvas used to plot the points in the Chaos Game. */
   private ChaosCanvas canvas;
 
-  /** The width and height of the canvas. */
-  private int canvasWidth, canvasHeight;
+  /** The width of the canvas. */
+  private int canvasWidth;
+
+  /** The height of the canvas. */
+  private int canvasHeight;
 
   /**
    * Constructs a new ChaosGame with the given description, width, and height.

@@ -1,6 +1,6 @@
 package edu.ntnu.stud.commands;
 
-import edu.ntnu.stud.controllers.CLIController;
+import edu.ntnu.stud.controllers.CliController;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.views.Cli;
 
@@ -11,7 +11,7 @@ import edu.ntnu.stud.views.Cli;
  *
  * @see edu.ntnu.stud.commands.CommandGroup
  */
-public class CLICommandGroup extends CommandGroup {
+public class CliCommandGroup extends CommandGroup {
 
   /**
    * Constructs a new CLICommandGroup with a set of specific commands. The commands are added to the
@@ -21,7 +21,7 @@ public class CLICommandGroup extends CommandGroup {
    * @param cli the command line interface
    * @param validatedInput the input validator
    */
-  public CLICommandGroup(CLIController controller, Cli cli, ValidatedInput validatedInput) {
+  public CliCommandGroup(CliController controller, Cli cli, ValidatedInput validatedInput) {
     super("Select a command:");
 
     this.addCommand(new ReadFileCommand(controller, cli, validatedInput));

@@ -1,6 +1,6 @@
 package edu.ntnu.stud.commands;
 
-import edu.ntnu.stud.controllers.CLIController;
+import edu.ntnu.stud.controllers.CliController;
 
 /**
  * This class represents the print fractal command in the CLI. It implements the Command interface
@@ -8,14 +8,14 @@ import edu.ntnu.stud.controllers.CLIController;
  */
 public class PrintFractalCommand implements Command {
   /** The CLIController to be used by the command. */
-  private final CLIController controller;
+  private final CliController controller;
 
   /**
    * Constructs a new PrintFractalCommand with the specified CLIController.
    *
    * @param controller the CLIController to be used by this command
    */
-  public PrintFractalCommand(CLIController controller) {
+  public PrintFractalCommand(CliController controller) {
     this.controller = controller;
   }
 

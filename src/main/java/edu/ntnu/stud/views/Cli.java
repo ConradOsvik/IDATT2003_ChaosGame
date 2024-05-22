@@ -1,6 +1,6 @@
 package edu.ntnu.stud.views;
 
-import edu.ntnu.stud.commands.CLICommandGroup;
+import edu.ntnu.stud.commands.CliCommandGroup;
 import edu.ntnu.stud.commands.Command;
 import edu.ntnu.stud.utils.Color;
 import java.util.List;
@@ -17,7 +17,7 @@ public class Cli {
    *
    * @param commands the CLICommandGroup containing the commands to display
    */
-  public void displayMenu(CLICommandGroup commands) {
+  public void displayMenu(CliCommandGroup commands) {
     System.out.println(commands.getTitle());
     List<Command> commandList = commands.getCommands();
     for (int i = 0; i < commandList.size(); i++) {

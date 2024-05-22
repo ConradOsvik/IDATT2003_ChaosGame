@@ -1,6 +1,6 @@
 package edu.ntnu.stud.commands;
 
-import edu.ntnu.stud.controllers.CLIController;
+import edu.ntnu.stud.controllers.CliController;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.ChaosGameFileHandler;
 import edu.ntnu.stud.views.Cli;
@@ -12,7 +12,7 @@ import edu.ntnu.stud.views.Cli;
 public class RunStepsCommand implements Command {
 
   /** The CLIController to be used by the command. */
-  private final CLIController controller;
+  private final CliController controller;
 
   /** The ValidatedInput to be used by the command. */
   private final ValidatedInput validatedInput;
@@ -24,11 +24,10 @@ public class RunStepsCommand implements Command {
    * @param cli the CLI to be used by this command
    * @param validatedInput the ValidatedInput to be used by this command
    */
-  public RunStepsCommand(CLIController controller, Cli cli, ValidatedInput validatedInput) {
+  public RunStepsCommand(CliController controller, Cli cli, ValidatedInput validatedInput) {
     this.controller = controller;
-    /** The CLI to be used by the command. */
+
     this.validatedInput = validatedInput;
-    /** The ChaosGameFileHandler to be used by the command. */
     ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
   }
 

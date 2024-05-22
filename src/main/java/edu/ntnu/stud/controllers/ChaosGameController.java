@@ -33,8 +33,10 @@ import javafx.util.Pair;
 public class ChaosGameController extends Controller {
 
   private final String PATH = "src/main/resources/transforms/";
-  private final int DEFAULT_WIDTH = 800, DEFAULT_HEIGHT = 800;
-  private final int DEFAULT_CANVAS_WIDTH = 600, DEFAULT_CANVAS_HEIGHT = 700;
+  private final int DEFAULT_WIDTH = 800;
+  private final int DEFAULT_HEIGHT = 800;
+  private final int DEFAULT_CANVAS_WIDTH = 600;
+  private final int DEFAULT_CANVAS_HEIGHT = 700;
   private final ChaosGameFileHandler chaosGameFileHandler = new ChaosGameFileHandler();
   private final ChaosGameView chaosGameView;
   private final ChaosGame chaosGame;
@@ -324,7 +326,7 @@ public class ChaosGameController extends Controller {
 
   /**
    * Updates the Chaos Game view when an event occurs The event can be related to dark mode, running
-   * steps, updating the canvas size, or opening the description dialogue
+   * steps, updating the canvas size, or opening the description dialogue.
    *
    * @param event the event that occurred
    */
@@ -351,7 +353,7 @@ public class ChaosGameController extends Controller {
 
   /**
    * Updates the Chaos Game view when an event occurs The event can be related to running the chaos
-   * game, setting a preset, loading a file, or saving a file
+   * game, setting a preset, loading a file, or saving a file.
    *
    * @param event the event that occurred
    * @param data the data associated with the event
@@ -371,6 +373,7 @@ public class ChaosGameController extends Controller {
         break;
       case SAVE_FILE:
         saveToFile((String) data);
+        break;
       default:
         break;
     }
@@ -378,7 +381,7 @@ public class ChaosGameController extends Controller {
 
   /**
    * Updates the Chaos Game view when an event occurs The event is related to updating the
-   * description of the chaos game
+   * description of the chaos game.
    *
    * @param event the event that occurred
    * @param data the data associated with the event

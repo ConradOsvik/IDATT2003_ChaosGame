@@ -84,9 +84,9 @@ public class FractalDialog extends Dialog<String> implements Observable {
     for (List<Double> transform : transformValues) {
       GridPane transformGrid = null;
       if (transformType.equals("Affine")) {
-        transformGrid = createAffineTransformUI(transform);
+        transformGrid = createAffineTransformUi(transform);
       } else if (transformType.equals("Julia")) {
-        transformGrid = createJuliaTransformUI(transform);
+        transformGrid = createJuliaTransformUi(transform);
       }
       transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
     }
@@ -152,9 +152,9 @@ public class FractalDialog extends Dialog<String> implements Observable {
         e -> {
           GridPane transformGrid = null;
           if (this.typeComboBox.getValue().equals("Affine")) {
-            transformGrid = createAffineTransformUI(null);
+            transformGrid = createAffineTransformUi(null);
           } else if (this.typeComboBox.getValue().equals("Julia")) {
-            transformGrid = createJuliaTransformUI(null);
+            transformGrid = createJuliaTransformUi(null);
           }
           transformsGrid.add(transformGrid, 0, transformsGrid.getRowCount());
         });
@@ -172,7 +172,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
    * @param values the values of the transform
    * @return a GridPane representing the user interface for the transform
    */
-  private GridPane createAffineTransformUI(List<Double> values) {
+  private GridPane createAffineTransformUi(List<Double> values) {
     GridPane grid = new GridPane();
 
     NumberField matrixValue1 =
@@ -227,7 +227,7 @@ public class FractalDialog extends Dialog<String> implements Observable {
    * @param values the values of the transform
    * @return a GridPane representing the user interface for the transform
    */
-  private GridPane createJuliaTransformUI(List<Double> values) {
+  private GridPane createJuliaTransformUi(List<Double> values) {
     GridPane grid = new GridPane();
 
     NumberField realPart =

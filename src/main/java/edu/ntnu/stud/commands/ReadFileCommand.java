@@ -1,6 +1,6 @@
 package edu.ntnu.stud.commands;
 
-import edu.ntnu.stud.controllers.CLIController;
+import edu.ntnu.stud.controllers.CliController;
 import edu.ntnu.stud.exceptions.FileHandlingException;
 import edu.ntnu.stud.input.ValidatedInput;
 import edu.ntnu.stud.models.ChaosGame;
@@ -15,7 +15,7 @@ import edu.ntnu.stud.views.Cli;
 public class ReadFileCommand implements Command {
 
   /** The CLIController to be used by the command. */
-  private final CLIController controller;
+  private final CliController controller;
 
   /** The CLI to be used by the command. */
   private final Cli cli;
@@ -33,7 +33,7 @@ public class ReadFileCommand implements Command {
    * @param cli the CLI to be used by this command
    * @param validatedInput the ValidatedInput to be used by this command
    */
-  public ReadFileCommand(CLIController controller, Cli cli, ValidatedInput validatedInput) {
+  public ReadFileCommand(CliController controller, Cli cli, ValidatedInput validatedInput) {
     this.controller = controller;
     this.cli = cli;
     this.validatedInput = validatedInput;

@@ -1,6 +1,6 @@
 package edu.ntnu.stud;
 
-import edu.ntnu.stud.controllers.CLIController;
+import edu.ntnu.stud.controllers.CliController;
 import edu.ntnu.stud.controllers.ChaosGameController;
 import edu.ntnu.stud.views.Cli;
 import javafx.application.Application;
@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class App extends Application {
   // This class is the main class of the application. It launches the JavaFX application or the CLI
 
-  private static CLIController cliController;
+  private static CliController cliController;
 
   /** Launches the JavaFX application. */
   @Override
@@ -26,13 +26,13 @@ public class App extends Application {
   /** Initializes the terminal view and controller. */
   public void initTerminal() {
     Cli cli = new Cli();
-    cliController = new CLIController(cli);
+    cliController = new CliController(cli);
   }
 
   /**
    * Starts the terminal by calling the handleRequest method of cliController.
    *
-   * @see CLIController#handleRequest()
+   * @see CliController#handleRequest()
    */
   public void startTerminal() {
     cliController.handleRequest();
