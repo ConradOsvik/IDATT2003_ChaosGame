@@ -6,7 +6,6 @@ import edu.ntnu.stud.utils.Observer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
 import javafx.util.Pair;
 
 /**
@@ -21,8 +20,7 @@ public class ChaosGame implements Observable {
   private ChaosGameDescription description;
   private Vector2D currentPoint;
   private ChaosCanvas canvas;
-  private int canvasWidth;
-  private int canvasHeight;
+  private int canvasWidth, canvasHeight;
 
   /**
    * Constructs a new ChaosGame with the given description, width, and height.
@@ -102,31 +100,34 @@ public class ChaosGame implements Observable {
     }
 
     if (description.isWeighted()) {
-      IntStream.range(0, steps).forEach(i -> {
+      for (int i = 0; i < steps; i++) {
         double totalWeight = description.getWeightedTransforms().stream()
             .mapToDouble(Pair::getValue)
             .sum();
         double randomWeight = random.nextDouble() * totalWeight;
-        description.getWeightedTransforms().stream()
-            .reduce((acc, weightedTransform) -> {
-              double cumulativeWeight = acc.getValue() + weightedTransform.getValue();
-              if (randomWeight <= cumulativeWeight) {
-                currentPoint = weightedTransform.getKey().transform(currentPoint);
-                return weightedTransform; // We return current to stop reducing further
-              }
-              return new Pair<>(weightedTransform.getKey(), cumulativeWeight);
-            });
+        double cumulativeWeight = 0.0;
+        for (Pair<Transform2D, Double> weightedTransform : description.getWeightedTransforms()) {
+          cumulativeWeight += weightedTransform.getValue();
+          if (randomWeight <= cumulativeWeight) {
+            Transform2D transform = weightedTransform.getKey();
+            currentPoint = transform.transform(currentPoint);
+            break;
+          }
+        }
         this.canvas.putPixel(currentPoint);
-      });
+      }
     } else {
-      IntStream.range(0, steps).forEach(i -> {
-        Transform2D transform = this.description
-            .getTransforms()
-            .get(this.random.nextInt(this.description.getTransforms().size()));
+      for (int i = 0; i < steps; i++) {
+        Transform2D transform =
+            this.description
+                .getTransforms()
+                .get(this.random.nextInt(this.description.getTransforms().size()));
         this.currentPoint = transform.transform(this.currentPoint);
         this.canvas.putPixel(this.currentPoint);
-      });
+      }
     }
+
+    notifyObservers(Event.STEPS_RAN);
   }
 
   @Override

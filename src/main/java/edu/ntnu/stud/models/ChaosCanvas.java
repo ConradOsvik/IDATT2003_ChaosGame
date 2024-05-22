@@ -1,7 +1,5 @@
 package edu.ntnu.stud.models;
 
-import java.util.Arrays;
-
 /**
  * This class represents a canvas for the Chaos Game. It is used to store and manipulate pixel data.
  * The canvas is a 2D array of integers, where each integer represents a pixel. The integers can be
@@ -96,6 +94,6 @@ public class ChaosCanvas {
 
   /** Clears the canvas by setting all pixels to 0. */
   public void clear() {
-    Arrays.stream(canvas).forEach(row -> Arrays.fill(row, 0));
+    this.canvas = new int[width][height];
   }
 }
